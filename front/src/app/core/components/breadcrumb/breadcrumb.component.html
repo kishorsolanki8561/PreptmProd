@@ -1,0 +1,23 @@
+<div class="breadcrumb-wrapper lg:mx-0 overflow-x-auto" itemscope itemtype="https://schema.org/BreadcrumbList">
+  <nz-breadcrumb [nzSeparator]="'>'">
+    <nz-breadcrumb-item *ngIf="breadcrumb && breadcrumb.length && breadcrumb[0].text" itemprop="itemListElement"
+      itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" [routerLink]="['/']" class="text-gray-800 hover:text-gray-500 text-sm">
+        <span itemprop="name" i18n>Home</span>
+      </a>
+      <meta itemprop="position" content="1" />
+    </nz-breadcrumb-item>
+
+    <nz-breadcrumb-item *ngFor="let item of breadcrumb; let i = index" itemprop="itemListElement" itemscope
+      itemtype="https://schema.org/ListItem">
+      <a itemprop="item" *ngIf="item.path; else withoutLink" [routerLink]="item.path" class="text-gray-800 hover:text-gray-500 text-sm">
+        <span itemprop="name">{{item.text}}</span>
+      </a>
+
+      <ng-template #withoutLink>
+        <span itemprop="name" class="text-gray-800 hover:text-gray-500 text-sm">{{item.text}}</span>
+      </ng-template>
+      <meta itemprop="position" [content]="i + 2" />
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+</div>

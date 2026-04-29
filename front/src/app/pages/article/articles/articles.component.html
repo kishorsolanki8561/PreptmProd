@@ -1,0 +1,15 @@
+<div class="gap-margin-x">
+     <!-- label heading -->
+     <div class="section-heading m-4">
+        <h2>Article Categories</h2>
+      </div>
+<div class="feature-grid">
+    <a [routerLink]="[article.otherData.slugUrl]" class="feature-card" *ngFor="let article of articleTypeList; let i = index">
+      <div class="icon" [ngStyle]="{'background-color': getColor(i)}">
+        <img [src]="'assets/img/place_holder.png'" alt="Feature Icon" class="icon-img" [attr.loading]="'lazy'" />
+      </div>
+      <div class="feature-text">{{ article.text }}</div>
+    </a>
+  </div>
+
+</div>

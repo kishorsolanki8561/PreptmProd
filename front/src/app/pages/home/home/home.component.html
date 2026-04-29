@@ -1,0 +1,70 @@
+<!-- <preptm-banner class="gap-top"></preptm-banner> -->
+<div class="gap-top">
+  <preptm-mobile-menu class="gap-top lg:hidden"></preptm-mobile-menu>
+</div>
+<!-- <div class="gap-top">
+  <preptm-header-tile titleName="Jobs Update" viewMoreUrl=""></preptm-header-tile>
+</div> -->
+
+
+<div class="gap-top">
+  <!-- <preptm-custom-button></preptm-custom-button> -->
+</div>
+
+<div class="gap-top">
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    
+    <preptm-post-container viewMoreUrl="/latest" *ngIf="isLoading || allPosts?.recentPosts?.length"
+      [showLoader]="isLoading" i18n-heading heading="Recent" [posts]="allPosts?.recentPosts"
+      className="list-wrapper-1"></preptm-post-container>
+
+      <preptm-post-container viewMoreUrl="/expiresoon" *ngIf="isLoading || allPosts?.expiredSoonPosts?.length"
+      [showLoader]="isLoading" i18n-heading heading="Expire Soon" [posts]="allPosts?.expiredSoonPosts"
+      className="list-wrapper-4"></preptm-post-container>
+
+
+      <!-- // TODO: with popular content change algorithm based on listing, show only monthly popular instead of overall -->
+   
+      <!-- <preptm-post-container viewMoreUrl="/popular" *ngIf="isLoading || allPosts?.popularPosts?.length"
+      [showLoader]="isLoading" i18n-heading heading="Popular" [posts]="allPosts?.popularPosts"
+      className="list-wrapper-2"></preptm-post-container> -->
+    <preptm-post-container viewMoreUrl="/jobs" *ngIf="isLoading || allPosts?.recruitments?.length"
+      [showLoader]="isLoading" i18n-heading heading="Recruitments" [posts]="allPosts?.recruitments"
+      className="list-wrapper-3"></preptm-post-container>
+    
+    
+      <preptm-post-container viewMoreUrl="/private-jobs" *ngIf="isLoading || allPosts?.privateRecruitments?.length"
+      [showLoader]="isLoading" i18n-heading heading="Private Jobs" [posts]="allPosts?.privateRecruitments"
+      className="list-wrapper-3"></preptm-post-container>
+
+      <!-- // TODO: scheme showing in post card blocks -->
+
+    <!-- <preptm-post-container viewMoreUrl="/schemes" *ngIf="isLoading || allPosts?.schemes?.length"
+      [showLoader]="isLoading" i18n-heading heading="Schemes" [posts]="allPosts?.schemes"
+      className="list-wrapper-4"></preptm-post-container> -->
+    <preptm-post-container viewMoreUrl="/results" *ngIf="isLoading || allPosts?.results?.length"
+      [showLoader]="isLoading" i18n-heading heading="Results" [posts]="allPosts?.results"
+      className="list-wrapper-1"></preptm-post-container>
+    <preptm-post-container viewMoreUrl="/admissions" *ngIf="isLoading || allPosts?.admissions?.length"
+      [showLoader]="isLoading" i18n-heading heading="Admissions" [posts]="allPosts?.admissions"
+      className="list-wrapper-2"></preptm-post-container>
+    <preptm-post-container viewMoreUrl="/exams" *ngIf="isLoading || allPosts?.exams?.length" [showLoader]="isLoading"
+      i18n-heading heading="Exams" [posts]="allPosts?.exams" className="list-wrapper-3"></preptm-post-container>
+    <!-- <preptm-post-container viewMoreUrl="/papers" *ngIf="isLoading || allPosts?.papers?.length" [showLoader]="isLoading"
+      i18n-heading heading="Exam Papers" [posts]="allPosts?.papers" className="list-wrapper-4"></preptm-post-container> -->
+    <preptm-post-container viewMoreUrl="/admit-cards" *ngIf="isLoading || allPosts?.admitCards?.length"
+      [showLoader]="isLoading" i18n-heading heading="Admit Cards" [posts]="allPosts?.admitCards"
+      className="list-wrapper-1"></preptm-post-container>
+    <!-- <preptm-post-container viewMoreUrl="/syllabus" *ngIf="isLoading || allPosts?.syllabus?.length"
+      [showLoader]="isLoading" i18n-heading heading="Syllabus" [posts]="allPosts?.syllabus"
+      className="list-wrapper-2"></preptm-post-container> -->
+
+    <preptm-post-container viewMoreUrl="/upcoming" *ngIf="isLoading || allPosts?.upComingPosts?.length"
+      [showLoader]="isLoading" i18n-heading heading="Upcoming" [posts]="allPosts?.upComingPosts"
+      className="list-wrapper-1"></preptm-post-container>
+   
+  </div> 
+</div>
+
+<preptm-categories></preptm-categories>
+<preptm-about-site></preptm-about-site>

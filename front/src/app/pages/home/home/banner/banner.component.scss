@@ -1,0 +1,51 @@
+.slide {
+  height: 150px;
+  padding-top: 10px;
+}
+
+.red {
+  background-color: rgb(241, 165, 165);
+}
+
+.yellow {
+  background-color: rgb(141, 241, 171);
+}
+
+.image-container {
+  max-height: 150px !important;
+
+  .banner-img {
+    max-height: 150px;
+    max-width: 100%;
+    width: auto;
+    margin: 0 auto;
+    display: inline;
+  }
+}
+
+// .slick-initialized.slick-slider {
+
+//   .slick-slide,
+//   .slick-track,
+//   .slick-list {
+//     max-height: 150px !important;
+//   }
+// }
+
+
+
+
+// lg
+@media (min-width:1024px) {
+  .slide {
+    height: 280px;
+  }
+
+  .image-container {
+    max-height: 280px !important;
+
+    .banner-img {
+      max-height: 280px;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<!-- small -->
+<img [class]="className" *ngIf="!skipSmall && (srcWidth<600 || onlyLow); else medium" nz-image [nzSrc]="srcLow"
+    [nzDisablePreview]="true" [attr.loading]="'lazy'" [nzFallback]="fallback" [alt]="alt" (click)="openPreview()">
+
+<!-- medium -->
+<ng-template #medium>
+    <img [class]="className" *ngIf="(srcWidth<1024 || onlyMedium); else large" nz-image [nzSrc]="srcMedium"
+        [nzDisablePreview]="true" [attr.loading]="'lazy'" [nzFallback]="fallback" [alt]="alt" (click)="openPreview()">
+</ng-template>
+
+<!-- large -->
+<ng-template #large>
+    <img [class]="className" nz-image [nzSrc]="srcHigh" [nzDisablePreview]="true" [attr.loading]="'lazy'"
+        [nzFallback]="fallback" [alt]="alt" (click)="openPreview()">
+</ng-template>

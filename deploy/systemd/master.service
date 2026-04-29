@@ -1,0 +1,19 @@
+[Unit]
+Description=PreptM Master Microservice
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/preptm/api/master
+ExecStart=/usr/bin/dotnet MasterMicroService.dll
+Restart=always
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=preptm-master
+User=root
+
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=ASPNETCORE_URLS=http://localhost:5003
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target

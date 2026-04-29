@@ -1,0 +1,27 @@
+<a [routerLink]="['/',post.blockTypeSlug,post.slugUrl]" class="post gap-padding-all" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+
+    <meta itemprop="position" [content]="index" />
+    <meta itemprop="url" [content]="document.location.origin + '/' + post.blockTypeSlug + '/' + post.slugUrl" />
+
+    <!-- <preptm-image [alt]="post.title" [onlyLow]="true" [className]="'suggestion-post-logo'" [src]="post.thumbnail"></preptm-image> -->
+    <div>
+        <h2 class="post-title" itemprop="name">{{post.title}}
+        </h2>
+        <div class="misc" *ngIf="!minimal">
+            <div class="chip date" *ngIf="post.startDate || post.lastDate">
+                <span class="date">
+                    <span title="Start Date" *ngIf="post.startDate">{{post.startDate | date:DATE_FORMAT}}</span>
+                    <span *ngIf="post.startDate && post.lastDate"> - </span>
+                    <span title="Last Date" *ngIf="post.lastDate">{{post.lastDate | date:DATE_FORMAT}}</span>
+                </span>
+            </div>
+
+            <div class="type chip" *ngIf="post.moduleName">{{post.moduleName | titlecase}}</div>
+            <span *ngIf="post && post.reminingFewDays" class="remaining-days">
+                <span class="counter">{{post.reminingFewDays}}</span>
+                <span>&nbsp;Day <span *ngIf="post.reminingFewDays>1">'s</span> Left</span>
+            </span>
+        </div>
+
+    </div>
+</a>

@@ -1,0 +1,19 @@
+[Unit]
+Description=PreptM AllDropDown Microservice
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/preptm/api/alldropdown
+ExecStart=/usr/bin/dotnet AllDropDownMicroService.dll
+Restart=always
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=preptm-alldropdown
+User=root
+
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=ASPNETCORE_URLS=http://localhost:5001
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target

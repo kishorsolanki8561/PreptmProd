@@ -1,0 +1,20 @@
+<!-- <owl-carousel-o *ngIf="banners?.length" [loading]="isLoading" [options]="customOptions">
+  <ng-template *ngFor="let item of banners" carouselSlide class="slide">
+    <div [loading]="isLoading" class="gap-padding-x slide image-container">
+      <img class="banner-img" [src]="item.attachmentUrl">
+    </div>
+  </ng-template>
+</owl-carousel-o> -->
+
+<nz-carousel >
+<!-- <nz-carousel nzAutoPlay> -->
+  <div nz-carousel-content *ngFor="let item of banners">
+    <div class="gap-padding-x slide image-container text-center">
+      <a [href]="item.url" target="_blank">
+        <img nz-image [draggable]="false" [alt]="item.title" [title]="item.title" [attr.loading]="'lazy'" 
+          class="banner-img {{item.url?' cursor-pointer':''}}" [nzSrc]="item.attachmentUrl" [nzDisablePreview]="true"
+          [nzPlaceholder]="'assets/img/spinner.svg'">
+      </a>
+    </div>
+  </div>
+</nz-carousel>

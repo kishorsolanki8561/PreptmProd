@@ -1,0 +1,103 @@
+<div>
+    <div class="wrapper gap-padding-x">
+        <div class="grid grid-cols-1 gap-4">
+            <div class="mt-3">
+                <preptm-breadcrumb [breadcrumb]="[]"></preptm-breadcrumb>
+            </div>
+
+            <!-- post header smart -->
+            <div class="article-container section">
+                <h1 class="mx-2">post title</h1>
+
+                <div class="author-and-state">
+                    <div class="mx-2 author">
+
+                        <div class="author-info">
+
+                            <div class="profile">
+                                <img src="assets/img/boy.png" alt="Author avatar" class="avatar mr-2"
+                                    [attr.loading]="'lazy'" />
+                                <span class="author-name">Suresh</span>
+                                <meta itemprop="url" [content]="'https://www.preptm.com/assets/img/writter.jpg'" />
+                            </div>
+
+
+                            <span class="author-meta">
+                                <span class="publish-date md:mt-2" title="Last updated">
+                                    <span class="date">12 august 2025</span>
+                                </span>
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="article-meta">
+                    <div>
+                        <span i18n class="mx-2 dept-lbl"> Department </span>
+                        <span class="seperator">:</span>
+                        <p>
+                            <a class="mx-2 dept-name" [routerLink]="['/department','abc']" itemprop="hiringOrganization"
+                                itemscope itemtype="https://schema.org/Organization">
+
+                                <span itemprop="name">
+                                    dept name test
+                                </span>
+                            </a>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- short  description -->
+            <div class="section gap-padding-all">
+                <p class="mb-4">short description</p>
+            </div>
+
+            <preptm-ads [isArticle]="true"></preptm-ads>
+
+            <!-- main content -->
+            <div class="section gap-padding-all">
+                <div #descHtml [innerHTML]="'main html body'" class="editor"></div>
+            </div>
+
+            <app-custom-ads></app-custom-ads>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="editor">
+    <div class="editor-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Year</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>subject 1</td>
+                    <td>year 1</td>
+                    <td>download 1</td>
+                </tr>
+                <tr>
+                    <td>subject 2</td>
+                    <td>year 2</td>
+                    <td>download 2</td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- <preptm-share-buttons *ngIf="shareContent" [content]="shareContent"></preptm-share-buttons> -->
+
+
+<!-- <preptm-no-records *ngIf="!post && !isLoading"></preptm-no-records> -->
+<div class="bg-transparent" [loading]="true" *ngIf="false"></div>

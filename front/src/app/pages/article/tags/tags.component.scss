@@ -1,0 +1,52 @@
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .name-button {
+    background-color: #f0f4f8; /* Matches the background color of the buttons in the image */
+    border: 1px solid #ccd1d9; /* Soft gray border */
+    color: #182a48; /* Text color matching the image */
+    font-size: 16px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .name-button:hover {
+    background-color: #e0e7ee; /* Slightly darker on hover */
+  }
+  
+  .section-heading {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #d3d3d3; /* Light grey line */
+    position: relative;
+  }
+  
+  .section-heading h2 {
+    display: inline-block;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    padding-bottom: 5px;
+    position: relative;
+  }
+  
+  .section-heading h2::after {
+    content: '';
+    display: block;
+    width: 40px; /* Length of the red underline */
+    height: 2px; /* Thickness of the red underline */
+    background-color: #b00a0f; /* Red color for the underline */
+    position: absolute;
+    bottom: -2px; /* Position it directly above the grey line */
+    left: 0;
+  }
+  @media (max-width: 768px) {
+    .name-button {
+      flex: 2 2 80%; /* Makes buttons stack vertically on smaller screens */
+      text-align: center;
+    }
+  }

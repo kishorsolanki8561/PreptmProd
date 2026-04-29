@@ -1,0 +1,58 @@
+name: Deploy Frontend (Angular SSR)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'front/**'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: front/package-lock.json
+
+      - name: Install dependencies
+        working-directory: front
+        run: npm ci
+
+      - name: Build Angular SSR (all locales + gzip)
+        working-directory: front
+        run: npm run build
+        # Runs: ng build --localize && gzipper compress ./dist
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Stop PM2 before deploy
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "pm2 stop preptm-en preptm-hi 2>/dev/null || true"
+
+      - name: Sync build output to server
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_rsa" \
+            front/dist/preptm/ \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/preptm/front/
+
+      - name: Start PM2 and save
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+            cd /var/www/preptm/front && \
+            pm2 start /var/www/preptm/pm2/ecosystem.config.js 2>/dev/null || pm2 restart preptm-en preptm-hi && \
+            pm2 save
+          "

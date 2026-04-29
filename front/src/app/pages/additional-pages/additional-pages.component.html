@@ -1,0 +1,22 @@
+<div class="container gap-padding-x">
+    <div class="header">
+        <p class="title" *ngIf="pageType===AdditionalPages.TermsConditions" i18n>Terms & Conditions</p>
+        <p class="title" *ngIf="pageType===AdditionalPages.PrivacyPolicy" i18n>Privacy Policy</p>
+        <p class="title" *ngIf="pageType===AdditionalPages.AboutUs" i18n>About us</p>
+        <p class="title" *ngIf="pageType===AdditionalPages.ManageAccount" i18n>Manage Account</p>
+    </div>
+    <div [loading]="isLoading" class="additional-page-content">
+        <div [innerHTML]="data"></div>
+    </div>
+</div>
+
+<div *ngIf="pageType===AdditionalPages.AboutUs" itemprop="Organization" itemscope
+    itemtype="https://schema.org/Organization">
+    <meta itemprop="url" content="https://preptm.com">
+    <meta itemprop="logo" content="https://preptm.com/assets/img/logo-black-bg.png">
+    <meta itemprop="name" content="Preptm">
+    <meta itemprop="description"
+        content="Preptm is an online education platform that is dedicated to providing quality content and timely updates to government job aspirants in India. We understand the importance of staying informed about the latest job notifications, exam patterns, syllabus, vacancies, application status, admit card, answer key, cut off, scorecard/marks, results, and various notices related to government jobs.">
+    <meta itemprop="email" content="thepreptm@gmail.com">
+
+</div>

@@ -1,0 +1,98 @@
+<div class="post-list-wrapper lg:grid gap-4 gap-margin-x " [ngClass]="{'lg:grid-cols-4':list.length}">
+    <!-- filter section -->
+    <div class="filter" *ngIf="list?.length">
+        <div class="flex justify-between filter-title gap-padding-all">
+            <div i18n>Filters</div>
+            <button
+                *ngIf="filter.departmentId || filter.jobDesignationId || filter.qualificationId || filter.title || filter.eligibilityId || filter.categoryId"
+                (click)="clearAll()">
+                <span i18n>Clear</span>
+            </button>
+        </div>
+        <div class="filter-item-container gap-padding-y">
+            <h4 class="mb-2" i18n>Department</h4>
+
+            <nz-select [(ngModel)]="filter.departmentId" (ngModelChange)="filterList()" nzSize="large" nzShowSearch
+                [nzAllowClear]="!!filter.departmentId" i18n-nzPlaceHolder nzPlaceHolder="Department">
+                <nz-option *ngFor="let item of ddls?.ddlDepartment" [nzLabel]="item.text"
+                    [nzValue]="item.value"></nz-option>
+            </nz-select>
+
+            <ng-container *ngIf="type != postType.SCHEME">
+                <h4 class="mb-2" i18n>Categorise</h4>
+                <nz-select [(ngModel)]="filter.categoryId" (ngModelChange)="filterList()" nzSize="large" nzShowSearch
+                    [nzAllowClear]="!!filter.categoryId" i18n-nzPlaceHolder nzPlaceHolder="Categorise" [nzDisabled]="categorySlug">
+                    <nz-option *ngFor="let item of ddls?.ddlCategory" [nzLabel]="item.text"
+                        [nzValue]="item.value"></nz-option>
+                </nz-select>
+            </ng-container>
+            <container-element [ngSwitch]="type">
+
+
+                <ng-container *ngSwitchCase="postType.RECRUITMENT">
+
+                    <h4 class="mb-2" i18n>Qualification</h4>
+                    <nz-select [(ngModel)]="filter.qualificationId" (ngModelChange)="filterList()" nzSize="large"
+                        nzShowSearch [nzAllowClear]="!!filter.qualificationId" i18n-nzPlaceHolder nzPlaceHolder="Qualification">
+                        <nz-option *ngFor="let item of ddls?.ddlQualification" [nzLabel]="item.text"
+                            [nzValue]="item.value"></nz-option>
+                    </nz-select>
+
+                    <h4 class="mb-2" i18n>Designation</h4>
+                    <nz-select [(ngModel)]="filter.jobDesignationId" (ngModelChange)="filterList()" nzSize="large"
+                        nzShowSearch [nzAllowClear]="!!filter.jobDesignationId" i18n-nzPlaceHolder nzPlaceHolder="Designation">
+                        <nz-option *ngFor="let item of ddls?.ddlJobDesignation" [nzLabel]="item.text"
+                            [nzValue]="item.value"></nz-option>
+                    </nz-select>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="postType.SCHEME">
+                    <h4 class="mb-2" i18n>Eligibility</h4>
+                    <nz-select [(ngModel)]="filter.eligibilityId" (ngModelChange)="filterList()" nzSize="large"
+                        nzShowSearch [nzAllowClear]="!!filter.eligibilityId" i18n-nzPlaceHolder nzPlaceHolder="Eligibility">
+                        <nz-option *ngFor="let item of ddlLookup?.[ddlLookupEnum.SchemeEligibility]"
+                            [nzLabel]="item.text" [nzValue]="item.value"></nz-option>
+                    </nz-select>
+                </ng-container>
+
+            </container-element>
+
+            <button
+                *ngIf="filter.departmentId || filter.jobDesignationId || filter.qualificationId || filter.title || filter.eligibilityId || filter.categoryId"
+                class="clear lg:hidden" (click)="clearAll()" i18n>Clear</button>
+
+        </div>
+    </div>
+
+    <!-- post section -->
+    <div class="list col-span-3" [loading]="loading">
+        <h3 *ngIf="search.trim()" class="mb-4">
+            <span i18n> Search Results for </span>
+            : "<strong>{{search}}</strong>"
+        </h3>
+
+        <preptm-breadcrumb [breadcrumb]="breadcrumb"></preptm-breadcrumb>
+        <div class="mx-3 lg:mx-0 mt-4" itemscope itemtype="https://schema.org/ItemList">
+            <link itemprop="url" [href]="this.document.location.href">
+            <meta itemprop="numberOfItems" [content]="list.length || 0" />
+            <meta itemprop="name" [content]="search || this.curModuleText" />
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <preptm-post [index]="i" [post]="postItem"
+                    *ngFor="let postItem of list  | paginate: pagination;let i=index"></preptm-post>
+            </div>
+        </div>
+
+        <preptm-no-records *ngIf="!list?.length && !loading"></preptm-no-records>
+
+        <!-- pagination -->
+        <!-- <pagination-controls class="my-pagination" (pageChange)="onPageChange($event)" [maxSize]="6"
+            [directionLinks]="false" [autoHide]="true" previousLabel="Back"></pagination-controls> -->
+
+        <preptm-pagination [maxSize]="6" [directionLinks]="false" [autoHide]="true"
+            previousLabel="Back"></preptm-pagination>
+
+    </div>
+
+
+</div>

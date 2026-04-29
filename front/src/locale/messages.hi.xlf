@@ -1,0 +1,1339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="2821179408673282599" datatype="html">
+        <source>Home</source>
+        <target>होम</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/breadcrumb/breadcrumb.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="395898887883156035" datatype="html">
+        <source>Sorry, the page you visited does not exist.</source>
+        <target>क्षमा करें, आपने जो पृष्ठ देखा वह मौजूद नहीं है।</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/no-records/no-records.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6817336836600293476" datatype="html">
+        <source>Back Home</source>
+        <target>होम पर वापस जाएं</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/no-records/no-records.component.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7419704019640008953" datatype="html">
+        <source>Share</source>
+        <target>साझा करें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/share-buttons/share-buttons.component.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3589357089999192033" datatype="html">
+        <source>Preptm Logo</source>
+        <target>प्रेपटीएम लोगो</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3444004279954316841" datatype="html">
+        <source> Making the job hunt easy for you with all the latest job notifications and up-to-date information. </source>
+        <target>सभी नवीनतम नौकरी सूचनाओं और लेटेस्ट जानकारी के साथ आपके लिए नौकरी की खोज को आसान बनाये।</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5047869673541564519" datatype="html">
+        <source>Download app from play store</source>
+        <target>प्ले स्टोर से ऐप डाउनलोड करें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6663336624063256423" datatype="html">
+        <source>WhatsApp Share</source>
+        <target>व्हाट्सएप पर साझा करें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9199677421881026415" datatype="html">
+        <source>WhatsApp</source>
+        <target>व्हाट्सएप</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4830791894121761354" datatype="html">
+        <source>Facebook Share</source>
+        <target>फेसबुक पर साझा करें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">27,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8790918354594417962" datatype="html">
+        <source>Facebook</source>
+        <target>फेसबुक</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5517055453513499745" datatype="html">
+        <source>Instagram Share</source>
+        <target>इंस्टाग्राम पर साझा करें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3080109816219994129" datatype="html">
+        <source>Instagram</source>
+        <target>इंस्टाग्राम</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1819152639996211208" datatype="html">
+        <source>X Share</source>
+        <target>X पर साझा करें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">34,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1715373473261069991" datatype="html">
+        <source>Twitter</source>
+        <target>ट्विटर</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7282881410031106032" datatype="html">
+        <source>Telegram Share</source>
+        <target>टेलीग्राम पर साझा करें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3618113761309540743" datatype="html">
+        <source>Telegram</source>
+        <target>टेलीग्राम</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1140327701924892323" datatype="html">
+        <source>Quick Links</source>
+        <target>लिंक्स</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2047711072972209539" datatype="html">
+        <source>Accountant</source>
+        <target>अकाउंटेंट</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5133492730804332637" datatype="html">
+        <source>Admission</source>
+        <target>प्रवेश</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">46,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6319029068592040867" datatype="html">
+        <source>Agriculture</source>
+        <target>कृषि</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="798669171616965554" datatype="html">
+        <source>Airforce</source>
+        <target>वायुसेना</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2852998942559119165" datatype="html">
+        <source>Banking</source>
+        <target>बैंकिंग</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">49,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4765906364144483440" datatype="html">
+        <source>Civil Services</source>
+        <target>सिविल सेवा</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">50,51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5905679463912747161" datatype="html">
+        <source>Engineering</source>
+        <target>इंजीनियरिंग</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5253222992448855648" datatype="html">
+        <source>Examination</source>
+        <target>परीक्षा</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1035713859463417870" datatype="html">
+        <source>High Court</source>
+        <target>उच्च न्यायालय</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">53,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5944488753746113803" datatype="html">
+        <source>Insurance</source>
+        <target>बीमा</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">54,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5693935181671647951" datatype="html">
+        <source>Language Translator</source>
+        <target>भाषा अनुवादक</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">55,56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5898106319446332360" datatype="html">
+        <source>Medical</source>
+        <target>चिकित्सा</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">56,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6064460815793997751" datatype="html">
+        <source>Police</source>
+        <target>पुलिस</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6255701642155098381" datatype="html">
+        <source>Railway</source>
+        <target>रेलवे</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">58,59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5764079100090156871" datatype="html">
+        <source>Teaching</source>
+        <target>शिक्षण</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3979962687792847615" datatype="html">
+        <source>Typing</source>
+        <target>टाइपिंग</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">60,61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5539833462297888878" datatype="html">
+        <source>Articles</source>
+        <target>लेख</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">61,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3817498941817715969" datatype="html">
+        <source>Pages</source>
+        <target>पृष्ठ</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">65,66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2501489806101473286" datatype="html">
+        <source>About us</source>
+        <target>हमारे बारे में</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">67,68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/additional-pages/additional-pages.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8525213662266893834" datatype="html">
+        <source>Contact us</source>
+        <target>संपर्क करें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">68,69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2598703394778941061" datatype="html">
+        <source>Disclaimer</source>
+        <target>अस्वीकरण</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">69,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8439955599488894226" datatype="html">
+        <source>Privacy Policy</source>
+        <target>गोपनीयता नीति</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">70,71</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/additional-pages/additional-pages.component.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3042681697799212465" datatype="html">
+        <source>Terms &amp; conditions</source>
+        <target>नियम और शर्तें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">71,72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3001619990214474060" datatype="html">
+        <source>Sitemap</source>
+        <target>साइटमैप</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/footer/footer.component.html</context>
+          <context context-type="linenumber">72,73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3712763448239725249" datatype="html">
+        <source>Search here</source>
+        <target>यहाँ खोजें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.component.html</context>
+          <context context-type="linenumber">15,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4997182893037887427" datatype="html">
+        <source>Search for</source>
+        <target>खोजें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.component.html</context>
+          <context context-type="linenumber">39,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3453929685926629133" datatype="html">
+        <source>Change Language</source>
+        <target>भाषा बदलें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.component.html</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3229595422546554334" datatype="html">
+        <source>Jobs</source>
+        <target>नौकरियां</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.component.html</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/mobile-menu/mobile-menu.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8920113254859722371" datatype="html">
+        <source>Admit Cards</source>
+        <target>प्रवेश पत्र</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.component.html</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/home.component.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/mobile-menu/mobile-menu.component.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4117223982312042991" datatype="html">
+        <source>Syllabus</source>
+        <target>पाठ्यक्रम</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.component.html</context>
+          <context context-type="linenumber">106</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/mobile-menu/mobile-menu.component.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5968132631442328843" datatype="html">
+        <source>Results</source>
+        <target>परिणाम</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.component.html</context>
+          <context context-type="linenumber">107</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/home.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/mobile-menu/mobile-menu.component.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3620668876378879803" datatype="html">
+        <source>Exams</source>
+        <target>परीक्षाएं</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.component.html</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/home.component.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/mobile-menu/mobile-menu.component.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1036233208904152310" datatype="html">
+        <source>Admissions</source>
+        <target>प्रवेश</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.component.html</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/home.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/mobile-menu/mobile-menu.component.html</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1960412477402020893" datatype="html">
+        <source>Schemes</source>
+        <target>योजनाएं</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/header/header.component.html</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/mobile-menu/mobile-menu.component.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3303852097031321192" datatype="html">
+        <source>Terms &amp; Conditions</source>
+        <target>नियम और शर्तें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/additional-pages/additional-pages.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1911827420209807833" datatype="html">
+        <source>Manage Account</source>
+        <target>खाता प्रबंधन</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/additional-pages/additional-pages.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2820031676440667416" datatype="html">
+        <source>Latest</source>
+        <target>नवीनतम</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/article/article-details/article-details.component.html</context>
+          <context context-type="linenumber">105,106</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6472599282785029372" datatype="html">
+        <source>View All</source>
+        <target>सभी देखें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/article/article-details/article-details.component.html</context>
+          <context context-type="linenumber">106,107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3679012116144418793" datatype="html">
+        <source>This may interest you</source>
+        <target>यह आपको रुचिकर लग सकता है</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/article/article-details/article-details.component.html</context>
+          <context context-type="linenumber">115,116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3724475073526050715" datatype="html">
+        <source>Related</source>
+        <target>संबंधित</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/article/article-details/article-details.component.html</context>
+          <context context-type="linenumber">123,124</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/article/article-details/article-details.component.html</context>
+          <context context-type="linenumber">124,125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="759687838251957893" datatype="html">
+        <source>Contact Us</source>
+        <target>संपर्क करें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/contact-us/contact-us.component.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4484843059099497490" datatype="html">
+        <source>Leave a Message</source>
+        <target>संदेश छोड़ें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/contact-us/contact-us.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3527923064152247568" datatype="html">
+        <source>Message Type*</source>
+        <target>संदेश प्रकार*</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/contact-us/contact-us.component.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3011407243753708483" datatype="html">
+        <source>Select a option and change input text above</source>
+        <target>एक विकल्प चुनें और ऊपर इनपुट बदलें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/contact-us/contact-us.component.html</context>
+          <context context-type="linenumber">16,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5142121607419820567" datatype="html">
+        <source>Your Message*</source>
+        <target>आपका संदेश*</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/contact-us/contact-us.component.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5819426584430687397" datatype="html">
+        <source>Leave your message here...</source>
+        <target>अपना संदेश यहाँ छोड़ें...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/contact-us/contact-us.component.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3388399251950847920" datatype="html">
+        <source>Your message...</source>
+        <target>आपका संदेश...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/contact-us/contact-us.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6924053821463290251" datatype="html">
+        <source> Send Message</source>
+        <target>संदेश भेजें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/contact-us/contact-us.component.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3262236020277300799" datatype="html">
+        <source>Phone</source>
+        <target>फोन</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/department/department-details/department-details.component.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4768749765465246664" datatype="html">
+        <source>Email</source>
+        <target>ईमेल</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/department/department-details/department-details.component.html</context>
+          <context context-type="linenumber">34,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1340298141300120234" datatype="html">
+        <source>Social media</source>
+        <target>सोशल मीडिया</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/department/department-details/department-details.component.html</context>
+          <context context-type="linenumber">39,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5637472420847663616" datatype="html">
+        <source> Website</source>
+        <target>वेबसाइट</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/department/department-details/department-details.component.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6304432362546770951" datatype="html">
+        <source>Address</source>
+        <target>पता</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/department/department-details/department-details.component.html</context>
+          <context context-type="linenumber">70,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="471816275243265264" datatype="html">
+        <source>Location</source>
+        <target>स्थान</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/department/department-details/department-details.component.html</context>
+          <context context-type="linenumber">77,78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4005887006865402093" datatype="html">
+        <source>🔔 Latest notification of </source>
+        <target>🔔 नवीनतम सूचना </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/department/department-details/department-details.component.html</context>
+          <context context-type="linenumber">88,89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1721692072968146561" datatype="html">
+        <source>Ganesh Chaturthi Special</source>
+        <target>गणेश चतुर्थी विशेष</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/custom-button/custom-button.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4911843450729688319" datatype="html">
+        <source>Recent</source>
+        <target>हाल ही में</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/home.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8643470425179114282" datatype="html">
+        <source>Expire Soon</source>
+        <target>जल्दी समाप्त होने वाला</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/home.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6145608661889312011" datatype="html">
+        <source>Recruitments</source>
+        <target>भर्तियां</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/home.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8725224299321680590" datatype="html">
+        <source>Upcoming</source>
+        <target>आगामी</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/home.component.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9055872601839389899" datatype="html">
+        <source> More...</source>
+        <target>और...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home/post-container/post-container.component.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="327853893306460458" datatype="html">
+        <source> Department </source>
+        <target>विभाग</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/notes-paper-syllabus/nps-details/nps-details.component.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-containt-details/post-containt-details.component.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">44,45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2956056528330437143" datatype="html">
+        <source>Highlights</source>
+        <target>मुख्य बिंदु</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">65,67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-containt-details/post-containt-details.component.html</context>
+          <context context-type="linenumber">65,66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">69,70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">77,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3604386807230411192" datatype="html">
+        <source>Start Date</source>
+        <target>आरंभ तिथि</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">75,76</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-containt-details/post-containt-details.component.html</context>
+          <context context-type="linenumber">75,76</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">81,82</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">86,87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7379726829888309084" datatype="html">
+        <source>End Date</source>
+        <target>समाप्ति तिथि</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">85,86</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-containt-details/post-containt-details.component.html</context>
+          <context context-type="linenumber">85,86</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">92,93</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">96,97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4610561849873160846" datatype="html">
+        <source>Extended date</source>
+        <target>विस्तारित तिथि</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">95,96</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-containt-details/post-containt-details.component.html</context>
+          <context context-type="linenumber">95,96</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">103,104</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">106,107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="53848600839482801" datatype="html">
+        <source>Correction last date</source>
+        <target>सुधार की अंतिम तिथि</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">105,106</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-containt-details/post-containt-details.component.html</context>
+          <context context-type="linenumber">105,106</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">114,115</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">126,127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="926173096293784933" datatype="html">
+        <source>Admit card date</source>
+        <target>प्रवेश पत्र तिथि</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">115,116</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">124,125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4631233756110102543" datatype="html">
+        <source>Payment Last Date</source>
+        <target>भुगतान की अंतिम तिथि</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">125,126</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-containt-details/post-containt-details.component.html</context>
+          <context context-type="linenumber">116,117</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">134,135</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1626188924003238277" datatype="html">
+        <source>Exam Mode</source>
+        <target>परीक्षा का मोड</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">135,136</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">144,145</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8870711330013548872" datatype="html">
+        <source>Online</source>
+        <target>ऑनलाइन</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">137,138</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">146,147</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">149,150</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="313850810538580916" datatype="html">
+        <source>Offline</source>
+        <target>ऑफलाइन</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">138,139</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">147,148</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">150,151</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1076715939729696355" datatype="html">
+        <source>Online / Offline</source>
+        <target>ऑनलाइन / ऑफलाइन</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">139,140</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">148,149</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">151,152</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5451026347645529518" datatype="html">
+        <source>Mininum Age</source>
+        <target>न्यूनतम आयु</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">149,150</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">158,159</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">161,162</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2994225279079745831" datatype="html">
+        <source> Years </source>
+        <target>वर्ष</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">151,152</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">164,165</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">160,161</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">173,174</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">163,164</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">176,177</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8756466335621794438" datatype="html">
+        <source>Maximum Age</source>
+        <target>अधिकतम आयु</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">162,163</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">171,172</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">174,175</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1666887226757993490" datatype="html">
+        <source>Fee</source>
+        <target>शुल्क</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">174,175</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">137,138</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5387566043287118561" datatype="html">
+        <source>Available Seats</source>
+        <target>उपलब्ध सीटें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">185,186</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8777809717184382694" datatype="html">
+        <source>Qualifications</source>
+        <target>योग्यताएं</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">207,208</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">208,209</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">210,211</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">211,212</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2935340112478452786" datatype="html">
+        <source>Designation</source>
+        <target>पद</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">220,221</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">221,222</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-list/post-list.component.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-list/post-list.component.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">223,224</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">224,225</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9079991239691826789" datatype="html">
+        <source>How to apply</source>
+        <target>आवेदन कैसे करें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">246,247</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-containt-details/post-containt-details.component.html</context>
+          <context context-type="linenumber">151,152</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">248,249</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">235,236</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="414887388288176527" datatype="html">
+        <source>Images</source>
+        <target>छवियां</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">266,267</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">267,268</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-containt-details/post-containt-details.component.html</context>
+          <context context-type="linenumber">170,171</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-containt-details/post-containt-details.component.html</context>
+          <context context-type="linenumber">171,172</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">269,270</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">270,271</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">280,281</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">281,282</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4391289919356861627" datatype="html">
+        <source>Apply</source>
+        <target>आवेदन करें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">285,286</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">304,305</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">353,354</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8044304973848447418" datatype="html">
+        <source>Notification</source>
+        <target>सूचना</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">292,293</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-containt-details/post-containt-details.component.html</context>
+          <context context-type="linenumber">213,214</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">311,312</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6899776632589966571" datatype="html">
+        <source>website</source>
+        <target>वेबसाइट</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">298,300</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">318,320</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5288210860972403382" datatype="html">
+        <source>Related Links</source>
+        <target>संबंधित लिंक</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">317,318</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/admission-details/admission-details.component.html</context>
+          <context context-type="linenumber">318,319</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5555132989294603452" datatype="html">
+        <source>This May interest You</source>
+        <target>यह आपको रुचिकर लग सकता है</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-containt-details/post-containt-details.component.html</context>
+          <context context-type="linenumber">229,230</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4163272119298020373" datatype="html">
+        <source>Filters</source>
+        <target>फ़िल्टर</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-list/post-list.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8700121026680200191" datatype="html">
+        <source>Clear</source>
+        <target>साफ़ करें</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-list/post-list.component.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-list/post-list.component.html</context>
+          <context context-type="linenumber">62,63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3955967824702499842" datatype="html">
+        <source>Department</source>
+        <target>विभाग</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-list/post-list.component.html</context>
+          <context context-type="linenumber">13,15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-list/post-list.component.html</context>
+          <context context-type="linenumber">16,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4495621702964721668" datatype="html">
+        <source>Categorise</source>
+        <target>श्रेणी</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-list/post-list.component.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-list/post-list.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="605720257764850532" datatype="html">
+        <source>Qualification</source>
+        <target>योग्यता</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-list/post-list.component.html</context>
+          <context context-type="linenumber">34,35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-list/post-list.component.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2830773843208995940" datatype="html">
+        <source>Eligibility</source>
+        <target>पात्रता</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-list/post-list.component.html</context>
+          <context context-type="linenumber">50,51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-list/post-list.component.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2080931434761286982" datatype="html">
+        <source> Search Results for </source>
+        <target>यह खोजे </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/post-list/post-list.component.html</context>
+          <context context-type="linenumber">70,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="498286527813307230" datatype="html">
+        <source>Salary</source>
+        <target>वेतन</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/recruitment-details/recruitment-details.component.html</context>
+          <context context-type="linenumber">183,184</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8955863609617577960" datatype="html">
+        <source>Center Level</source>
+        <target>केंद्र स्तर</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8228098617971333632" datatype="html">
+        <source>State Level</source>
+        <target>राज्य स्तर</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1035216493918017571" datatype="html">
+        <source>Postpone Date</source>
+        <target>स्थगित तिथि</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">116,117</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7454948663060185252" datatype="html">
+        <source>Mode of Apply</source>
+        <target>आवेदन का तरीका</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">147,148</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7871821868333367332" datatype="html">
+        <source>Eligilibility</source>
+        <target>पात्रता</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">199,200</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">200,201</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4450110402290172592" datatype="html">
+        <source>Documents Required</source>
+        <target>आवश्यक दस्तावेज</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">212,213</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">213,214</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="592184995594667555" datatype="html">
+        <source>Contact Persons</source>
+        <target>संपर्क के लिए व्यक्ति</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">254,255</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">255,256</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1452087992857320332" datatype="html">
+        <source>Video&apos;s</source>
+        <target>वीडियो</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">314,315</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">315,316</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4733307402565258070" datatype="html">
+        <source>Documents</source>
+        <target>दस्तावेज</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">333,334</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">334,335</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5481284030283031915" datatype="html">
+        <source>Website</source>
+        <target>वेबसाइट</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/post/scheme-details/scheme-details.component.html</context>
+          <context context-type="linenumber">360,361</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

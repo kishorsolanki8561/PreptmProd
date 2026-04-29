@@ -1,0 +1,19 @@
+[Unit]
+Description=PreptM Front Microservice
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/preptm/api/frontapi
+ExecStart=/usr/bin/dotnet FrontMicroService.dll
+Restart=always
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=preptm-frontapi
+User=root
+
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=ASPNETCORE_URLS=http://localhost:5002
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target

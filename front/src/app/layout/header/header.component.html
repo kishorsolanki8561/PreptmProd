@@ -1,0 +1,199 @@
+<header class="header">
+  <div class="header-content container mx-auto gap-padding-x">
+    <a routerLink="/" class="logo">
+      <img class="desktop-icon" src="assets/img/preptm-logo.svg" alt="preptm logo" title="PrepTM"
+        [attr.loading]="'lazy'">
+      <img class="mobile-icon" src="assets/img/preptm icon.svg" alt="preptm logo" title="PrepTM" height="50" width="50"
+        [attr.loading]="'lazy'">
+    </a>
+    
+    <div class="search" itemprop="potentialAction" itemscope itemtype="https://schema.org/SearchAction">
+      <meta itemprop="target" content="https://preptm.com/{{curLang=='hi'?'hi/':''}}search/{search_term_string}" />
+      <input itemprop="query-input" id="sertext" name="search_term_string" #toggleButton type="text"
+        (focus)="onSearchFocus()" (focusout)="onSearchFocusout()" (keyup.backspace)="showSearchList=true"
+        (keyup.enter)="onSearch(searchText.value)" [formControl]="searchText" i18n-placeholder
+        placeholder="Search here" />
+      <div *ngIf="searchTextList.length==0 && !searchText.value" #searchDiv
+        [ngClass]="{'search-list-open':showSearchList,'search-list':true}">
+        <ul>
+
+          <!-- only for show history serach text -->
+          <li id="myli" class="flex justify-between" *ngFor="let hoption of historySerachText"
+            (click)="onSearch(hoption)">
+            <div class="flex history">
+              <img src="assets/img/history.svg" alt="history" [attr.loading]="'lazy'" />
+              <span>{{hoption}}</span>
+            </div>
+            <div>
+              <img class="new-tab-icon" (click)="$event.stopPropagation() ;searchText.setValue(hoption)"
+                src="assets/svg/top-left-arrow.svg" [attr.loading]="'lazy'">
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div #searchDiv [ngClass]="{'search-list-open':showSearchList,'search-list':true}">
+
+        <ul>
+          <!-- only for show serach text -->
+          <li style="padding-left: 10px;" (click)="onSearch(searchText.value)" *ngIf="searchText.value">
+            <span i18n>Search for</span>
+            "<strong>{{searchText.value}}</strong>"
+          </li>
+          <!-- only for show api serach text -->
+          <li id="myli" class="flex justify-between" *ngFor="let option of searchTextList" (click)="onSearch(option)">
+            <div class="flex history">
+              <img src="assets/img/search.svg" alt="search" [attr.loading]="'lazy'">
+              <span>{{option}}</span>
+            </div>
+            <div>
+              <img class="new-tab-icon" (click)="$event.stopPropagation() ;searchText.setValue(option)"
+                src="assets/svg/top-left-arrow.svg" [attr.loading]="'lazy'">
+            </div>
+          </li>
+        </ul>
+      </div>
+    
+
+      <img class="icon" alt="search" src="assets/img/search.svg" *ngIf="!isSearchLoading">
+      <img class="icon" alt="loading" src="assets/img/spinner.svg" *ngIf="isSearchLoading">
+      
+      
+
+      <div class="ng-autocomplete">
+
+
+        <ng-template #itemTemplate let-item>
+          <a style="color:black" [innerHTML]="item.title"></a>
+        </ng-template>
+
+        <ng-template #notFoundTemplate let-notFound>
+          <div style="color:black" [innerHTML]="notFound"></div>
+        </ng-template>
+      </div>
+
+    </div>
+    <nav>
+      <ng-container *ngTemplateOutlet="menu"></ng-container>
+    </nav>
+
+    <div i18n-title title="Change Language" [loading]="isLangChanged" [ignoreMinHeight]="true" class="lang cursor-pointer"
+      (click)="changeLang(curLang=='en'?'hi':'en')">
+      <span *ngIf="curLang=='hi'">En</span>
+      <span *ngIf="curLang=='en'">हिंदी</span>
+    </div>
+
+    <preptm-loader *ngIf="isLoginLoading"></preptm-loader>
+
+    <!-- profile picture -->
+    <div class="profile" *ngIf="userDetails && !isLoginLoading">
+      <img class="cursor-pointer" nz-image (click)="openSidebar()" [attr.loading]="'lazy'"
+        [nzSrc]="userDetails.profileImg || 'assets/img/profile-pic-placeholder.svg'" [nzDisablePreview]="true"
+        [nzPlaceholder]="'assets/img/spinner.svg'" [alt]="userDetails.firstName">
+    </div>
+    <div style="width: 25px;">
+      <img class="cursor-pointer menu" (click)="openMobileMenu()" src="assets/img/menu-bars.svg" alt="menu"
+        [attr.loading]="'lazy'" />
+    </div>
+  </div>
+</header>
+
+
+
+<ng-template #menu>
+  <ol class="nav">
+    <li> <a routerLink="/jobs" routerLinkActive="active" i18n>Jobs</a> </li>
+    <li> <a routerLink="/admit-cards" routerLinkActive="active" i18n>Admit Cards</a> </li>
+    <li> <a routerLink="/syllabus" routerLinkActive="active" i18n>Syllabus</a> </li>
+    <li> <a routerLink="/results" routerLinkActive="active" i18n>Results</a> </li>
+    <li> <a routerLink="/exams" routerLinkActive="active" i18n>Exams</a> </li>
+    <li> <a routerLink="/admissions" routerLinkActive="active" i18n>Admissions</a> </li>
+    <li> <a routerLink="/schemes" routerLinkActive="active" i18n>Schemes</a> </li>
+  </ol>
+</ng-template>
+
+
+<!-- profile sidebar -->
+<!-- <div>
+  <div [ngClass]="{'sidebar-wrapper':true,'hidden':!isSidebarOpen}" (click)="closeSidebar()">
+    <div class="sidebar" (click)="$event.stopPropagation()">
+      <div class="sidebar-menu-wrapper" [ngClass]="{'padding-top-90':!!userDetails}">
+        <div class="sidebar-profile-pic" *ngIf="userDetails">
+          <div class="text-center">
+            <img nz-image [nzSrc]="userDetails.profileImg || 'assets/img/profile-pic-placeholder.svg'"
+              [nzDisablePreview]="true" [nzPlaceholder]="'assets/img/spinner.svg'" [alt]="userDetails.firstName">
+          </div>
+          <p>{{userDetails.firstName + ' ' + userDetails.lastName}}</p>
+        </div>
+        <div class="menu">
+
+          <p *ngIf="userDetails"><i class="fa-solid fa-user-pen"></i> Edit Profile</p>
+
+          <p class="flex justify-between">
+            <span>
+              <i class="fa-solid fa-earth-asia"></i> Language
+            </span>
+
+            <span>
+              <nz-radio-group [(ngModel)]="curLang" (ngModelChange)="changeLang($event)">
+                <label nz-radio-button nzValue="en">EN</label>
+                <label nz-radio-button nzValue="hi">HI</label>
+              </nz-radio-group>
+            </span>
+
+          </p>
+
+          <p *ngIf="userDetails">
+            <a routerLink="/bookmarks" (click)="closeSidebar()">
+              <i class="fa-regular fa-star"></i> Bookmarks
+            </a>
+          </p>
+
+          <p><i class="fa-solid fa-circle-half-stroke"></i> Theme</p>
+          <p class="flex justify-between">
+            <span><i class="fa-regular fa-bell"></i> Notifications</span>
+            <nz-switch [ngModel]="false" nzCheckedChildren="On" nzUnCheckedChildren="Off"></nz-switch>
+          </p>
+
+          <div class="footer">
+
+            <div class="p-4" *ngIf="!userDetails && !isLoginLoading && ENABLE_LOGIN">
+              <div class="" id="google-button"></div>
+            </div>
+
+            <button *ngIf="userDetails" (click)="logout();closeSidebar()">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- mobile menu -->
+<div class="mobile-menu-container" *ngIf="isMobileMenuOpen" (click)="closeMobileMenu()">
+  <nav class="menu container">
+    <ng-container *ngTemplateOutlet="menu"></ng-container>
+  </nav>
+</div>
+
+
+<ng-template #whatsappNotification let-notification>
+  <div class="ant-notification-notice-content">
+    <div>
+      <div class="ant-notification-notice-description">
+        <i class="fa-brands fa-whatsapp whatsapp-icon" aria-hidden="true"></i>
+        <span class="msg">Get Notifications on WhatsApp</span>
+      </div>
+      <div class="action-btn">
+
+        <a target="_blank" href="https://chat.whatsapp.com/BW9AIPdks2DJcjZlGQ24Tp" class="sub"
+          (click)="notification.close()">
+          <span>Join Group</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</ng-template>

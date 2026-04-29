@@ -1,0 +1,80 @@
+<footer class="gap-top">
+  <div class="container mx-auto grid grid-cols-1 md:grid-cols-2  lg:grid-cols-5 gap-16 gap-padding-x">
+    <div class="lg:col-span-2 section-1">
+      <div class="logo">
+        <a routerLink="/"><img style="width: 200px;" src="assets/img/logo-black-bg.svg" i18n-alt alt="Preptm Logo"
+            [attr.loading]="'lazy'" /></a>
+      </div>
+      <p class="summery" i18n>
+        <!-- One-stop solution for all your job preparation needs.  -->
+        Making the job hunt easy for you with all the latest job notifications and up-to-date information.
+      </p>
+
+      <div class="mobile-app" itemscope itemtype="https://schema.org/SoftwareApplication">
+        <a class="play-store" target="_blank" href="https://play.google.com/store/apps/details?id=com.preptm.study">
+          <img src="assets/svg/google play.svg" i18n-alt alt="Download app from play store" [attr.loading]="'lazy'" />
+        </a>
+        <meta itemprop="name" content="Preptm" />
+        <meta itemprop="operatingSystem" content="ANDROID" />
+        <meta itemprop="applicationCategory" content="Education" />
+
+      </div>
+      <div class="social-media">
+        <a target="_blank" href="https://chat.whatsapp.com/BW9AIPdks2DJcjZlGQ24Tp" class="whatsapp"
+          i18n-title title="WhatsApp Share"><img src="assets/img/whatsApp-icon.svg" i18n-alt alt="WhatsApp" [attr.loading]="'lazy'" />
+        </a>
+        <a target="_blank" href="https://www.facebook.com/profile.php?id=100092545592455" class="facebook"
+          i18n-title title="Facebook Share">
+          <img src="assets/img/facebook-icon.svg" i18n-alt alt="Facebook" [attr.loading]="'lazy'" />
+        </a>
+        <a target="_blank" href="https://www.instagram.com/preptm_job.update/" class="instagram"
+          i18n-title title="Instagram Share">
+          <img src="assets/img/intagram.svg" i18n-alt alt="Instagram" [attr.loading]="'lazy'" />
+        </a>
+        <a target="_blank" href="https://x.com/thepreptm" class="twitter" i18n-title title="X Share">
+          <img src="assets/img/twitter.svg" i18n-alt alt="Twitter" [attr.loading]="'lazy'" />
+        </a>
+        <a target="_blank" href="https://t.me/official_5study" class="telegram" i18n-title title="Telegram Share">
+          <img src="assets/img/telegram.svg" i18n-alt alt="Telegram" [attr.loading]="'lazy'" />
+        </a>
+      </div>
+    </div>
+    <div class="lg:col-span-2 section-2">
+      <h3 class="ftr-title" i18n>Quick Links</h3>
+      <ul>
+        <li><a [routerLink]="['/accountant']" i18n>Accountant</a></li>
+        <li><a [routerLink]="['/admission']" i18n>Admission</a></li>
+        <li><a [routerLink]="['/agriculture']" i18n>Agriculture</a></li>
+        <li><a [routerLink]="['/airforce']" i18n>Airforce</a></li>
+        <li><a [routerLink]="['/banking']" i18n>Banking</a></li>
+        <li><a [routerLink]="['/upsc']" i18n>Civil Services</a></li>
+        <li><a [routerLink]="['/engineering']" i18n>Engineering</a></li>
+        <li><a [routerLink]="['/examination']" i18n>Examination</a></li>
+        <li><a [routerLink]="['/high-court']" i18n>High Court</a></li>
+        <li><a [routerLink]="['/insurance']" i18n>Insurance</a></li>
+        <li><a [routerLink]="['/language-translator']" i18n>Language Translator</a></li>
+        <li><a [routerLink]="['/medical']" i18n>Medical</a></li>
+        <li><a [routerLink]="['/police']" i18n>Police</a></li>
+        <li><a [routerLink]="['/railway']" i18n>Railway</a></li>
+        <li><a [routerLink]="['/teaching']" i18n>Teaching</a></li>
+        <li><a [routerLink]="['/typing-jobs']" i18n>Typing</a></li>
+        <li><a [routerLink]="['/article']" i18n>Articles</a></li>
+      </ul>
+    </div>
+    <div class="section-3">
+      <h3 class="ftr-title" i18n>Pages</h3>
+      <ul>
+        <li><a [routerLink]="['/about-us']" i18n>About us</a></li>
+        <li><a [routerLink]="['/contact']" i18n>Contact us</a></li>
+        <li><a [routerLink]="['/disclaimer']" i18n>Disclaimer</a></li>
+        <li><a [routerLink]="['/privacy-policy']" i18n>Privacy Policy</a></li>
+        <li><a [routerLink]="['/terms-and-conditions']" i18n>Terms & conditions</a></li>
+        <li><a target="_blank" [href]="'https://api.preptm.com/api/front/Dashboard/GetSitemap'+lang" i18n>Sitemap</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © Preptm 2023-25
+  </div>
+</footer>

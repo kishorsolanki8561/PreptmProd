@@ -1,0 +1,181 @@
+@import 'src/assets/css/variables.scss';
+
+
+.list-wrapper {
+  div {
+    padding: 0 15px;
+  }
+
+  .mb35 {
+    padding-bottom: 35px;
+  }
+
+  width: 100%;
+
+  .title {
+    text-align: center;
+    color: #fff;
+    padding: 5px;
+  }
+
+
+  .posts {
+    li {
+      padding: 10px 0;
+      font-size: 15px;
+      border-bottom: 1px solid;
+      transition: 0.25s ease-in;
+
+      &:last-child {
+        border: none;
+      }
+
+      &:hover {
+        cursor: pointer;
+
+        a {
+          color: #000;
+        }
+
+        .remaining-days {
+          background-color: #ae0b09;
+          .counter{
+            background-color: #ae0b09;
+          }
+        }  
+        .new-img{
+          width: 35px;
+          height: 21px;
+        }  
+      }
+
+    }
+  }
+
+  .more {
+    text-align: right;
+    font-weight: bold;
+    display: block;
+    bottom: 15px;
+    position: absolute;
+    right: 15px;
+
+    i {
+      vertical-align: middle;
+    }
+  }
+}
+
+.posts {
+  li {
+    border-color: rgba($post-list-1, .25);
+  }
+
+  .post-item {
+    .remaining-days {
+      position: relative;
+      padding-left: 13px;
+      margin-left: 16px;
+      border: 2px solid;
+
+      display: inline-block;
+      color: white;
+      background-color: #e40f0c;
+      padding: 5px;
+      border-radius: 20px;
+      line-height: 8px;
+      padding-right: 8px;
+      padding-left: 13px;
+
+      * {
+        font-size: 13px;
+      }
+
+      .counter {
+        display: inline-block;
+        padding: 8px;
+        background: #e40f0c;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border: 2px solid #fff;
+        font-weight: bolder;
+      }
+   
+    }
+   
+  }
+}
+.new-img{
+  width: 35px;
+  height: 21px;
+}  
+
+.list-wrapper-1 {
+  background-color: rgba($post-list-1, .10);
+  color: $post-list-1;
+
+  .title {
+    background-color: $post-list-1;
+  }
+
+  .posts {
+    li {
+      border-color: rgba($post-list-1, .25);
+    }
+  }
+}
+
+.list-wrapper-2 {
+  background-color: rgba($post-list-2, .10);
+  color: $post-list-2;
+
+  .title {
+    background-color: $post-list-2;
+  }
+
+  .posts {
+    li {
+      border-color: rgba($post-list-2, .25);
+    }
+  }
+}
+
+.list-wrapper-3 {
+  background-color: rgba($post-list-3, .10);
+  color: $post-list-3;
+
+  .title {
+    background-color: $post-list-3;
+  }
+
+  .posts {
+    li {
+      border-color: rgba($post-list-3, .25);
+    }
+  }
+}
+
+.list-wrapper-4 {
+  background-color: rgba($post-list-4, .10);
+  color: $post-list-4;
+
+  .title {
+    background-color: $post-list-4;
+  }
+
+  .posts {
+    li {
+      border-color: rgba($post-list-4, .25);
+    }
+  }
+}
+
+// lg
+@media (min-width:1024px) {
+  .gap-margin-x {
+    margin: 0;
+  }
+}

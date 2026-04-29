@@ -1,0 +1,132 @@
+<!-- mobile -->
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-4 gap-margin" itemscope itemtype="https://schema.org/Article">
+    <div class="lg:col-span-3">
+        <div class="grid grid-cols-1 gap-4">
+            <preptm-breadcrumb [breadcrumb]="breadcrumb"></preptm-breadcrumb>
+            <meta itemprop="mainEntityOfPage" [content]="this.platformLocation.href" />
+            <meta itemprop="inLanguage" [content]="lang" />
+            <meta itemprop="keywords" [content]="post?.keywords" />
+            <meta itemprop="url" [content]="this.platformLocation.href" />
+            <meta itemprop="headline" [content]="post?.title" />
+            
+            <!-- post header smart -->
+            <div class="article-container section">
+                <h1 class="mx-2" *ngIf="post?.title">{{post?.title}}</h1>
+                
+                <div class="author-and-state">
+                    <div class="mx-2 author">
+                        <div class="author-info">
+                            <div class="profile" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                                <img src="assets/img/boy.png" alt="Author avatar" class="avatar mr-2"  [attr.loading]="'lazy'"  />
+                                <span class="author-name" itemprop="name">Suresh</span>
+                                <meta itemprop="url" [content]="'https://www.preptm.com/assets/img/writter.jpg'" />
+                            </div>
+                            <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                                <meta itemprop="name" content="Preptm" />
+                                <meta itemprop="url" content="https://www.preptm.com" />
+                                <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                                    <meta itemprop="url" [content]="preptmLogo" />
+                                </div>
+                            </div>
+                            <span class="author-meta">
+                                <span class="publish-date mt-1 md:mt-2" title="Last updated" *ngIf="post?.modifiedDate">
+                                    <span class="date">{{post?.modifiedDate | date:DATE_FORMAT}}</span>
+                                    <meta itemprop="datePublished" [content]="post?.modifiedDate+'+05:30'" />
+                                </span>
+                            </span>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <!-- short  description -->
+            <div class="section gap-padding-all" *ngIf="this.shortDesc?.length">
+                <p class="mb-4" *ngFor="let desc of this.shortDesc">{{desc}}</p>
+                <meta itemprop="description" [content]="this.shortDesc.join(' ')" />
+            </div>
+
+            <!-- main content -->
+            <div class="section gap-padding-all">
+                <preptm-ads [isArticle]="true"></preptm-ads>
+                <div itemprop="articleBody" [innerHTML]="post?.description" class="editor"></div>
+            </div>
+
+            <!-- thumbnail -->
+            <div class="thumbnail-wrapper" *ngIf="post && post?.thumbnail">
+                <meta itemprop="image" [content]="post.thumbnail" />
+                <meta itemprop="thumbnailUrl" [content]="post.thumbnail" />
+                <preptm-image [alt]="post.title" [onlyLow]="false" [skipSmall]="true" [className]="'thumbnail'"
+                    [src]="post.thumbnail"></preptm-image>
+                <p class="text-center my-2" *ngIf="post?.thumbnail && post?.thumbnailCredit">
+                    <span>Photo by </span>
+                    <span [innerHTML]="post.thumbnailCredit"></span>
+                </p>
+            </div>
+
+            <!-- Tags list -->
+            <div class="tag-container section bg-gray" *ngIf="post?.tags?.length">
+                <div class="tag" [ngClass]="{'active': true}">
+                    Tags
+                </div>
+                <a class="tag button" [routerLink]="['/topic',tag.slugUrl]" *ngFor="let tag of (post?.tags ?? [])">
+                    {{ tag.tag }}
+                </a>
+            </div>
+
+            <!-- faq -->
+            <div *ngIf="post && post.articleFaqs && post.articleFaqs.length" class="section gap-padding-all" itemscope
+                itemtype="https://schema.org/FAQPage">
+                <h2 class="mb-3">FAQ's</h2>
+                <ol class="faq-container">
+                    <ng-container *ngFor="let faqItem of post?.articleFaqs">
+                        <li class="faq" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <p class="que" itemprop="name">{{faqItem.que}}</p>
+                            <p class="ans text-muted" itemscope itemprop="acceptedAnswer"
+                                itemtype="https://schema.org/Answer">
+                                <span itemprop="text">{{faqItem.ans}}</span>
+                            </p>
+                        </li>
+                    </ng-container>
+
+                </ol>
+            </div>
+
+        </div>
+    </div>
+    <div>
+        <div class="grid grid-cols-1 gap-4 side-nav">
+            <!-- Latest Post -->
+            <div class="section bg-gray" *ngIf="latestList && latestList?.length">
+                <div class="title flex justify-between mb-4">
+                    <p i18n>Latest</p>
+                    <a routerLink="/latest" i18n>View All</a>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
+                    <preptm-post [post]="post" *ngFor="let post of latestList"></preptm-post>
+                </div>
+            </div>
+
+            <!-- related recruitment -->
+            <div class="section bg-gray" *ngIf="post?.recruitments && post?.recruitments?.length">
+                <p class="title" i18n>This may interest you</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 suggestion-links">
+                    <preptm-post [post]="post" *ngFor="let post of post?.recruitments"></preptm-post>
+                </div>
+            </div>
+
+            <!-- related block content -->
+            <div class="section bg-gray" *ngIf="post?.blockContents && post?.blockContents?.length">
+                <h2 class="related-section-title hidden lg:block gap-top gap-padding-x" i18n>Related</h2>
+                <h2 class="title lg:hidden" i18n>Related</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 gap-padding-all suggestion-links">
+                    <preptm-post [minimal]="false" [post]="post" *ngFor="let post of post?.blockContents"></preptm-post>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

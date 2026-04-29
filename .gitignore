@@ -1,0 +1,30 @@
+# Node
+**/node_modules/
+**/dist/
+**/.angular/
+**/.cache/
+**/npm-debug.log*
+
+# .NET
+**/bin/
+**/obj/
+**/publish/
+**/*.user
+**/.vs/
+**/launchSettings.json
+
+# Logs
+**/logs/
+**/*.log
+**/nlog.config
+
+# Uploaded user files (served by FileUploader service)
+backend/FileUploaderMicroService/Content/*
+!backend/FileUploaderMicroService/Content/.gitkeep
+
+# Claude private config
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db

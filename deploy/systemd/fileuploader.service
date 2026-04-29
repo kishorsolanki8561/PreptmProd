@@ -1,0 +1,19 @@
+[Unit]
+Description=PreptM FileUploader Microservice
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/preptm/api/fileuploader
+ExecStart=/usr/bin/dotnet FileUploaderMicroService.dll
+Restart=always
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=preptm-fileuploader
+User=root
+
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=ASPNETCORE_URLS=http://localhost:5005
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target

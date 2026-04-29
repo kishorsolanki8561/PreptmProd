@@ -1,0 +1,97 @@
+<div class="gap-margin-x">
+  <preptm-breadcrumb class="mt-4 block" [breadcrumb]="breadcrumb"></preptm-breadcrumb>
+  <div class="mt-2 ">
+    <div class="grid md:grid-cols-4 article">
+
+      <div class="grid grid-cols-subgrid md:col-span-3 content-start">
+
+        <div class="md:col-span-3">
+          <!-- label heading -->
+          <div class="section-heading">
+            <h2>{{moduleName}}</h2>
+          </div>
+        </div>
+        <div class="md:col-span-2">
+          <div class="news-highlight">
+            <!-- highlight -->
+            <a class="highlight-post cursor-pointer block" [routerLink]="'/'+articleItems[0].slugUrl"
+              *ngIf="articleItems?.length">
+              <preptm-image [skipSmall]="true" [alt]="articleItems[0].title" [onlyLow]="false" [className]="'highlight-image'" [src]="articleItems[0].thumbnail"></preptm-image>
+              <div class="highlight-content">
+                <span class="live-label">Latest</span>
+                <h2 class="highlight-title">{{ articleItems[0].title }}</h2>
+                <p class="highlight-description">{{articleItems[0].modifiedDate | date}}</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <div class="video-news-list">
+            <a class="list-card cursor-pointer block" [routerLink]="'/'+article.slugUrl"
+              *ngFor="let article of articleItems?.slice(1, 5)">
+              <preptm-image [alt]="article.title" [onlyLow]="true" [className]="'list-image'" [src]="article.thumbnail"></preptm-image>
+              <div class="video-news-content">
+                <p class="video-news-title">{{ article.title }}</p>
+                <span class="video-duration">{{ article.modifiedDate | date}}</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="md:col-span-3 mt-4">
+          <div class="grid md:grid-cols-2 gap-x-4">
+            <!-- <a class="small-news-card cursor-pointer block" [routerLink]="'/'+article.slugUrl"
+              *ngFor="let article of (articleItems?.slice(5, articleItems.length-1) || []) | paginate: pagination">
+              <preptm-image [alt]="article.title" [onlyLow]="true" [className]="'small-news-image'" [src]="article.thumbnail"></preptm-image>
+
+              <div class="small-news-content">
+                <p class="small-news-title">{{ article?.title }}</p>
+              </div>
+            </a> -->
+
+            <a class="list-card cursor-pointer block mb-3" [routerLink]="'/'+article.slugUrl"
+              *ngFor="let article of (articleItems?.slice(5, articleItems.length-1) || []) | paginate: pagination">
+              <preptm-image [alt]="article.title" [onlyLow]="true" [className]="'list-image'" [src]="article.thumbnail"></preptm-image>
+              <div class="video-news-content">
+                <p class="video-news-title">{{ article.title }}</p>
+                <span class="video-duration">{{ article.modifiedDate | date}}</span>
+              </div>
+            </a>
+
+          </div>
+        </div>
+
+         <!-- pagination -->
+         <preptm-pagination [maxSize]="6"
+         [directionLinks]="false" previousLabel="Back"></preptm-pagination>
+      </div>
+
+      <!-- sidebar -->
+      <div>
+        <div class="sidebar">
+          <div class="ad-section">
+            <!-- Replace with your ad content -->
+            <h3>ADVERTISEMENT</h3>
+            <a href="https://play.google.com/store/apps/details?id=com.preptm.study&hl=en" target="_blank"><img
+                src="https://file.preptm.com/Content/2024/OriginalAttachment/GET LATEST UPDATE.png" alt="Ad Image"
+                class="ad-image"  [attr.loading]="'lazy'" /></a>
+          </div>
+          <div class="video-news-list">
+            <a class="list-card cursor-pointer block" [routerLink]="'/'+article.slugUrl"
+              *ngFor="let article of latestArticles">
+              <preptm-image class="self-stretch" [alt]="article.title" [onlyLow]="true" [className]="'list-image'" [src]="article.thumbnail"></preptm-image>
+
+              <div class="video-news-content">
+                <p class="video-news-title second-line-ellipsis">{{ article.title }}</p>
+                <span class="video-duration">{{ article.modifiedDate | date}}</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

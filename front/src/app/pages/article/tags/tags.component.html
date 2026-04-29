@@ -1,0 +1,9 @@
+<div class="gap-margin">
+    <div class="section-heading">
+        <h2>Topics</h2>
+      </div>
+    <div class="button-container mt-4">
+        <a [routerLink]="['/topic',name.otherData.slugUrl]" *ngFor="let name of topicsList" class="name-button">{{ name.text }}</a>
+      </div>
+</div>
+ 

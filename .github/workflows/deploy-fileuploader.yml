@@ -1,0 +1,55 @@
+name: Deploy FileUploader Microservice
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/FileUploaderMicroService/**'
+      - 'backend/CommonService/**'
+      - 'backend/ModelService/**'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Publish FileUploaderMicroService
+        run: |
+          dotnet publish backend/FileUploaderMicroService/FileUploaderMicroService.csproj \
+            -c Release \
+            --no-self-contained \
+            -r linux-x64 \
+            -o ./publish/fileuploader
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Stop service before deploy
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "systemctl stop preptm-fileuploader || true"
+
+      - name: Sync build output to server (preserve Content folder)
+        run: |
+          rsync -avz --delete \
+            --exclude='Content/' \
+            -e "ssh -i ~/.ssh/id_rsa" \
+            ./publish/fileuploader/ \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/preptm/api/fileuploader/
+
+      - name: Start service
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "systemctl start preptm-fileuploader && systemctl status preptm-fileuploader --no-pager"

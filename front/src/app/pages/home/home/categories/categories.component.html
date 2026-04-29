@@ -1,0 +1,16 @@
+<div class="gap-top wrapper-category" [loading]="isLoading">
+
+  <div class="grid grid-rows-2 grid-flow-col">
+
+    <a [routerLink]="['/',category.otherData.slugUrl]" class="category-item" *ngFor="let category of categories">
+      <div class="img-container">
+        <img nz-image [nzSrc]="category.otherData.icon" [nzDisablePreview]="true" [nzPlaceholder]="'assets/img/spinner.svg'"
+          [alt]="'category'" [attr.loading]="'lazy'" >
+      </div>
+      <p class="short-line-height">{{category.text}}</p>
+    </a>
+
+
+  </div>
+
+</div>

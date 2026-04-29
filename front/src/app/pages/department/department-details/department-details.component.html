@@ -1,0 +1,125 @@
+<ng-template #Main>
+    <div class="gap-padding-all">
+        <h1 itemprop="title" class="mb-3" *ngIf="department?.name" itemprop="name">
+            About | {{department?.name}} ({{department?.shortName}}) , {{department?.stateName}} Check here latest
+            notification</h1>
+        <div *ngIf="department?.description" [innerHTML]="department?.description" class="editor"
+            itemprop="description">
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #sidebarProfile>
+    <div class="side-bar-section gap-padding-all" *ngIf="department">
+        <div class="title flex">
+            <!-- <img *ngIf="department.logo" itemprop="logo" [alt]="department.name" nz-image [nzSrc]="department.logo"
+                [nzDisablePreview]="true" [nzPlaceholder]="'assets/img/spinner.svg'"> -->
+            <preptm-image style="margin-right: 10px;" [className]="'dept-logo'" *ngIf="department.logo"
+                [alt]="department.name" [onlyLow]="true" [src]="department.logo"></preptm-image>
+            <p>{{department.name}}</p>
+        </div>
+        <div class="body">
+            <div *ngIf="department && department.phoneNumber">
+                <p i18n>Phone</p>
+                <div *ngIf="department.phoneNumber?.length">
+                    <p *ngFor="let contact of department.phoneNumber?.split(',');let i=index">
+                        <a [href]="'tel:'+department.phoneNumber.trim()" *ngIf="i==0"
+                            itemprop="telephone">{{department.phoneNumber.trim()}}</a>
+                        <a [href]="'tel:'+department.phoneNumber.trim()"
+                            *ngIf="i!=0">{{department.phoneNumber.trim()}}</a>
+                    </p>
+                </div>
+            </div>
+            <div *ngIf="department && department.email">
+                <p i18n>Email</p>
+                <p><a [href]="'mailto:'+department.email">{{department.email}}</a></p>
+            </div>
+
+            <div style="justify-content: space-between; align-items: center;">
+                <p i18n>Social media</p>
+                <span>
+
+                    <div class="social-media" style="margin-top: 0px;">
+
+                        <a *ngIf="department?.faceBookLink" target="_blank" [href]="department.faceBookLink"
+                            title="Facebook Share" class="facebook">
+                            <img src="assets/img/facebook-icon.svg" alt="Facebook" [attr.loading]="'lazy'">
+                        </a>
+
+                        <a *ngIf="department?.twitterLink" target="_blank" [href]="department.twitterLink"
+                            title="X Share" class="twitter">
+                            <img src="assets/img/twitter.svg" alt="Twitter" [attr.loading]="'lazy'">
+                        </a>
+
+                    </div>
+
+                </span>
+            </div>
+            <div class="btn-wrapper">
+                <a class="website-btn" target="_blank" [href]="department.url" i18n> Website</a>
+                <a *ngIf="department.wikipediaUrl" class="wiki-btn" [href]="department.wikipediaUrl">
+                    <img style="height:22px" src="assets/img/wikipedia.svg" alt="Facebook" [attr.loading]="'lazy'">
+                </a>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #address>
+    <div *ngIf="department?.address" class="side-bar-section gap-padding-all mt-4">
+        <h2 class="mb-4" i18n>Address</h2>
+        <p itemprop="address">{{department?.address}}</p>
+
+    </div>
+</ng-template>
+<ng-template #googleMap>
+    <div *ngIf="department?.mapUrl" class="side-bar-section gap-padding-all mt-4">
+        <h2 class="mb-4" i18n>Location</h2>
+        <iframe class="map-iframe" [src]="department?.mapUrl| safe:'resourceUrl'"
+            style="border:0;width: 100%;min-height: 300px;" allowfullscreen="" [attr.loading]="'lazy'"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+</ng-template>
+
+<!-- //TODO: handle Localization for this text-->
+<ng-template #related>
+    <div *ngIf="department && department.relatedData?.length" class="gap-padding-all">
+        <h3 class="related-title">
+            <span i18n>🔔 Latest notification of </span>
+            <span>{{department.shortName}}</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <preptm-post [post]="post" *ngFor="let post of department.relatedData"></preptm-post>
+        </div>
+    </div>
+</ng-template>
+
+<!-- <span  [loading]="isLoading"></span> -->
+
+<!-- desktop -->
+<div *ngIf="!isMobile && department && !isLoading" class="gap-margin grid grid-cols-4 gap-4" itemscope
+    itemtype="https://schema.org/GovernmentOrganization">
+    <div class="col-span-3">
+        <div class="gap-padding-all">
+            <ng-container *ngTemplateOutlet="Main"></ng-container>
+            <ng-container *ngTemplateOutlet="related"></ng-container>
+        </div>
+    </div>
+    <div>
+        <ng-container *ngTemplateOutlet="sidebarProfile"></ng-container>
+        <ng-container *ngTemplateOutlet="address"></ng-container>
+        <!-- <ng-container *ngTemplateOutlet="googleMap"></ng-container> -->
+    </div>
+</div>
+
+<!-- mobile -->
+<div *ngIf="isMobile && department && !isLoading" class="gap-margin grid grid-cols-1 gap-4" itemscope
+    itemtype="https://schema.org/GovernmentOrganization">
+    <ng-container *ngTemplateOutlet="sidebarProfile"></ng-container>
+    <ng-container *ngTemplateOutlet="Main"></ng-container>
+    <ng-container *ngTemplateOutlet="address"></ng-container>
+    <!-- <ng-container *ngTemplateOutlet="googleMap"></ng-container> -->
+    <ng-container *ngTemplateOutlet="related"></ng-container>
+</div>
+
+<preptm-no-records *ngIf="!isLoading && !department"></preptm-no-records>

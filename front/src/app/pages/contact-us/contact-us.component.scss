@@ -1,0 +1,51 @@
+@import 'src/assets/css/variables.scss';
+
+
+
+.header {
+    margin: 20px 0;
+    text-align: center;
+
+    .title {
+        font-size: 30px;
+        color: $primary-color;
+        letter-spacing: 3px;
+        text-align: center;
+    }
+}
+
+
+.form {
+    max-width: 850px;
+    border: 1px solid #8080804a;
+    border-radius: 10px;
+    padding: 20px;
+
+    .form-title {
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+
+    .form-body {
+        p {
+            margin: 10px 0;
+        }
+
+        button {
+            margin: 10px 0;
+        }
+
+        .control {
+            margin-bottom: 30px;
+        }
+    }
+}
+
+// lg
+@media (min-width:1024px) {
+
+    .form {
+        padding: 40px;
+        border-radius: 20px;
+    }
+}

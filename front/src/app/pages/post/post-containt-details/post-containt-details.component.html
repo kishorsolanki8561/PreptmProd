@@ -1,0 +1,247 @@
+<div class="wrapper gap-padding-x" itemscope itemtype="https://schema.org/Article" *ngIf="post">
+    <div class="grid grid-cols-1 gap-4 mt-3">
+        <preptm-breadcrumb [breadcrumb]="breadcrumb"></preptm-breadcrumb>
+        <meta itemprop="mainEntityOfPage" [content]="this.platformLocation.href" />
+        <meta itemprop="inLanguage" [content]="lang" />
+        <meta itemprop="keywords" [content]="post?.keywords" />
+        <meta itemprop="url" [content]="this.platformLocation.href" />
+        <meta itemprop="headline" [content]="post?.title" />
+
+        <!-- post header smart -->
+        <div class="article-container section">
+            <h1 class="mx-2" *ngIf="post?.title" itemprop="headline">{{post?.title}}</h1>
+            <div class="author-and-state">
+                <div class="mx-2 author">
+                    <div class="author-info">
+                        <div class="profile" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                            <img src="assets/img/boy.png" alt="Author avatar" class="avatar mr-2"
+                                [attr.loading]="'lazy'" />
+                            <span class="author-name" itemprop="name">Suresh</span>
+                            <meta itemprop="url" [content]="'https://www.preptm.com/assets/img/writter.jpg'" />
+                        </div>
+                        <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                            <meta itemprop="name" content="Preptm" />
+                            <meta itemprop="url" content="https://www.preptm.com" />
+                            <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                                <meta itemprop="url" [content]="preptmLogo" />
+                            </div>
+                        </div>
+                        <span class="author-meta">
+                            <span class="publish-date md:mt-2" *ngIf="post?.publishedDate" title="Last updated">
+                                <span class="date">{{post?.publishedDate | date:DATE_FORMAT}}</span>
+                                <meta itemprop="datePublished" [content]="post?.publishedDate+'+05:30'" />
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <span class="states mx-1">{{post?.stateName | titlecase}} </span>
+            </div>
+
+            <div class="article-meta">
+                <div *ngIf="post?.departmentName">
+                    <span i18n class="mx-2 dept-lbl"> Department </span>
+                    <span class="seperator">:</span>
+                    <p>
+                        <a class="mx-2 dept-name" [routerLink]="['/department',post?.departmentSlugUrl]">
+                            {{post?.departmentName}}
+                        </a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- short  description -->
+        <div class="section gap-padding-all" *ngIf="this.shortDesc?.length">
+            <p class="mb-4" *ngFor="let desc of this.shortDesc">{{desc}}</p>
+            <meta itemprop="description" [content]="this.shortDesc.join(' ')" />
+        </div>
+
+        <!-- dates -->
+        <div *ngIf="!post" [loading]="!post"></div>
+        <div class="section"
+            *ngIf="post?.startDate || post?.lastDate || post?.extendedDate || post?.correctionLastDate || post?.feePaymentLastDate">
+            <p class="title" i18n>Highlights</p>
+            <div [loading]="!post"
+                class="dates gap-padding-all grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-2 gap-3">
+
+                <!-- start date -->
+                <div class="flex gap-3" *ngIf="post?.startDate">
+                    <div class="icon">
+                        <img src="assets/img/calender.svg" alt="start date" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>Start Date</div>
+                        <div class="section-val">{{post?.startDate | date:DATE_FORMAT}}</div>
+                    </div>
+                </div>
+                <!-- end date -->
+                <div class="flex gap-3" *ngIf="post?.lastDate">
+                    <div class="icon">
+                        <img src="assets/img/calender.svg" alt="start date" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>End Date</div>
+                        <div class="section-val">{{post?.lastDate | date:DATE_FORMAT}}</div>
+                    </div>
+                </div>
+                <!-- Extended date -->
+                <div class="flex gap-3" *ngIf="post?.extendedDate">
+                    <div class="icon">
+                        <img src="assets/img/calender.svg" alt="start date" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>Extended date</div>
+                        <div class="section-val">{{post?.extendedDate | date:DATE_FORMAT}}</div>
+                    </div>
+                </div>
+                <!-- Correction last date -->
+                <div class="flex gap-3" *ngIf="post?.correctionLastDate">
+                    <div class="icon">
+                        <img src="assets/img/calender.svg" alt="start date" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>Correction last date</div>
+                        <div class="section-val">{{post?.correctionLastDate | date:DATE_FORMAT}}</div>
+                    </div>
+                </div>
+
+                <!-- payment last date -->
+                <div class="flex gap-3" *ngIf="post?.feePaymentLastDate">
+                    <div class="icon">
+                        <img src="assets/img/calender.svg" alt="start date" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>Payment Last Date</div>
+                        <div class="section-val">{{post?.feePaymentLastDate | date:DATE_FORMAT}}</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- main content -->
+        <div class="section gap-padding-all" *ngIf="post?.description">
+            <div itemprop="articleBody" [innerHTML]="post?.description" class="editor"></div>
+        </div>
+
+        <!-- thumbnail -->
+        <div class="thumbnail-wrapper" *ngIf="post && post?.thumbnail">
+            <meta itemprop="image" [content]="post.thumbnail" />
+            <meta itemprop="thumbnailUrl" [content]="post.thumbnail" />
+            <preptm-image [alt]="post.title" [onlyLow]="false" [className]="'thumbnail'"
+                [src]="post.thumbnail"></preptm-image>
+            <p class="text-center my-2" *ngIf="post?.thumbnailCredit && post?.thumbnail">
+                <span>Photo by </span>
+                <span [innerHTML]="post.thumbnailCredit"></span>
+            </p>
+        </div>
+
+        <!-- whatsapp join ads -->
+        <app-custom-ads></app-custom-ads>
+
+
+        <!-- how to -->
+        <div class="section gap-padding-all" *ngIf="post && post.howToApply.length && post.howToApply[0].title"
+            itemscope itemtype="https://schema.org/HowTo">
+            <meta itemprop="url" [content]="post.title" />
+            <h2 i18n>How to apply</h2>
+            <ol class="how-to sr-number">
+                <li class="how-to-item" itemprop="step" itemscope itemtype="https://schema.org/HowTo"
+                    *ngFor="let step of post?.howToApply">
+                    <p class="how-to-title" itemprop="name">{{step.title}}</p>
+                    <p itemprop="text" class="text-muted editor" *ngIf="step.description"
+                        [innerHTML]="step.description"></p>
+                    <meta *ngIf="step.url" itemprop="thumbnailUrl" [content]="step.url" />
+                    <!-- <img *ngIf="step.url" nz-image [nzSrc]="step.url" [nzDisablePreview]="false"
+                    [nzPlaceholder]="'assets/img/spinner.svg'" [alt]="step.title"> -->
+                    <preptm-image *ngIf="step.url" [alt]="step.title" [showPreview]="true" [onlyLow]="false"
+                        [src]="step.url"></preptm-image>
+                </li>
+            </ol>
+        </div>
+
+
+        <!-- images -->
+        <div class="section images text-center" *ngIf="post?.documents && post?.documents?.length">
+            <h2 class="related-section-title hidden lg:block gap-top gap-padding-x" i18n>Images</h2>
+            <h2 class="title lg:hidden" i18n>Images</h2>
+            <nz-image-group>
+                <!-- <img nz-image width="150px" *ngFor="let docUrl of post?.documents;let i=index" [nzSrc]="docUrl"
+                [alt]="'document-'+i" /> -->
+                <preptm-image [className]="'detailsImages'" [onlyMedium]="true"
+                    *ngFor="let docUrl of post?.documents;let i=index" [alt]="'document-'+i" [showPreview]="true"
+                    [onlyLow]="false" [class]="''" [src]="docUrl"></preptm-image>
+            </nz-image-group>
+        </div>
+
+
+        <!-- faq -->
+        <div *ngIf="post && post.faQs && post.faQs.length" class="section gap-padding-all" itemscope
+            itemtype="https://schema.org/FAQPage">
+            <h2 class="mb-3">FAQ's</h2>
+            <ol class="faq-container">
+                <ng-container *ngFor="let faqItem of post?.faQs">
+                    <li class="faq" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                        <p class="que" itemprop="name">{{faqItem.que}}</p>
+                        <p class="ans text-muted" itemscope itemprop="acceptedAnswer"
+                            itemtype="https://schema.org/Answer">
+                            <span itemprop="text">{{faqItem.ans}}</span>
+                        </p>
+                    </li>
+                </ng-container>
+
+            </ol>
+        </div>
+
+        <!-- buttons -->
+        <div class="flex flex-wrap gap-5 my-2 justify-center">
+            <a *ngIf="post?.url && post?.urlLabel" target="_blank" [href]="post?.url" class="imp-link-btn light-green">
+                <div class="btn-icon">
+                    <img src="assets/img/check-circle-btn.svg" [alt]="'Apply'" [attr.loading]="'lazy'">
+                </div>
+                <div>{{post?.urlLabel}}</div>
+            </a>
+            <a *ngIf="post?.notificationLink" target="_blank" [href]="post?.notificationLink"
+                class="imp-link-btn light-blue">
+                <div class="btn-icon">
+                    <img src="assets/img/bell.svg" [alt]="'Apply'" [attr.loading]="'lazy'">
+                </div>
+                <span i18n>Notification</span>
+            </a>
+
+            <ng-container *ngIf="post && post.otherLinksList">
+                <a *ngFor="let link of post.otherLinksList" [href]="link.url" target="_blank"
+                    class="imp-link-btn light-yellow">
+                    <div class="btn-icon">
+                        <img [src]="'assets/img/'+(link.iconClass?link.iconClass:'check-circle-btn')+'.svg'"
+                            [alt]="link.title" [attr.loading]="'lazy'">
+                    </div>
+                    {{link.title}}
+                </a>
+            </ng-container>
+        </div>
+
+        <div class="section" *ngIf="post?.relatedBlockContent?.length">
+            <p class="title" i18n>This May interest You</p>
+            <div class="px-3 suggestion-links">
+
+                <ul>
+                    <li *ngFor="let item of post?.relatedBlockContent">
+                        <a class="block py-2" [routerLink]="['/',item.blockTypeSlug,item.slugUrl]">{{item.title}}</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<preptm-share-buttons *ngIf="shareContent && post" [content]="shareContent"></preptm-share-buttons>
+
+<preptm-no-records *ngIf="!post && !isLoading"></preptm-no-records>
+<div class="bg-transparent" [loading]="true" *ngIf="isLoading"></div>

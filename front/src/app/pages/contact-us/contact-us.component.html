@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="gap-padding-x">
+        <div class="header">
+            <h1 class="title" i18n>Contact Us</h1>
+        </div>
+        <div class="mx-auto form">
+            <h2>Contact Us</h2>
+            <p class="mb-6">Contacting us means reaching the group of people behind PreTM. You can contact us at <a
+                    href="mailto:thepreptm@gmail.com">thepreptm&#64;gmail.com</a></p>
+
+            <p class="form-title" i18n>Leave a Message</p>
+            <div class="form-body" [formGroup]="form">
+                <div class="control">
+                    <p i18n>Message Type*</p>
+                    <nz-select class="w-full" id="gender" nzSize="large" formControlName="type" i18n-nzPlaceHolder
+                        nzPlaceHolder="Select a option and change input text above">
+                        <nz-option *ngFor="let option of feedbackTypeDdl" [nzLabel]="option.text"
+                            [nzValue]="option.value"></nz-option>
+                    </nz-select>
+                </div>
+                <div class="control">
+                    <p i18n>Your Message*</p>
+                    <textarea formControlName="message" i18n-placeholder placeholder="Leave your message here..."
+                        [nzStatus]="form.get('message')?.touched && form.get('message')?.hasError('required')?'error':''"
+                        nzStatus="error" rows="4" nzSize="large" nz-input></textarea>
+                </div>
+
+                <div class="text-end">
+                    <button class="btn-primary" [disabled]="isLoading" i18n-placeholder placeholder="Your message..." (click)="submit()" nzSize="large">
+                        <preptm-loader *ngIf="isLoading"></preptm-loader>
+                        <span class="icon" nz-icon nzTheme="outline" *ngIf="!isLoading"></span>
+                        <span i18n> Send Message</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

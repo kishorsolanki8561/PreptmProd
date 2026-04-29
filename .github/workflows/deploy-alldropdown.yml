@@ -1,0 +1,55 @@
+name: Deploy AllDropDown Microservice
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/AllDropDownMicroService/**'
+      - 'backend/CommonService/**'
+      - 'backend/DBInfrastructure/**'
+      - 'backend/ModelService/**'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Publish AllDropDown
+        run: |
+          dotnet publish backend/AllDropDownMicroService/AllDropDownMicroService.csproj \
+            -c Release \
+            --no-self-contained \
+            -r linux-x64 \
+            -o ./publish/alldropdown
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Stop service before deploy
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "systemctl stop preptm-alldropdown || true"
+
+      - name: Sync build output to server
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_rsa" \
+            ./publish/alldropdown/ \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/preptm/api/alldropdown/
+
+      - name: Start service
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "systemctl start preptm-alldropdown && systemctl status preptm-alldropdown --no-pager"

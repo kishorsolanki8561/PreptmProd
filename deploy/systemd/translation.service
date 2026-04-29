@@ -1,0 +1,19 @@
+[Unit]
+Description=PreptM Translation Microservice
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/preptm/api/translation
+ExecStart=/usr/bin/dotnet TranslationMicroService.dll
+Restart=always
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=preptm-translation
+User=root
+
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=ASPNETCORE_URLS=http://localhost:5004
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target

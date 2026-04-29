@@ -1,0 +1,332 @@
+<div class="wrapper gap-padding-x" itemscope itemtype="https://schema.org/Article" *ngIf="post">
+    <div class="grid grid-cols-1 gap-4 mt-3">
+        <preptm-breadcrumb [breadcrumb]="breadcrumb"></preptm-breadcrumb>
+        <meta itemprop="mainEntityOfPage" [content]="this.platformLocation.href" />
+        <meta itemprop="inLanguage" [content]="lang" />
+        <meta itemprop="keywords" [content]="post?.keywords" />
+        <meta itemprop="url" [content]="this.platformLocation.href" />
+        <meta itemprop="headline" [content]="post?.title" />
+
+        <!-- post header smart -->
+        <div class="article-container section">
+            <h1 class="mx-2" *ngIf="post?.title" itemprop="headline">{{post?.title}}</h1>
+            <div class="author-and-state">
+                <div class="mx-2 author">
+                    <div class="author-info">
+                        <div class="profile" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                            <img src="assets/img/boy.png" alt="Author avatar" class="avatar mr-2"
+                                [attr.loading]="'lazy'" />
+                            <span class="author-name" itemprop="name">Suresh</span>
+                            <meta itemprop="url" [content]="'https://www.preptm.com/assets/img/writter.jpg'" />
+                        </div>
+                        <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                            <meta itemprop="name" content="Preptm" />
+                            <meta itemprop="url" content="https://www.preptm.com" />
+                            <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                                <meta itemprop="url" [content]="preptmLogo" />
+                            </div>
+                        </div>
+                        <span class="author-meta">
+                            <span class="publish-date md:mt-2" *ngIf="post?.publishedDate" title="Last updated">
+                                <span class="date">{{post?.publishedDate | date:DATE_FORMAT}}</span>
+                                <meta itemprop="datePublished" [content]="post?.publishedDate+'+05:30'" />
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <span class="states mx-1">{{post?.stateName | titlecase}} </span>
+            </div>
+
+            <div class="article-meta">
+                <div *ngIf="post?.departmentName">
+                    <span i18n class="mx-2 dept-lbl"> Department </span>
+                    <span class="seperator">:</span>
+                    <p>
+                        <a class="mx-2 dept-name" [routerLink]="['/department',post?.departmentSlugUrl]">
+                            {{post?.departmentName}}
+                        </a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- short  description -->
+        <div class="section gap-padding-all" *ngIf="this.shortDesc?.length">
+            <p class="mb-4" *ngFor="let desc of this.shortDesc">{{desc}}</p>
+            <meta itemprop="description" [content]="this.shortDesc.join(' ')" />
+        </div>
+
+        <!-- dates -->
+        <div *ngIf="!post" [loading]="!post"></div>
+        <div class="section"
+            *ngIf="post?.startDate || post?.lastDate || post?.extendedDate || post?.correctionLastDate || post?.admitCardDate || post?.feePaymentLastDate || post?.examMode || post?.minAge || post?.maxAge || post?.salary || post?.totalPost">
+            <p class="title" i18n>Highlights</p>
+
+            <div [loading]="!post"
+                class="dates gap-padding-all grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-2 gap-3">
+                <!-- start date -->
+                <div class="flex gap-3" *ngIf="post?.startDate">
+                    <div class="icon">
+                        <img src="assets/img/calender.svg" alt="start date" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>Start Date</div>
+                        <div class="section-val">{{post?.startDate | date:DATE_FORMAT}}</div>
+                    </div>
+                </div>
+                <!-- end date -->
+                <div class="flex gap-3" *ngIf="post?.lastDate">
+                    <div class="icon">
+                        <img src="assets/img/calender.svg" alt="start date" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>End Date</div>
+                        <div class="section-val">{{post?.lastDate | date:DATE_FORMAT}}</div>
+                    </div>
+                </div>
+                <!-- Extended date -->
+                <div class="flex gap-3" *ngIf="post?.extendedDate">
+                    <div class="icon">
+                        <img src="assets/img/calender.svg" alt="start date" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>Extended date</div>
+                        <div class="section-val">{{post?.extendedDate | date:DATE_FORMAT}}</div>
+                    </div>
+                </div>
+                <!-- Correction last date -->
+                <div class="flex gap-3" *ngIf="post?.correctionLastDate">
+                    <div class="icon">
+                        <img src="assets/img/calender.svg" alt="start date" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>Correction last date</div>
+                        <div class="section-val">{{post?.correctionLastDate | date:DATE_FORMAT}}</div>
+                    </div>
+                </div>
+                <!-- Admit card date -->
+                <div class="flex gap-3" *ngIf="post?.admitCardDate">
+                    <div class="icon">
+                        <img src="assets/img/calender.svg" alt="start date" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>Admit card date</div>
+                        <div class="section-val">{{post?.admitCardDate | date:DATE_FORMAT}}</div>
+                    </div>
+                </div>
+                <!-- payment last date -->
+                <div class="flex gap-3" *ngIf="post?.feePaymentLastDate">
+                    <div class="icon">
+                        <img src="assets/img/calender.svg" alt="start date" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>Payment Last Date</div>
+                        <div class="section-val">{{post?.feePaymentLastDate | date:DATE_FORMAT}}</div>
+                    </div>
+                </div>
+                <!-- exam mode -->
+                <div class="flex gap-3" *ngIf="post?.examMode">
+                    <div class="icon">
+                        <img src="assets/img/glob.svg" alt="exam-mode" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>Exam Mode</div>
+                        <div class="section-val">
+                            <span *ngIf="post?.examMode==ExamModeEnum.Online" i18n>Online</span>
+                            <span *ngIf="post?.examMode==ExamModeEnum.Offline" i18n>Offline</span>
+                            <span *ngIf="post?.examMode==ExamModeEnum.OnlineOffline" i18n>Online / Offline</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Minimum age-->
+                <div class="flex gap-3" *ngIf="post?.minAge">
+                    <div class="icon">
+                        <img src="assets/img/min-age.svg" alt="exam-mode" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>Mininum Age</div>
+                        <div class="section-val">{{post?.minAge}}
+                            <span i18n> Years </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Maximum age-->
+                <div class="flex gap-3" *ngIf="post?.maxAge">
+                    <div class="icon">
+                        <img src="assets/img/max-age.svg" alt="exam-mode" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>Maximum Age</div>
+                        <div class="section-val">{{post?.maxAge}}
+                            <span i18n> Years </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Salary-->
+                <div class="flex gap-3" *ngIf="post?.salary">
+                    <div class="icon">
+                        <img src="assets/img/rupee.svg" alt="fee" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>Fee</div>
+                        <div class="section-val">{{post?.salary}}</div>
+                    </div>
+                </div>
+
+                <!-- Total Seats-->
+                <div class="flex gap-3" *ngIf="post?.totalPost">
+                    <div class="icon">
+                        <img src="assets/img/people-group.svg" alt="fee" [attr.loading]="'lazy'">
+                    </div>
+                    <div>
+                        <div class="section-title" i18n>Available Seats</div>
+                        <div class="section-val">{{post?.totalPost}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- thumbnail -->
+        <div class="thumbnail-wrapper" *ngIf="post && post?.thumbnail">
+            <meta itemprop="image" [content]="post.thumbnail" />
+            <meta itemprop="thumbnailUrl" [content]="post.thumbnail" />
+            <preptm-image [alt]="post.title" [onlyLow]="false" [className]="'thumbnail'"
+                [src]="post.thumbnail"></preptm-image>
+            <p class="text-center my-2" *ngIf="post?.thumbnailCredit && post?.thumbnail">
+                <span>Photo by </span>
+                <span [innerHTML]="post.thumbnailCredit"></span>
+            </p>
+        </div>
+
+        <!-- qualifications -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4" *ngIf="post?.qualification && post?.qualification?.length">
+            <div class="section">
+                <h2 class="related-section-title hidden lg:block gap-top gap-padding-x" i18n>Qualifications</h2>
+                <h2 class="title lg:hidden" i18n>Qualifications</h2>
+                <div class="gap-padding-all">
+                    <ul class="qualificationAndDesig grid grid-cols-1 xl:grid-cols-2">
+                        <li class="qualification flex icon" *ngFor="let qualification of post?.qualification">
+                            <img src="assets/img/check-circle.svg" [alt]="'Qualifications'" [attr.loading]="'lazy'">
+                            <span>{{qualification}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section" *ngIf="post?.designation && post?.designation?.length">
+                <h2 class="related-section-title hidden lg:block gap-top gap-padding-x" i18n>Designation</h2>
+                <h2 class="title lg:hidden" i18n>Designation</h2>
+                <div class=" gap-padding-all">
+                    <ul class="qualificationAndDesig grid grid-cols-1 xl:grid-cols-2">
+                        <li class="qualification flex icon" *ngFor="let designation of post?.designation">
+                            <img src="assets/img/check-circle.svg" [alt]="'Designation'" [attr.loading]="'lazy'">
+                            <span>{{designation}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- main content -->
+        <div class="section gap-padding-all" *ngIf="post?.description">
+            <div itemprop="articleBody" [innerHTML]="post?.description" class="editor"></div>
+        </div>
+
+        <!-- whatsapp join ads -->
+        <app-custom-ads></app-custom-ads>
+
+        <!-- how to -->
+        <div class="section gap-padding-all" *ngIf="post && post.howToApply.length && post.howToApply[0].title"
+            itemscope itemtype="https://schema.org/HowTo">
+            <meta itemprop="url" [content]="post.title" />
+            <h2 class="mb-3" i18n>How to apply</h2>
+            <ol class="how-to sr-number">
+                <li class="how-to-item" itemprop="step" itemscope itemtype="https://schema.org/HowTo"
+                    *ngFor="let step of post?.howToApply">
+                    <ng-container *ngIf="step.title || step.description">
+                        <p class="how-to-title" itemprop="name">{{step.title}}</p>
+                        <p itemprop="text" class="text-muted editor" *ngIf="step.description"
+                            [innerHTML]="step.description"></p>
+                        <meta *ngIf="step.url" itemprop="thumbnailUrl" [content]="step.url" />
+                        <!-- <img *ngIf="step.url" nz-image [nzSrc]="step.url" [nzDisablePreview]="false"
+                        [nzPlaceholder]="'assets/img/spinner.svg'" [alt]="step.title"> -->
+                        <preptm-image *ngIf="step.url" [alt]="step.title" [showPreview]="true" [onlyLow]="false"
+                            [src]="step.url"></preptm-image>
+                    </ng-container>
+                </li>
+            </ol>
+        </div>
+
+        <!-- images -->
+        <div class="section images text-center" *ngIf="post?.documents && post?.documents?.length">
+            <h2 class="related-section-title hidden lg:block gap-top gap-padding-x" i18n>Images</h2>
+            <h2 class="title lg:hidden" i18n>Images</h2>
+            <nz-image-group>
+                <!-- <img nz-image width="150px" *ngFor="let docUrl of post?.documents;let i=index" [nzSrc]="docUrl"
+                [alt]="'document-'+i" [nzPlaceholder]="'assets/img/spinner.svg'" /> -->
+                <preptm-image [className]="'detailsImages'" [onlyMedium]="true"
+                    *ngFor="let docUrl of post?.documents;let i=index" [alt]="'document-'+i" [showPreview]="true"
+                    [onlyLow]="false" [class]="''" [src]="docUrl"></preptm-image>
+            </nz-image-group>
+        </div>
+
+
+
+        <!-- buttons -->
+        <div class="flex flex-wrap gap-5 my-2 justify-center">
+            <a *ngIf="post?.applyLink" target="_blank" [href]="post?.applyLink" class="imp-link-btn light-green">
+                <div class="btn-icon">
+                    <img src="assets/img/hand-pointer.svg" [alt]="'Admission'" [attr.loading]="'lazy'">
+                </div>
+                <div i18n>Apply</div>
+            </a>
+            <a *ngIf="post?.notificationLink" target="_blank" [href]="post?.notificationLink"
+                class="imp-link-btn light-blue">
+                <div class="btn-icon">
+                    <img src="assets/img/bell.svg" [alt]="'Details'" [attr.loading]="'lazy'">
+                </div>
+                <div i18n>Notification</div>
+            </a>
+            <a *ngIf="post?.officialLink" [href]="post?.officialLink" target="_blank" class="imp-link-btn ligh-orange">
+                <div class="btn-icon">
+                    <img src="assets/img/globe-btn.svg" [alt]="'Official Website'" [attr.loading]="'lazy'">
+                </div>
+                <div i18n>website</div>
+
+            </a>
+            <ng-container *ngIf="post && post.otherLinksList && post.otherLinksList[0]?.title">
+                <ng-container *ngFor="let link of post.otherLinksList">
+                    <a *ngIf="link.url && link.title" [href]="link.url" target="_blank"
+                        class="imp-link-btn light-yellow">
+                        <div class="btn-icon">
+                            <img [src]="'assets/img/check-circle-btn.svg'" [alt]="link.title" [attr.loading]="'lazy'">
+                        </div>
+                        {{link.title}}
+                    </a>
+                </ng-container>
+            </ng-container>
+        </div>
+
+
+        <!-- related links -->
+        <div class="section bg-gray" *ngIf="post?.relatedCatSubCat && post?.relatedCatSubCat?.length">
+            <h2 class="related-section-title hidden lg:block gap-top gap-padding-x" i18n>Related Links</h2>
+            <h2 class="title lg:hidden" i18n>Related Links</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 gap-padding-all">
+                <preptm-post [minimal]="false" [post]="post" *ngFor="let post of post?.relatedCatSubCat"></preptm-post>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<preptm-share-buttons *ngIf="shareContent" [content]="shareContent"></preptm-share-buttons>
+
+<preptm-no-records *ngIf="!post && !isLoading"></preptm-no-records>
+<div class="bg-transparent" [loading]="true" *ngIf="isLoading"></div>

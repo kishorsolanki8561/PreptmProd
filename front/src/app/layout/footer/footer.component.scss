@@ -1,0 +1,130 @@
+@import 'src/assets/css/variables.scss';
+
+footer {
+  background-color: $footer-background-color;
+  color: #c1c1c1;
+  padding-top: 60px;
+  font-weight: 100;
+}
+
+.section-1 {
+
+  .logo {
+    width: 150px;
+  }
+
+  .summery {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .mobile-app {
+    display: flex;
+    gap: 20px;
+    flex-wrap: nowrap;
+    margin-top: 30px;
+
+    img {
+      // width: 50%;
+      width: 250px;
+    }
+  }
+
+
+}
+
+.section-2 {
+  h3 {
+    font-size: 30px;
+  }
+
+  ul {
+    margin-top: 25px;
+  }
+
+  li {
+    width: 50%;
+    float: left;
+    line-height: 30px;
+    padding-right: 30px;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+}
+
+.section-3 {
+  h3 {
+    font-size: 30px;
+  }
+
+  ul {
+    margin-top: 25px;
+  }
+
+  li {
+    line-height: 30px;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+}
+
+.footer-bottom {
+  text-align: center;
+  background-color: #161616;
+  margin-top: 60px;
+  line-height: 40px;
+}
+
+// lg
+@media (min-width:1024px) {
+  footer {
+    padding-top: 80px;
+    // padding-bottom: 80px;
+  }
+
+  .section-1 {
+    .logo {
+      width: 200px;
+    }
+
+    .summery {
+      margin-top: 15px;
+      font-weight: 100;
+      font-size: 15px;
+    }
+
+    .mobile-app {
+      img {
+        width: 200px;
+      }
+    }
+  }
+
+  .section-2 {
+    li {
+      font-size: 15px;
+    }
+  }
+
+  .footer-bottom {
+    margin-top: 80px;
+  }
+
+}
+
+.ftr-title {
+  color: #8b8b8b;
+}
+
+.play-store {
+  img {
+    width: 200px;
+    height: 58px;
+  }
+}
