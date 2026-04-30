@@ -42,6 +42,14 @@ jobs:
                      /var/cache/nginx/front_api
           "
 
+      - name: Install express in pm2 directory
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+            cd /var/www/preptm/pm2 &&
+            [ -f package.json ] || npm init -y &&
+            npm install express --save 2>&1 | tail -3
+          "
+
       - name: Push config files to server via base64
         run: |
           for f in deploy/nginx/preptm.conf deploy/nginx/admin.preptm.conf deploy/nginx/api.preptm.conf deploy/nginx/file.preptm.conf; do
