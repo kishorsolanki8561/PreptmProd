@@ -62,14 +62,10 @@ jobs:
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "echo '$content' | base64 -d > /var/www/preptm/pm2/ecosystem.config.js"
           echo "Pushed ecosystem.config.js"
-          content=$(base64 -w 0 deploy/pm2/start-prod-en.mjs)
+          content=$(base64 -w 0 deploy/pm2/start-prod.mjs)
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-            "echo '$content' | base64 -d > /var/www/preptm/pm2/start-prod-en.mjs"
-          echo "Pushed start-prod-en.mjs"
-          content=$(base64 -w 0 deploy/pm2/start-prod-hi.mjs)
-          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-            "echo '$content' | base64 -d > /var/www/preptm/pm2/start-prod-hi.mjs"
-          echo "Pushed start-prod-hi.mjs"
+            "echo '$content' | base64 -d > /var/www/preptm/pm2/start-prod.mjs"
+          echo "Pushed start-prod.mjs"
 
       - name: Verify files on server
         run: |
