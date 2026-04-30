@@ -125,12 +125,19 @@ nz-table-inner-scroll .ant-table-header {
 
 /* ─── Breadcrumb ──────────────────────────────────────────────────────── */
 .ant-breadcrumb-link {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--text-secondary, #475569) !important;
 }
 
 .ant-breadcrumb-separator {
   color: var(--text-muted, #94a3b8) !important;
+}
+
+/* Current page (last breadcrumb item) — acts as the page title */
+.breadcrumb-current .ant-breadcrumb-link {
+  font-weight: 600 !important;
+  color: var(--text-primary, #0f172a) !important;
+  font-size: 0.9375rem !important;
 }
 
 /* ─── Ant Result ──────────────────────────────────────────────────────── */

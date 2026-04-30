@@ -1,23 +1,17 @@
 <div class="page-header">
 
-  <div class="page-header-left">
-    <nz-breadcrumb class="breadcrumb">
-      <nz-breadcrumb-item [routerLink]="['/']" class="cursor-pointer">
-        <span class="material-symbols-outlined breadcrumb-home ms-outline">home</span>
+  <nz-breadcrumb class="breadcrumb">
+    <nz-breadcrumb-item [routerLink]="['/']" class="cursor-pointer">
+      <span class="material-symbols-outlined breadcrumb-home ms-outline">home</span>
+    </nz-breadcrumb-item>
+    <ng-container *ngFor="let item of breadcrumb; let isLast = last">
+      <nz-breadcrumb-item
+        [ngClass]="{'cursor-pointer': !isLast, 'breadcrumb-current': isLast}"
+        [routerLink]="isLast ? [] : [item.path]">
+        {{ item.name }}
       </nz-breadcrumb-item>
-      <ng-container *ngFor="let item of breadcrumb; let isLast = last">
-        <nz-breadcrumb-item
-          [ngClass]="{'cursor-pointer': !isLast}"
-          [routerLink]="isLast ? [] : [item.path]">
-          {{ item.name }}
-        </nz-breadcrumb-item>
-      </ng-container>
-    </nz-breadcrumb>
-
-    <h1 class="page-title" *ngIf="breadcrumb?.length">
-      {{ breadcrumb[breadcrumb.length - 1]?.name }}
-    </h1>
-  </div>
+    </ng-container>
+  </nz-breadcrumb>
 
   <div class="page-header-actions">
     <app-button *ngIf="addButtonUrl && permissions.add"
