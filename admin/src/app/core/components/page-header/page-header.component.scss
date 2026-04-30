@@ -8,7 +8,7 @@
   margin-bottom: 20px;
   gap: 12px;
   position: sticky;
-  top: 60px;             /* clears the 60px main header */
+  top: 60px;
   z-index: 50;
   background: var(--content-bg, #f8fafc);
 }
@@ -20,9 +20,7 @@
   gap: 2px;
 }
 
-.breadcrumb {
-  font-size: 0.8125rem;
-}
+.breadcrumb { font-size: 0.8125rem; }
 
 .breadcrumb-home {
   font-size: 14px;
@@ -38,15 +36,50 @@
   line-height: 1.3;
 }
 
-/* ─── Right: action buttons — hide entirely when empty ───────────────── */
+/* ─── Right: action area ─────────────────────────────────────────────── */
 .page-header-actions {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
 
-  /* Collapse the actions column if nothing is projected into it */
-  &:not(:has(*)) {
-    display: none;
+  /* Hide column entirely when nothing is inside */
+  &:not(:has(*)) { display: none; }
+
+  /* ── Any plain <button> projected via ng-content ─────────────────── */
+  > button:not([nz-button]),
+  > button:not(.app-btn) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 36px;
+    min-width: 36px;
+    padding: 0 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border, #e2e8f0);
+    background: var(--surface, #fff);
+    color: var(--text-secondary, #475569);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+
+    &:hover {
+      border-color: var(--brand-primary, #4f46e5);
+      color: var(--brand-primary, #4f46e5);
+    }
+  }
+
+  /* ── Ng-Zorro default button projected into actions ──────────────── */
+  > [nz-button][nzType="default"]:not(.app-btn) {
+    height: 36px !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+  }
+
+  /* ── nz-switch projected into actions ────────────────────────────── */
+  > nz-switch {
+    margin: 0 4px;
   }
 }

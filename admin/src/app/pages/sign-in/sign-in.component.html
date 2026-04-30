@@ -1,15 +1,23 @@
 <div class="signin-wrapper">
 
-  <!-- ── Form panel ──────────────────────────────────────────────────── -->
+  <!-- ── Form panel ─────────────────────────────────────────────────── -->
   <div class="signin-card">
 
+    <!-- Brand mark -->
     <div class="signin-brand">
-      <img src="assets/images/logo.png" class="signin-logo" alt="Preptm">
-      <span class="signin-app-name">Preptm Admin</span>
+      <div class="signin-logo-wrap">
+        <img src="assets/images/logo.png" class="signin-logo" alt="Preptm" onerror="this.style.display='none'">
+      </div>
+      <div>
+        <p class="signin-app-name">Preptm</p>
+        <p class="signin-app-sub">Admin Panel</p>
+      </div>
     </div>
 
+    <div class="signin-divider"></div>
+
     <h2 class="signin-title">Welcome back</h2>
-    <p class="signin-subtitle">Sign in to your admin account</p>
+    <p class="signin-subtitle">Sign in to continue to your admin account</p>
 
     <form [formGroup]="form" class="signin-form">
       <app-text label="Email address" [form]="form" formControlName="email"></app-text>
@@ -17,27 +25,29 @@
 
       <button nz-button nzType="primary" [nzSize]="'large'" class="signin-btn"
               [nzLoading]="form.disabled" [disabled]="form.disabled" (click)="signIn()">
-        <span class="material-symbols-outlined">login</span>
+        <span class="material-symbols-outlined" *ngIf="!form.disabled">login</span>
         Sign in
       </button>
     </form>
 
   </div>
 
-  <!-- ── Branded panel ───────────────────────────────────────────────── -->
+  <!-- ── Branded panel ──────────────────────────────────────────────── -->
   <div class="signin-panel" aria-hidden="true">
     <div class="panel-blob panel-blob--tl"></div>
     <div class="panel-blob panel-blob--br"></div>
 
     <div class="panel-content">
-      <img src="assets/images/logo.png" class="panel-logo" alt="">
+      <div class="panel-logo-ring">
+        <img src="assets/images/logo.png" class="panel-logo" alt="">
+      </div>
       <h2 class="panel-headline">The smarter way to manage your content</h2>
       <p class="panel-sub">Publish articles, manage recruitments, and grow your platform — all from one place.</p>
 
       <div class="panel-pills">
-        <span class="pill"><span class="material-symbols-outlined">article</span> Articles</span>
-        <span class="pill"><span class="material-symbols-outlined">work</span> Recruitment</span>
-        <span class="pill"><span class="material-symbols-outlined">bar_chart</span> Reports</span>
+        <span class="pill"><span class="material-symbols-outlined">article</span>Articles</span>
+        <span class="pill"><span class="material-symbols-outlined">work</span>Recruitment</span>
+        <span class="pill"><span class="material-symbols-outlined">bar_chart</span>Reports</span>
       </div>
     </div>
   </div>

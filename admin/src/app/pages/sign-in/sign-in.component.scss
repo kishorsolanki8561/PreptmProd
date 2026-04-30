@@ -1,52 +1,83 @@
-/* ─── Outer wrapper ───────────────────────────────────────────────────── */
+/* ─── Wrapper ─────────────────────────────────────────────────────────── */
 .signin-wrapper {
   display: flex;
   min-height: 100vh;
+  background: #f8fafc;
 }
 
-/* ─── Left: form card ─────────────────────────────────────────────────── */
+/* ─── Left: form card ────────────────────────────────────────────────── */
 .signin-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  max-width: 460px;
-  padding: 56px 52px;
+  max-width: 420px;
+  min-height: 100vh;
+  padding: 48px 44px;
   background: #ffffff;
-  box-shadow: 4px 0 40px rgba(15, 23, 42, 0.06);
-  position: relative;
-  z-index: 1;
+  border-right: 1px solid var(--border, #e2e8f0);
+  box-shadow: 6px 0 32px rgba(15, 23, 42, 0.07);
 
   @media (max-width: 767px) {
     max-width: 100%;
-    padding: 40px 28px;
+    padding: 36px 24px;
+    border-right: none;
+    box-shadow: none;
   }
 }
 
-/* ─── Brand row ───────────────────────────────────────────────────────── */
+/* ─── Brand block ────────────────────────────────────────────────────── */
 .signin-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 44px;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.signin-logo-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
 }
 
 .signin-logo {
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
 .signin-app-name {
-  font-size: 1.0625rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text-primary, #0f172a);
+  margin: 0;
+  line-height: 1.2;
 }
 
-/* ─── Heading ─────────────────────────────────────────────────────────── */
+.signin-app-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted, #94a3b8);
+  margin: 0;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ─── Divider ────────────────────────────────────────────────────────── */
+.signin-divider {
+  height: 1px;
+  background: var(--border, #e2e8f0);
+  margin-bottom: 28px;
+}
+
+/* ─── Headings ───────────────────────────────────────────────────────── */
 .signin-title {
-  font-size: 1.75rem;
+  font-size: 1.625rem;
   font-weight: 700;
   color: var(--text-primary, #0f172a);
   letter-spacing: -0.02em;
@@ -54,23 +85,24 @@
 }
 
 .signin-subtitle {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: var(--text-secondary, #64748b);
-  margin: 0 0 28px;
+  margin: 0 0 24px;
+  line-height: 1.5;
 }
 
-/* ─── Form ────────────────────────────────────────────────────────────── */
+/* ─── Form ───────────────────────────────────────────────────────────── */
 .signin-form {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-/* ─── Submit button ───────────────────────────────────────────────────── */
+/* ─── Sign-in button ─────────────────────────────────────────────────── */
 .signin-btn {
   width: 100% !important;
   height: 46px !important;
-  margin-top: 10px;
+  margin-top: 12px;
   border-radius: 10px !important;
   border: none !important;
   background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
@@ -84,12 +116,11 @@
 
   &:hover:not([disabled]) {
     background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
-    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.4) !important;
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.38) !important;
     transform: translateY(-1px);
   }
 
   &:active { transform: translateY(0) !important; }
-
   &[disabled] { opacity: 0.6; }
 
   .material-symbols-outlined {
@@ -98,12 +129,12 @@
   }
 }
 
-/* ─── Right: branded panel ────────────────────────────────────────────── */
+/* ─── Right: branded panel ───────────────────────────────────────────── */
 .signin-panel {
   flex: 1;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(145deg, #1e1b4b 0%, #312e81 45%, #4338ca 100%);
+  background: linear-gradient(145deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,49 +142,60 @@
   @media (max-width: 767px) { display: none; }
 }
 
-/* Decorative blobs */
 .panel-blob {
   position: absolute;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
   pointer-events: none;
 
   &--tl {
-    width: 480px;
-    height: 480px;
-    top: -140px;
-    left: -140px;
+    width: 500px;
+    height: 500px;
+    top: -160px;
+    left: -160px;
+    background: rgba(255, 255, 255, 0.055);
   }
 
   &--br {
-    width: 360px;
-    height: 360px;
-    bottom: -100px;
-    right: -100px;
-    background: rgba(255, 255, 255, 0.04);
+    width: 380px;
+    height: 380px;
+    bottom: -110px;
+    right: -110px;
+    background: rgba(255, 255, 255, 0.035);
   }
 }
 
-/* Panel content */
 .panel-content {
   position: relative;
   z-index: 1;
-  max-width: 420px;
+  max-width: 400px;
   padding: 40px;
   text-align: center;
 }
 
-.panel-logo {
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
-  object-fit: cover;
+/* Logo ring on branded panel */
+.panel-logo-ring {
+  width: 88px;
+  height: 88px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0 auto 28px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+
+.panel-logo {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 14px;
 }
 
 .panel-headline {
-  font-size: 1.875rem;
+  font-size: 1.75rem;
   font-weight: 700;
   color: #ffffff;
   line-height: 1.25;
@@ -162,16 +204,15 @@
 }
 
 .panel-sub {
-  font-size: 1rem;
+  font-size: 0.9375rem;
   color: rgba(255, 255, 255, 0.6);
   line-height: 1.65;
-  margin: 0 0 32px;
+  margin: 0 0 28px;
 }
 
-/* Feature pills */
 .panel-pills {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -183,11 +224,14 @@
   padding: 6px 14px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.88);
   font-size: 0.8125rem;
   font-weight: 500;
   backdrop-filter: blur(8px);
+  transition: background 0.15s;
+
+  &:hover { background: rgba(255, 255, 255, 0.18); }
 
   .material-symbols-outlined {
     font-size: 15px;

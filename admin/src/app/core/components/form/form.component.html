@@ -121,7 +121,7 @@
     <ng-content></ng-content>
   </div>
 
-  <div class="text-right" *ngIf="form.enabled && !inlineForm">
+  <div class="form-footer" *ngIf="form.enabled && !inlineForm">
     <app-button (onClick)="onReset()" type="reset"></app-button>
     <app-button (onClick)="onSubmit()" type="submit" [isLoading]="isLoading"></app-button>
   </div>
