@@ -3,13 +3,19 @@
   <!-- Sidebar toggle -->
   <button class="sidebar-toggle" (click)="toggleSidebar()"
           [attr.aria-label]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'">
-    <span class="material-symbols-outlined ms-outline">
-      {{ isCollapsed ? 'menu_open' : 'menu' }}
-    </span>
+    <span class="material-symbols-outlined ms-outline">menu</span>
   </button>
 
   <!-- Right-side actions -->
   <div class="header-actions">
+    <!-- Fullscreen (hide sidebar) toggle -->
+    <button class="sidebar-toggle" (click)="toggleFullscreen()"
+            [attr.aria-label]="isFullscreen ? 'Exit fullscreen' : 'Fullscreen mode'">
+      <span class="material-symbols-outlined ms-outline">
+        {{ isFullscreen ? 'close_fullscreen' : 'open_in_full' }}
+      </span>
+    </button>
+
     <div class="user-info">
       <span class="user-name">{{ userDetails.name }}</span>
       <span class="user-role">{{ userDetails.userTypeName }}</span>

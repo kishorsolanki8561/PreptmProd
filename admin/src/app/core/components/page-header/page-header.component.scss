@@ -3,13 +3,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0;
+  padding: 8px 0;
   border-bottom: 1px solid var(--border, #e2e8f0);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   gap: 12px;
-  position: sticky;
-  top: 60px;
-  z-index: 50;
   background: var(--content-bg, #f8fafc);
 }
 
