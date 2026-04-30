@@ -8,6 +8,10 @@
   margin-bottom: 14px;
   gap: 12px;
   background: var(--content-bg, #f8fafc);
+  /* Stick below the 60px app header so it doesn't scroll away */
+  position: sticky;
+  top: 60px;
+  z-index: 50;
 }
 
 /* ─── Breadcrumb ─────────────────────────────────────────────────────── */

@@ -76,40 +76,8 @@
   opacity: 1;
 }
 
-/* ─── Collapsed sidebar: show icon, hide label ───────────────────────── */
-/* Ng-Zorro hides .ant-menu-title-content entirely (max-width:0, opacity:0)
-   when collapsed. Our MS icons live inside it, so we must un-hide it and
-   then manually hide only the text label. */
-.ant-menu-inline-collapsed {
-  /* Un-hide the title-content wrapper so the icon inside it is visible */
-  > .ant-menu-item .ant-menu-title-content,
-  > .ant-menu-submenu > .ant-menu-submenu-title .ant-menu-title-content {
-    max-width: 100% !important;
-    opacity: 1 !important;
-    overflow: visible !important;
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Hide only the label text */
-  .menu-label { display: none !important; }
-
-  /* Center the icon and remove its side margin */
-  .menu-icon {
-    margin-right: 0 !important;
-    font-size: 20px !important;
-  }
-
-  /* Center icon in the item cell */
-  > .ant-menu-item,
-  > .ant-menu-submenu > .ant-menu-submenu-title {
-    padding: 0 !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-  }
-}
+/* Collapsed sidebar override moved to css.fixes.scss (global) to avoid
+   Angular ViewEncapsulation blocking the selectors on Ng-Zorro's DOM. */
 
 /* ─── Submenu popup (when sidebar is collapsed) ──────────────────────── */
 .ant-menu-submenu-popup {

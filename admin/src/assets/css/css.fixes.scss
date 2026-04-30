@@ -15,6 +15,45 @@ body {
   line-height: 60px !important;
 }
 
+/* ─── Collapsed sidebar: un-hide title-content so MS icons are visible ── */
+/* Angular ViewEncapsulation prevents layout.component.scss from reaching
+   Ng-Zorro's own DOM nodes, so this override MUST live in global styles. */
+.ant-menu-inline-collapsed {
+  > .ant-menu-item .ant-menu-title-content,
+  > .ant-menu-submenu > .ant-menu-submenu-title .ant-menu-title-content {
+    max-width: 100% !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu-label { display: none !important; }
+
+  .menu-icon {
+    margin-right: 0 !important;
+    font-size: 20px !important;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  > .ant-menu-item,
+  > .ant-menu-submenu > .ant-menu-submenu-title {
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
+
+/* Restore label + icon spacing in popup flyouts */
+.ant-menu-submenu-popup {
+  .menu-label { display: inline !important; opacity: 1; }
+  .menu-icon  { margin-right: 10px !important; font-size: 16px !important; }
+  .ant-menu-sub { max-height: 60vh; overflow-y: auto; }
+  .ant-menu-item { height: 38px !important; line-height: 38px !important; }
+}
+
 /* ─── Sidebar overrides ───────────────────────────────────────────────── */
 .admin-sidebar.ant-layout-sider {
   background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%) !important;
