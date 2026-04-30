@@ -49,7 +49,8 @@ jobs:
       - name: Sync build output to server (preserve Content folder)
         run: |
           rsync -avz --delete \
-            --exclude='Content/' \
+            --exclude='Content' \
+            --filter='protect Content/***' \
             -e "ssh -i ~/.ssh/id_rsa" \
             ./publish/fileuploader/ \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/preptm/api/fileuploader/
