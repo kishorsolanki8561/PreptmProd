@@ -25,6 +25,9 @@ jobs:
         working-directory: front
         run: npm ci
 
+      - name: Install gzipper CLI
+        run: npm install -g gzipper
+
       - name: Build Angular SSR (all locales + gzip)
         working-directory: front
         run: npm run build
