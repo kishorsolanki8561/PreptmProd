@@ -3,21 +3,15 @@
   <!-- ── Form panel ─────────────────────────────────────────────────── -->
   <div class="signin-card">
 
-    <!-- Brand mark -->
+    <!-- Inline brand (logo + name, no divider) -->
     <div class="signin-brand">
-      <div class="signin-logo-wrap">
-        <img src="assets/images/logo.png" class="signin-logo" alt="Preptm" onerror="this.style.display='none'">
-      </div>
-      <div>
-        <p class="signin-app-name">Preptm</p>
-        <p class="signin-app-sub">Admin Panel</p>
-      </div>
+      <img src="assets/images/logo.png" class="signin-logo" alt="Preptm"
+           onerror="this.style.display='none'">
+      <span class="signin-app-name">Preptm Admin</span>
     </div>
 
-    <div class="signin-divider"></div>
-
     <h2 class="signin-title">Welcome back</h2>
-    <p class="signin-subtitle">Sign in to continue to your admin account</p>
+    <p class="signin-subtitle">Sign in to continue</p>
 
     <form [formGroup]="form" class="signin-form">
       <app-text label="Email address" [form]="form" formControlName="email"></app-text>
@@ -32,7 +26,7 @@
 
   </div>
 
-  <!-- ── Branded panel ──────────────────────────────────────────────── -->
+  <!-- ── Branded panel (desktop only) ──────────────────────────────── -->
   <div class="signin-panel" aria-hidden="true">
     <div class="panel-blob panel-blob--tl"></div>
     <div class="panel-blob panel-blob--br"></div>

@@ -2,7 +2,6 @@
 .signin-wrapper {
   display: flex;
   min-height: 100vh;
-  background: #f8fafc;
 }
 
 /* ─── Left: form card ────────────────────────────────────────────────── */
@@ -13,66 +12,38 @@
   width: 100%;
   max-width: 420px;
   min-height: 100vh;
-  padding: 48px 44px;
+  padding: 40px 44px;
   background: #ffffff;
   border-right: 1px solid var(--border, #e2e8f0);
-  box-shadow: 6px 0 32px rgba(15, 23, 42, 0.07);
 
   @media (max-width: 767px) {
     max-width: 100%;
-    padding: 36px 24px;
+    padding: 40px 28px;
     border-right: none;
-    box-shadow: none;
   }
 }
 
-/* ─── Brand block ────────────────────────────────────────────────────── */
+/* ─── Brand row (logo + app name, no box, no divider) ────────────────── */
 .signin-brand {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 32px;
-}
-
-.signin-logo-wrap {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #6366f1, #4f46e5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  overflow: hidden;
+  gap: 10px;
+  margin-bottom: 36px;
 }
 
 .signin-logo {
-  width: 100%;
-  height: 100%;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .signin-app-name {
   font-size: 1rem;
   font-weight: 700;
   color: var(--text-primary, #0f172a);
-  margin: 0;
-  line-height: 1.2;
-}
-
-.signin-app-sub {
-  font-size: 0.75rem;
-  color: var(--text-muted, #94a3b8);
-  margin: 0;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-/* ─── Divider ────────────────────────────────────────────────────────── */
-.signin-divider {
-  height: 1px;
-  background: var(--border, #e2e8f0);
-  margin-bottom: 28px;
+  letter-spacing: -0.01em;
 }
 
 /* ─── Headings ───────────────────────────────────────────────────────── */
@@ -88,7 +59,6 @@
   font-size: 0.875rem;
   color: var(--text-secondary, #64748b);
   margin: 0 0 24px;
-  line-height: 1.5;
 }
 
 /* ─── Form ───────────────────────────────────────────────────────────── */
@@ -129,7 +99,7 @@
   }
 }
 
-/* ─── Right: branded panel ───────────────────────────────────────────── */
+/* ─── Right: branded panel (desktop only) ───────────────────────────── */
 .signin-panel {
   flex: 1;
   position: relative;
@@ -172,7 +142,6 @@
   text-align: center;
 }
 
-/* Logo ring on branded panel */
 .panel-logo-ring {
   width: 88px;
   height: 88px;
