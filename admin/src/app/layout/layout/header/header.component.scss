@@ -7,6 +7,13 @@
   padding: 0 24px;
 }
 
+/* ─── Left controls cluster ──────────────────────────────────────────── */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Sidebar toggle button ──────────────────────────────────────────── */
 .sidebar-toggle {
   display: flex;

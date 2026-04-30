@@ -1,21 +1,24 @@
 <div class="header-inner">
 
-  <!-- Sidebar toggle -->
-  <button class="sidebar-toggle" (click)="toggleSidebar()"
-          [attr.aria-label]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'">
-    <span class="material-symbols-outlined ms-outline">menu</span>
-  </button>
+  <!-- Left: sidebar controls -->
+  <div class="header-left">
+    <!-- Hamburger toggle: collapse ↔ expand sidebar -->
+    <button class="sidebar-toggle" (click)="toggleSidebar()"
+            [attr.aria-label]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'">
+      <span class="material-symbols-outlined ms-outline">menu</span>
+    </button>
+
+    <!-- Fullscreen toggle: hide sidebar entirely for more content space -->
+    <button class="sidebar-toggle" (click)="toggleFullscreen()"
+            [attr.aria-label]="isFullscreen ? 'Show sidebar' : 'Hide sidebar'">
+      <span class="material-symbols-outlined ms-outline">
+        {{ isFullscreen ? 'left_panel_open' : 'left_panel_close' }}
+      </span>
+    </button>
+  </div>
 
   <!-- Right-side actions -->
   <div class="header-actions">
-    <!-- Fullscreen (hide sidebar) toggle -->
-    <button class="sidebar-toggle" (click)="toggleFullscreen()"
-            [attr.aria-label]="isFullscreen ? 'Exit fullscreen' : 'Fullscreen mode'">
-      <span class="material-symbols-outlined ms-outline">
-        {{ isFullscreen ? 'close_fullscreen' : 'open_in_full' }}
-      </span>
-    </button>
-
     <div class="user-info">
       <span class="user-name">{{ userDetails.name }}</span>
       <span class="user-role">{{ userDetails.userTypeName }}</span>
