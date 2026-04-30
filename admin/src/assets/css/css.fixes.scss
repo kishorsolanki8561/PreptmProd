@@ -46,12 +46,20 @@ body {
   }
 }
 
-/* Restore label + icon spacing in popup flyouts */
+/* Restore label + icon spacing inside popup flyouts */
 .ant-menu-submenu-popup {
-  .menu-label { display: inline !important; opacity: 1; }
-  .menu-icon  { margin-right: 10px !important; font-size: 16px !important; }
+  .menu-label {
+    display: inline !important;
+    opacity: 1;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .menu-icon {
+    margin-right: 10px !important;
+    font-size: 16px !important;
+    color: rgba(255, 255, 255, 0.75);
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
   .ant-menu-sub { max-height: 60vh; overflow-y: auto; }
-  .ant-menu-item { height: 38px !important; line-height: 38px !important; }
 }
 
 /* ─── Sidebar overrides ───────────────────────────────────────────────── */
@@ -66,10 +74,40 @@ body {
 }
 
 /* ─── Menu overrides (dark theme → brand indigo) ─────────────────────── */
+/* Inline submenus (inside the sidebar) inherit the gradient → transparent.
+   Popup flyouts must NOT be transparent — they need a solid background. */
 .ant-menu-dark,
-.ant-menu-dark .ant-menu-sub,
 .ant-menu-dark .ant-menu-inline.ant-menu-sub {
   background: transparent !important;
+}
+
+/* ─── Popup submenu: dark card flyout ────────────────────────────────── */
+.ant-menu-submenu-popup.ant-menu-dark > .ant-menu,
+.ant-menu-submenu-popup > .ant-menu.ant-menu-dark {
+  background: #1e1b4b !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45) !important;
+  border-radius: 10px !important;
+  padding: 4px 0 !important;
+  min-width: 180px;
+}
+
+.ant-menu-submenu-popup .ant-menu-item {
+  height: 38px !important;
+  line-height: 38px !important;
+  border-radius: 6px !important;
+  margin: 2px 6px !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.ant-menu-submenu-popup .ant-menu-item:hover,
+.ant-menu-submenu-popup .ant-menu-item-active {
+  background: rgba(99, 102, 241, 0.28) !important;
+  color: #ffffff !important;
+}
+
+.ant-menu-submenu-popup .ant-menu-item-selected {
+  background: rgba(99, 102, 241, 0.45) !important;
+  color: #ffffff !important;
 }
 
 .ant-menu-dark .ant-menu-item,
