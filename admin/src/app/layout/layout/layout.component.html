@@ -14,20 +14,20 @@
     <ul nz-menu nzTheme="dark" nzMode="inline" class="sidebar-nav">
       <ng-container *ngFor="let menu of menus">
 
-        <!-- Expandable group — uses TemplateRef title for consistent MS icons -->
+        <!-- Expandable group -->
         <li *ngIf="menu.hashChild" nz-submenu [nzTitle]="groupTitle">
           <ng-template #groupTitle>
             <span class="material-symbols-outlined menu-icon">{{menu.icon || 'folder'}}</span>
-            <span>{{menu.menuName}}</span>
+            <span class="menu-label">{{menu.menuName}}</span>
           </ng-template>
           <ul>
             <li *ngFor="let page of menu.pages" nz-menu-item
                 [routerLink]="page.pageUrl"
                 routerLinkActive="ant-menu-item-selected">
               <span class="material-symbols-outlined menu-icon">{{page.icon || 'article'}}</span>
-              <span>{{page.name}}</span>
+              <span class="menu-label">{{page.name}}</span>
             </li>
-            <app-menu [menus]="menu.childParentMenuList"></app-menu>
+            <app-menu *ngIf="menu.childParentMenuList?.length" [menus]="menu.childParentMenuList"></app-menu>
           </ul>
         </li>
 
@@ -39,7 +39,7 @@
             nz-tooltip nzTooltipPlacement="right"
             [nzTooltipTitle]="isCollapsed ? menu.menuName : ''">
           <span class="material-symbols-outlined menu-icon">{{menu.icon || 'grid_view'}}</span>
-          <span>{{menu.menuName}}</span>
+          <span class="menu-label">{{menu.menuName}}</span>
         </li>
 
       </ng-container>
