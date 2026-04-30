@@ -54,29 +54,51 @@ jobs:
                      /var/cache/nginx/front_api
           "
 
-      - name: Sync nginx and systemd configs to server
+      - name: Copy nginx configs to server (SCP – always overwrites)
         run: |
-          rsync -avz -e "ssh -i ~/.ssh/id_rsa" \
-            deploy/nginx/ \
+          scp -i ~/.ssh/id_rsa \
+            deploy/nginx/preptm.conf \
+            deploy/nginx/admin.preptm.conf \
+            deploy/nginx/api.preptm.conf \
+            deploy/nginx/file.preptm.conf \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/etc/nginx/sites-available/
-          rsync -avz -e "ssh -i ~/.ssh/id_rsa" \
-            deploy/pm2/ \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/preptm/pm2/
-          rsync -avz -e "ssh -i ~/.ssh/id_rsa" \
-            deploy/systemd/ \
+
+      - name: Copy systemd service files to server (SCP – always overwrites)
+        run: |
+          scp -i ~/.ssh/id_rsa \
+            deploy/systemd/preptm-gateway.service \
+            deploy/systemd/preptm-alldropdown.service \
+            deploy/systemd/preptm-frontapi.service \
+            deploy/systemd/preptm-master.service \
+            deploy/systemd/preptm-translation.service \
+            deploy/systemd/preptm-fileuploader.service \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/etc/systemd/system/
+
+      - name: Copy PM2 ecosystem to server
+        run: |
+          scp -i ~/.ssh/id_rsa \
+            deploy/pm2/ecosystem.config.js \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/preptm/pm2/
+
+      - name: Verify files on server
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+            echo '=== nginx configs ===' && ls -la /etc/nginx/sites-available/*.conf
+            echo '=== systemd services ===' && ls -la /etc/systemd/system/preptm-*.service
+          "
 
       - name: Enable nginx sites and systemd services
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
-            ln -sf /etc/nginx/sites-available/preptm.conf       /etc/nginx/sites-enabled/preptm.conf
-            ln -sf /etc/nginx/sites-available/admin.preptm.conf /etc/nginx/sites-enabled/admin.preptm.conf
-            ln -sf /etc/nginx/sites-available/api.preptm.conf   /etc/nginx/sites-enabled/api.preptm.conf
-            ln -sf /etc/nginx/sites-available/file.preptm.conf  /etc/nginx/sites-enabled/file.preptm.conf
-            rm -f /etc/nginx/sites-enabled/default
-            systemctl daemon-reload
-            systemctl enable preptm-gateway preptm-alldropdown preptm-frontapi preptm-master preptm-translation preptm-fileuploader
-            nginx -t && systemctl reload nginx
+            ln -sf /etc/nginx/sites-available/preptm.conf       /etc/nginx/sites-enabled/preptm.conf &&
+            ln -sf /etc/nginx/sites-available/admin.preptm.conf /etc/nginx/sites-enabled/admin.preptm.conf &&
+            ln -sf /etc/nginx/sites-available/api.preptm.conf   /etc/nginx/sites-enabled/api.preptm.conf &&
+            ln -sf /etc/nginx/sites-available/file.preptm.conf  /etc/nginx/sites-enabled/file.preptm.conf &&
+            rm -f /etc/nginx/sites-enabled/default &&
+            systemctl daemon-reload &&
+            systemctl enable preptm-gateway preptm-alldropdown preptm-frontapi preptm-master preptm-translation preptm-fileuploader &&
+            nginx -t &&
+            systemctl reload nginx
           "
 
       - name: Stop service before deploy
