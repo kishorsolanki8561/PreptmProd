@@ -7,11 +7,19 @@ import { BehaviorSubject } from 'rxjs';
 export class SidebarService {
   isSidebarCollapsed$ = new BehaviorSubject<boolean>(false);
   constructor() { }
+  isFullscreen$ = new BehaviorSubject<boolean>(false);
+
   collapseSidebar() {
     this.isSidebarCollapsed$.next(true);
   }
   expandSidebar() {
     this.isSidebarCollapsed$.next(false);
+    this.isFullscreen$.next(false);
+  }
+  toggleFullscreen() {
+    const next = !this.isFullscreen$.getValue();
+    this.isFullscreen$.next(next);
+    if (next) this.isSidebarCollapsed$.next(true);
   }
 
   // getListUrl(pages: any[]): string {

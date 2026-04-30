@@ -83,6 +83,21 @@
     }
   }
 }
-.link{
+.link {
   min-height: 47px !important;
+}
+
+/* ─── Sticky submit / reset bar ──────────────────────────────────────── */
+.form-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0 8px;
+  margin-top: 20px;
+  background: var(--surface, #ffffff);
+  border-top: 1px solid var(--border, #e2e8f0);
 }

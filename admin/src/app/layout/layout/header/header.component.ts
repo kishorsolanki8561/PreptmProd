@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 })
 export class HeaderComponent implements OnInit {
   isCollapsed = false;
+  isFullscreen = false;
   userDetails: any;
   enableTranslate = this._coreService.translatorStaus();
   env = environment
@@ -23,14 +24,22 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._sidebarService.isSidebarCollapsed$.subscribe(isCollapsed => this.isCollapsed = isCollapsed)
+    this._sidebarService.isSidebarCollapsed$.subscribe(isCollapsed => this.isCollapsed = isCollapsed);
+    this._sidebarService.isFullscreen$.subscribe(isFullscreen => this.isFullscreen = isFullscreen);
   }
 
   toggleSidebar() {
-    if (this.isCollapsed)
+    if (this.isFullscreen) {
       this._sidebarService.expandSidebar();
-    else
+    } else if (this.isCollapsed) {
+      this._sidebarService.expandSidebar();
+    } else {
       this._sidebarService.collapseSidebar();
+    }
+  }
+
+  toggleFullscreen() {
+    this._sidebarService.toggleFullscreen();
   }
 
   logout() {

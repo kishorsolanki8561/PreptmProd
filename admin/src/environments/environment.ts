@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   // apiEndPoint: 'https://sapi.preptm.com/api/', //Stage api 
   //apiEndPoint:'https://api.preptm.com/api/', //prod api 
-   apiEndPoint: 'https://localhost:7229/api/', // Local Api
+   apiEndPoint: 'https://api.preptm.com/api/', // Local Api
   fileEndPoint: 'https://sfile.preptm.com/Content',
   fileUploadEndPoint: 'https://sfile.preptm.com',
   rootFileEndPoint: 'https://sfile.preptm.com/api/FileUploader/',

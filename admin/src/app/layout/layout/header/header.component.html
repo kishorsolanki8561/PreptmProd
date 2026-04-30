@@ -1,37 +1,54 @@
-<div class="cursor-pointer text-lg text-white/50 flex h-full items-center justify-between">
-    <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" (click)="toggleSidebar()"></span>
-    <div class="flex gap-4 items-center">
+<div class="header-inner">
 
-        <p class="m-0">{{userDetails.name}} ({{userDetails.userTypeName}})
-        </p>
+  <!-- Left: sidebar controls -->
+  <div class="header-left">
+    <!-- Hamburger toggle: collapse ↔ expand sidebar -->
+    <button class="sidebar-toggle" (click)="toggleSidebar()"
+            [attr.aria-label]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'">
+      <span class="material-symbols-outlined ms-outline">menu</span>
+    </button>
 
-        <nz-avatar [nzSize]="40" nzIcon="user" nz-popover nzPopoverTitle="Profile" [nzPopoverContent]="menu"
-            nzPopoverPlacement="bottomRight"></nz-avatar>
-        <ng-template #menu>
-            <div class="flex justify-between my-3">
-                <span>Translate</span>
-                <nz-switch [(ngModel)]="enableTranslate" [nzControl]="true" (click)="onTranslateChange()"></nz-switch>
-            </div>
-            <button nz-button nzType="text" (click)="logout()" nzBlock>
-                <span nz-icon nzType="logout" nzTheme="outline"></span>Logout
-            </button>
+  </div>
 
-            <ng-container *ngIf="!env.production">
-                <div>
-                    <a href="http://204.12.245.106:7233/swagger/index.html" target="_blank">Transaction doc</a>
-                </div>
-                <div>
-                    <a href="http://204.12.245.106:7256/swagger/index.html" target="_blank">Master doc</a>
-                </div>
-                <div>
-                    <a href="http://204.12.245.106:7294/swagger/index.html" target="_blank">DDL doc</a>
-                </div>
-                <div>
-                    <a href="http://204.12.245.106:7080/swagger/index.html" target="_blank">UI doc</a>
-                </div>
-
-            </ng-container>
-
-        </ng-template>
+  <!-- Right-side actions -->
+  <div class="header-actions">
+    <div class="user-info">
+      <span class="user-name">{{ userDetails.name }}</span>
+      <span class="user-role">{{ userDetails.userTypeName }}</span>
     </div>
+
+    <nz-avatar [nzSize]="36" nzIcon="user" class="user-avatar"
+               nz-popover nzPopoverTitle="Account"
+               [nzPopoverContent]="accountMenu"
+               nzPopoverPlacement="bottomRight">
+    </nz-avatar>
+
+    <ng-template #accountMenu>
+      <div class="account-popover">
+
+        <div class="popover-row">
+          <span class="popover-label">Translate</span>
+          <nz-switch [(ngModel)]="enableTranslate" [nzControl]="true"
+                     (click)="onTranslateChange()"></nz-switch>
+        </div>
+
+        <button nz-button nzType="text" nzDanger (click)="logout()" nzBlock class="logout-btn">
+          <span class="material-symbols-outlined">logout</span>
+          Sign out
+        </button>
+
+        <ng-container *ngIf="!env.production">
+          <nz-divider nzText="Dev Docs" nzOrientation="left"></nz-divider>
+          <div class="dev-links">
+            <a href="http://204.12.245.106:7233/swagger/index.html" target="_blank">Transaction</a>
+            <a href="http://204.12.245.106:7256/swagger/index.html" target="_blank">Master</a>
+            <a href="http://204.12.245.106:7294/swagger/index.html" target="_blank">DDL</a>
+            <a href="http://204.12.245.106:7080/swagger/index.html" target="_blank">UI</a>
+          </div>
+        </ng-container>
+
+      </div>
+    </ng-template>
+  </div>
+
 </div>

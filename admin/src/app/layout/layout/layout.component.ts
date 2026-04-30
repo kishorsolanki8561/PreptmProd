@@ -9,7 +9,8 @@ import { SidebarService } from 'src/app/core/services/sidebar.service';
 })
 export class LayoutComponent implements OnInit {
   isCollapsed = false;
-  menus: any[]=[]
+  isFullscreen = false;
+  menus: any[] = []
   constructor(
     private _sidebarService: SidebarService,
     private _coreService: CoreService,
@@ -17,7 +18,8 @@ export class LayoutComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._sidebarService.isSidebarCollapsed$.subscribe(isCollapsed => this.isCollapsed = isCollapsed)
+    this._sidebarService.isSidebarCollapsed$.subscribe(isCollapsed => this.isCollapsed = isCollapsed);
+    this._sidebarService.isFullscreen$.subscribe(isFullscreen => this.isFullscreen = isFullscreen);
     this.menus = this.getMenus();
   }
 
