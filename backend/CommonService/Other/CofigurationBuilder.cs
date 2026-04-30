@@ -19,7 +19,11 @@ namespace CommonService.Other
         {
             services.AddCors(p => p.AddPolicy(appName, builder =>
             {
-                builder.WithOrigins(path).AllowAnyMethod().AllowAnyHeader().WithHeaders();
+                // AllowAnyOrigin sets Access-Control-Allow-Origin: *
+                // SetIsOriginAllowed handles OPTIONS preflight correctly for all origins
+                builder.SetIsOriginAllowed(origin => true)
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
             }));
         }
 
