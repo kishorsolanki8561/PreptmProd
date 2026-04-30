@@ -45,10 +45,10 @@ jobs:
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "mkdir -p /var/www/preptm/front /var/www/preptm/pm2 /var/log/preptm /var/cache/nginx/ssr"
 
-      - name: Stop ProdFront before deploy
+      - name: Stop ProdFront apps before deploy
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-            "pm2 stop ProdFront 2>/dev/null || true"
+            "pm2 stop ProdFront-en ProdFront-hi 2>/dev/null || true"
 
       - name: Sync build output to server
         run: |
@@ -57,10 +57,10 @@ jobs:
             front/dist/preptm/ \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/preptm/front/
 
-      - name: Start ProdFront and save
+      - name: Start ProdFront apps and save
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
-            pm2 restart ProdFront 2>/dev/null || \
-            pm2 start /var/www/preptm/pm2/ecosystem.config.js --only ProdFront && \
+            pm2 restart ProdFront-en ProdFront-hi 2>/dev/null || \
+            pm2 start /var/www/preptm/pm2/ecosystem.config.js && \
             pm2 save
           "
