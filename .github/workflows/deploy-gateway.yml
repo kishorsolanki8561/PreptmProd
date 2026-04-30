@@ -54,31 +54,27 @@ jobs:
                      /var/cache/nginx/front_api
           "
 
-      - name: Copy nginx configs to server (SCP – always overwrites)
+      - name: Push config files to server via base64
         run: |
-          scp -i ~/.ssh/id_rsa \
-            deploy/nginx/preptm.conf \
-            deploy/nginx/admin.preptm.conf \
-            deploy/nginx/api.preptm.conf \
-            deploy/nginx/file.preptm.conf \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/etc/nginx/sites-available/
-
-      - name: Copy systemd service files to server (SCP – always overwrites)
-        run: |
-          scp -i ~/.ssh/id_rsa \
-            deploy/systemd/preptm-gateway.service \
-            deploy/systemd/preptm-alldropdown.service \
-            deploy/systemd/preptm-frontapi.service \
-            deploy/systemd/preptm-master.service \
-            deploy/systemd/preptm-translation.service \
-            deploy/systemd/preptm-fileuploader.service \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/etc/systemd/system/
-
-      - name: Copy PM2 ecosystem to server
-        run: |
-          scp -i ~/.ssh/id_rsa \
-            deploy/pm2/ecosystem.config.js \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/preptm/pm2/
+          # Encode each config file and write directly via SSH (bypasses SCP/rsync issues)
+          for f in deploy/nginx/preptm.conf deploy/nginx/admin.preptm.conf deploy/nginx/api.preptm.conf deploy/nginx/file.preptm.conf; do
+            name=$(basename $f)
+            content=$(base64 -w 0 $f)
+            ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+              "echo '$content' | base64 -d > /etc/nginx/sites-available/$name"
+            echo "Pushed $name"
+          done
+          for f in deploy/systemd/preptm-gateway.service deploy/systemd/preptm-alldropdown.service deploy/systemd/preptm-frontapi.service deploy/systemd/preptm-master.service deploy/systemd/preptm-translation.service deploy/systemd/preptm-fileuploader.service; do
+            name=$(basename $f)
+            content=$(base64 -w 0 $f)
+            ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+              "echo '$content' | base64 -d > /etc/systemd/system/$name"
+            echo "Pushed $name"
+          done
+          content=$(base64 -w 0 deploy/pm2/ecosystem.config.js)
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "echo '$content' | base64 -d > /var/www/preptm/pm2/ecosystem.config.js"
+          echo "Pushed ecosystem.config.js"
 
       - name: Verify files on server
         run: |
