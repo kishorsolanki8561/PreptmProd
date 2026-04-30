@@ -1,16 +1,61 @@
 
-.lbl {
-    line-height: 35px;
-    font-weight: 500;
-    font-size: 0.875rem;
+/* ─── Design Tokens ──────────────────────────────────────────────────── */
+:root {
+  --brand-primary:   #4f46e5;
+  --brand-hover:     #4338ca;
+  --brand-light:     #eef2ff;
+  --sidebar-from:    #0f172a;
+  --sidebar-to:      #1e1b4b;
+  --header-bg:       #ffffff;
+  --content-bg:      #f8fafc;
+  --surface:         #ffffff;
+  --border:          #e2e8f0;
+  --text-primary:    #0f172a;
+  --text-secondary:  #475569;
+  --text-muted:      #94a3b8;
+  --radius-sm:       6px;
+  --radius-md:       10px;
+  --radius-lg:       14px;
+  --shadow-card:     0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  --shadow-card-md:  0 4px 12px -1px rgb(0 0 0 / 0.10), 0 2px 6px -2px rgb(0 0 0 / 0.08);
 }
 
+/* ─── Base Typography ────────────────────────────────────────────────── */
+* {
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--text-primary);
+  background: var(--content-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Label utility ──────────────────────────────────────────────────── */
+.lbl {
+  line-height: 35px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* ─── Material Symbols — filled by default ───────────────────────────── */
 .material-symbols-outlined {
-  font-size: 20px;
-  margin-right: 10px;
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48
+  font-size: 18px;
+  vertical-align: middle;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.material-symbols-outlined.ms-outline {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ─── Surface card pattern ───────────────────────────────────────────── */
+.surface-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 20px 24px;
 }

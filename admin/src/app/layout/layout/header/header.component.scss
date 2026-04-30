@@ -1,0 +1,119 @@
+/* ─── Header shell ───────────────────────────────────────────────────── */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0 24px;
+}
+
+/* ─── Sidebar toggle button ──────────────────────────────────────────── */
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-secondary, #475569);
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background: #f1f5f9;
+    color: var(--text-primary, #0f172a);
+  }
+
+  .material-symbols-outlined {
+    font-size: 22px;
+  }
+}
+
+/* ─── Right actions cluster ──────────────────────────────────────────── */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* ─── User info (name + role stack) ─────────────────────────────────── */
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.3;
+}
+
+.user-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary, #0f172a);
+}
+
+.user-role {
+  font-size: 0.6875rem;
+  color: var(--text-muted, #94a3b8);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Avatar ─────────────────────────────────────────────────────────── */
+.user-avatar {
+  cursor: pointer;
+  background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+  border: 2px solid transparent;
+  transition: box-shadow 0.15s, border-color 0.15s;
+
+  &:hover {
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+  }
+}
+
+/* ─── Account popover content ────────────────────────────────────────── */
+.account-popover {
+  min-width: 200px;
+  padding: 2px 0;
+}
+
+.popover-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 6px 0 10px;
+}
+
+.popover-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #475569);
+}
+
+.logout-btn {
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+  color: #ef4444 !important;
+  font-weight: 500;
+
+  .material-symbols-outlined {
+    font-size: 16px;
+  }
+}
+
+/* ─── Dev doc links ──────────────────────────────────────────────────── */
+.dev-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 2px;
+
+  a {
+    font-size: 0.8125rem;
+    color: var(--brand-primary, #4f46e5);
+    transition: opacity 0.15s;
+
+    &:hover { opacity: 0.75; text-decoration: underline; }
+  }
+}

@@ -1,0 +1,63 @@
+/* ─── Base button ────────────────────────────────────────────────────── */
+.app-btn {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  height: 38px !important;
+  padding: 0 16px !important;
+  border-radius: 8px !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.1s !important;
+  margin: 4px 0;
+
+  &:active { transform: translateY(0) !important; }
+
+  /* ── Primary (indigo) ─────────────────────────────────── */
+  &--primary {
+    background: var(--brand-primary, #4f46e5) !important;
+    border-color: var(--brand-primary, #4f46e5) !important;
+    color: #ffffff !important;
+
+    &:hover:not([disabled]),
+    &:focus:not([disabled]) {
+      background: var(--brand-hover, #4338ca) !important;
+      border-color: var(--brand-hover, #4338ca) !important;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
+      transform: translateY(-1px);
+    }
+
+    &[disabled] { opacity: 0.55; cursor: not-allowed; }
+  }
+
+  /* ── Default (outlined) ───────────────────────────────── */
+  &--default {
+    background: #ffffff !important;
+    border-color: var(--border, #e2e8f0) !important;
+    color: var(--text-secondary, #475569) !important;
+
+    &:hover:not([disabled]) {
+      color: var(--brand-primary, #4f46e5) !important;
+      border-color: var(--brand-primary, #4f46e5) !important;
+    }
+  }
+
+  /* ── Ghost / text ─────────────────────────────────────── */
+  &--ghost {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: var(--text-secondary, #475569) !important;
+
+    &:hover:not([disabled]) {
+      background: #f1f5f9 !important;
+      color: var(--text-primary, #0f172a) !important;
+    }
+  }
+}
+
+/* ─── Icon inside button ─────────────────────────────────────────────── */
+.btn-icon {
+  font-size: 16px !important;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}

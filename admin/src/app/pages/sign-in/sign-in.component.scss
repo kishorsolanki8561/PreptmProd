@@ -1,0 +1,196 @@
+/* ─── Outer wrapper ───────────────────────────────────────────────────── */
+.signin-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ─── Left: form card ─────────────────────────────────────────────────── */
+.signin-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 460px;
+  padding: 56px 52px;
+  background: #ffffff;
+  box-shadow: 4px 0 40px rgba(15, 23, 42, 0.06);
+  position: relative;
+  z-index: 1;
+
+  @media (max-width: 767px) {
+    max-width: 100%;
+    padding: 40px 28px;
+  }
+}
+
+/* ─── Brand row ───────────────────────────────────────────────────────── */
+.signin-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 44px;
+}
+
+.signin-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.signin-app-name {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+}
+
+/* ─── Heading ─────────────────────────────────────────────────────────── */
+.signin-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+}
+
+.signin-subtitle {
+  font-size: 0.9375rem;
+  color: var(--text-secondary, #64748b);
+  margin: 0 0 28px;
+}
+
+/* ─── Form ────────────────────────────────────────────────────────────── */
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ─── Submit button ───────────────────────────────────────────────────── */
+.signin-btn {
+  width: 100% !important;
+  height: 46px !important;
+  margin-top: 10px;
+  border-radius: 10px !important;
+  border: none !important;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  font-weight: 600 !important;
+  font-size: 0.9375rem !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: box-shadow 0.2s, transform 0.1s !important;
+
+  &:hover:not([disabled]) {
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.4) !important;
+    transform: translateY(-1px);
+  }
+
+  &:active { transform: translateY(0) !important; }
+
+  &[disabled] { opacity: 0.6; }
+
+  .material-symbols-outlined {
+    font-size: 18px;
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+}
+
+/* ─── Right: branded panel ────────────────────────────────────────────── */
+.signin-panel {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, #1e1b4b 0%, #312e81 45%, #4338ca 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 767px) { display: none; }
+}
+
+/* Decorative blobs */
+.panel-blob {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+
+  &--tl {
+    width: 480px;
+    height: 480px;
+    top: -140px;
+    left: -140px;
+  }
+
+  &--br {
+    width: 360px;
+    height: 360px;
+    bottom: -100px;
+    right: -100px;
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+/* Panel content */
+.panel-content {
+  position: relative;
+  z-index: 1;
+  max-width: 420px;
+  padding: 40px;
+  text-align: center;
+}
+
+.panel-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  object-fit: cover;
+  margin: 0 auto 28px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.panel-headline {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+}
+
+.panel-sub {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.65;
+  margin: 0 0 32px;
+}
+
+/* Feature pills */
+.panel-pills {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  backdrop-filter: blur(8px);
+
+  .material-symbols-outlined {
+    font-size: 15px;
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+}

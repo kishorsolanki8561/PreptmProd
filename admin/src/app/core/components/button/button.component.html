@@ -1,30 +1,34 @@
-<!-- Submit button -->
-<button (click)="click()" *ngIf="type==='submit' && show" nz-button nzType="primary" [nzLoading]="isLoading" class="my-4 p-2 btn">
-    <span nz-icon nzType="send" nzTheme="outline" class="align-text-top"></span>
-    Submit
+<!-- Submit -->
+<button (click)="click()" *ngIf="type==='submit' && show"
+        nz-button nzType="primary" [nzLoading]="isLoading" class="app-btn app-btn--primary">
+  <span class="material-symbols-outlined btn-icon">send</span>
+  Submit
 </button>
 
-<!-- Reset button -->
-<button (click)="click()" *ngIf="type==='reset' && show" nz-button nzType="text" [nzLoading]="isLoading" class="my-4 p-2 btn">
-    <span nz-icon nzType="sync" nzTheme="outline" class="align-text-top"></span>
-    Reset
+<!-- Reset -->
+<button (click)="click()" *ngIf="type==='reset' && show"
+        nz-button nzType="default" [nzLoading]="isLoading" class="app-btn app-btn--default">
+  <span class="material-symbols-outlined btn-icon">restart_alt</span>
+  Reset
 </button>
 
-
-<!-- Back button -->
-<button (click)="onBack()" *ngIf="type==='back' && show" nz-button nzType="default" [nzLoading]="isLoading" class="my-4 p-2 btn">
-    <span nz-icon nzType="arrow-left" nzTheme="outline" class="align-text-top"></span>
-    Back
+<!-- Back -->
+<button (click)="onBack()" *ngIf="type==='back' && show"
+        nz-button nzType="text" [nzLoading]="isLoading" class="app-btn app-btn--ghost">
+  <span class="material-symbols-outlined btn-icon">arrow_back</span>
+  Back
 </button>
 
-<!-- Edit button -->
-<button (click)="click()" *ngIf="type==='edit' && show" nz-button nzType="primary" [nzLoading]="isLoading" class="my-4 p-2 btn">
-    <span nz-icon nzType="edit" nzTheme="outline" class="align-text-top"></span>
-    Edit
+<!-- Edit -->
+<button (click)="click()" *ngIf="type==='edit' && show"
+        nz-button nzType="primary" [nzLoading]="isLoading" class="app-btn app-btn--primary">
+  <span class="material-symbols-outlined btn-icon">edit</span>
+  Edit
 </button>
 
-
-<button (click)="click()" *ngIf="type==='add' && show" nz-button nzType="primary" [nzLoading]="isLoading" class="my-4 p-2 btn">
-    <span nz-icon nzType="plus" nzTheme="outline" class="align-text-top"></span>
-    Add
+<!-- Add -->
+<button (click)="click()" *ngIf="type==='add' && show"
+        nz-button nzType="primary" [nzLoading]="isLoading" class="app-btn app-btn--primary">
+  <span class="material-symbols-outlined btn-icon">add</span>
+  Add New
 </button>

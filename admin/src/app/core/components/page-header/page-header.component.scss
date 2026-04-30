@@ -1,0 +1,43 @@
+/* ─── Page header bar ────────────────────────────────────────────────── */
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 20px 0 16px;
+  border-bottom: 1px solid var(--border, #e2e8f0);
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+/* ─── Left: breadcrumb + title ───────────────────────────────────────── */
+.page-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.breadcrumb {
+  font-size: 0.8125rem;
+}
+
+.breadcrumb-home {
+  font-size: 14px;
+  vertical-align: -2px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+/* ─── Right: action buttons ──────────────────────────────────────────── */
+.page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
