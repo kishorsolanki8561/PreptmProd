@@ -7,8 +7,8 @@ module.exports = {
     {
       name: 'ProdFront',
       script: '/var/www/preptm/front/server/en/server.mjs',
-      instances: 2,
-      exec_mode: 'cluster',
+      instances: 1,
+      exec_mode: 'fork',
       watch: false,
       max_memory_restart: '512M',
       env: {
