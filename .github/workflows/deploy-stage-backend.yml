@@ -1,0 +1,180 @@
+name: Deploy — Stage Backend API
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/deploy-stage-backend.yml'
+  workflow_dispatch:
+    inputs:
+      service:
+        description: 'Service to deploy'
+        required: true
+        default: 'All'
+        type: choice
+        options:
+          - All
+          - Gateway
+          - FrontMicroService
+          - MasterMicroService
+          - AllDropDownMicroService
+          - FileUploaderMicroService
+          - TranslationMicroService
+
+# GitHub Secrets required (one per service — full JSON content):
+#   STAGE_APPSETTINGS_GATEWAY
+#   STAGE_APPSETTINGS_FRONT
+#   STAGE_APPSETTINGS_MASTER
+#   STAGE_APPSETTINGS_DROPDOWN
+#   STAGE_APPSETTINGS_FILEUPLOAD
+#   STAGE_APPSETTINGS_TRANSLATION
+
+jobs:
+  deploy:
+    name: Deploy ${{ matrix.service }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - service: Gateway
+            project: backend/5GStudyGateway/Gateway.csproj
+            systemd: preptm-gateway
+            secret_suffix: GATEWAY
+            http_port: 5229
+
+          - service: FrontMicroService
+            project: backend/FrontMicroService/FrontMicroService.csproj
+            systemd: preptm-front-api
+            secret_suffix: FRONT
+            http_port: 5080
+
+          - service: MasterMicroService
+            project: backend/MasterMicroService/MasterMicroService.csproj
+            systemd: preptm-master-api
+            secret_suffix: MASTER
+            http_port: 5256
+
+          - service: AllDropDownMicroService
+            project: backend/AllDropDownMicroService/AllDropDownMicroService.csproj
+            systemd: preptm-dropdown-api
+            secret_suffix: DROPDOWN
+            http_port: 5294
+
+          - service: FileUploaderMicroService
+            project: backend/FileUploaderMicroService/FileUploaderMicroService.csproj
+            systemd: preptm-fileupload-api
+            secret_suffix: FILEUPLOAD
+            http_port: 5129
+            extra_rsync_args: --exclude='Content/'
+
+          - service: TranslationMicroService
+            project: backend/TranslationMicroService/TranslationMicroService.csproj
+            systemd: preptm-translation-api
+            secret_suffix: TRANSLATION
+            http_port: 5233
+
+    steps:
+      - name: Check if this service is selected
+        id: gate
+        run: |
+          INPUT="${{ github.event.inputs.service }}"
+          if [ -z "$INPUT" ] || [ "$INPUT" = "All" ] || [ "$INPUT" = "${{ matrix.service }}" ]; then
+            echo "deploy=true" >> $GITHUB_OUTPUT
+          else
+            echo "deploy=false" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.deploy == 'true'
+
+      - uses: actions/setup-dotnet@v4
+        if: steps.gate.outputs.deploy == 'true'
+        with:
+          dotnet-version: '6.x'
+
+      - name: Publish ${{ matrix.service }}
+        if: steps.gate.outputs.deploy == 'true'
+        run: |
+          dotnet publish ${{ matrix.project }} \
+            -c Release \
+            -o publish/${{ matrix.service }} \
+            --no-self-contained
+
+      - name: Inject staging appsettings
+        if: steps.gate.outputs.deploy == 'true'
+        env:
+          APPSETTINGS: ${{ secrets[format('STAGE_APPSETTINGS_{0}', matrix.secret_suffix)] }}
+        run: |
+          if [ -z "$APPSETTINGS" ]; then
+            echo "::error::Secret STAGE_APPSETTINGS_${{ matrix.secret_suffix }} is not set in GitHub Secrets"
+            exit 1
+          fi
+          printf '%s' "$APPSETTINGS" > "publish/${{ matrix.service }}/appsettings.json"
+
+      - name: Set up SSH agent
+        if: steps.gate.outputs.deploy == 'true'
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Trust server host key
+        if: steps.gate.outputs.deploy == 'true'
+        run: ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Stop service
+        if: steps.gate.outputs.deploy == 'true'
+        run: |
+          ssh "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" \
+            "sudo systemctl stop ${{ matrix.systemd }} || true"
+
+      - name: Upload build artifacts to server
+        if: steps.gate.outputs.deploy == 'true'
+        run: |
+          rsync -az --delete \
+            --exclude='appsettings.Development.json' \
+            ${{ matrix.extra_rsync_args }} \
+            --rsync-path="mkdir -p ~/preptm/BackEnd/Stage/${{ matrix.service }} && rsync" \
+            publish/${{ matrix.service }}/ \
+            "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:~/preptm/BackEnd/Stage/${{ matrix.service }}/"
+
+      - name: Register systemd service
+        if: steps.gate.outputs.deploy == 'true'
+        run: |
+          DLL=$(basename "${{ matrix.project }}" .csproj)
+          REMOTE_HOME=$(ssh "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" 'echo $HOME')
+          DEPLOY_DIR="${REMOTE_HOME}/preptm/BackEnd/Stage/${{ matrix.service }}"
+          cat > /tmp/${{ matrix.systemd }}.service << UNIT
+          [Unit]
+          Description=PrepTM ${{ matrix.service }}
+          After=network.target
+
+          [Service]
+          WorkingDirectory=${DEPLOY_DIR}
+          ExecStart=/usr/bin/dotnet ${DEPLOY_DIR}/${DLL}.dll
+          Restart=always
+          RestartSec=10
+          KillSignal=SIGINT
+          SyslogIdentifier=${{ matrix.systemd }}
+          User=${{ secrets.DEPLOY_USER }}
+          Environment=ASPNETCORE_ENVIRONMENT=Staging
+          Environment=ASPNETCORE_URLS=http://127.0.0.1:${{ matrix.http_port }}
+          Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+          [Install]
+          WantedBy=multi-user.target
+          UNIT
+          scp /tmp/${{ matrix.systemd }}.service \
+            "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:/tmp/${{ matrix.systemd }}.service"
+          ssh "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" "
+            sudo mv /tmp/${{ matrix.systemd }}.service /etc/systemd/system/${{ matrix.systemd }}.service
+            sudo systemctl daemon-reload
+            sudo systemctl enable ${{ matrix.systemd }}
+          "
+
+      - name: Start service
+        if: steps.gate.outputs.deploy == 'true'
+        run: |
+          ssh "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" \
+            "sudo systemctl start ${{ matrix.systemd }}"
