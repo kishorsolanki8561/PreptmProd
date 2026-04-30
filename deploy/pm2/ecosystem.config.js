@@ -6,7 +6,7 @@ module.exports = {
   apps: [
     {
       name: 'ProdFront',
-      script: '/var/www/preptm/front/server/en/server.mjs',
+      script: '/var/www/preptm/pm2/start-prod.mjs',
       instances: 1,
       exec_mode: 'fork',
       watch: false,
