@@ -1,4 +1,4 @@
-name: Deploy — Stage Frontend (SSR)
+name: Deploy Stage Frontend (Angular SSR)
 
 on:
   push:
@@ -9,52 +9,59 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
-    name: Build & Deploy
+  build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: npm
+          cache: 'npm'
           cache-dependency-path: front/package-lock.json
 
       - name: Install dependencies
         working-directory: front
         run: npm ci
 
-      # environment.staging.ts is automatically used here via --configuration=staging
-      - name: Build staging
+      - name: Install gzipper CLI
+        run: npm install -g gzipper
+
+      - name: Build Angular SSR staging (all locales + gzip)
         working-directory: front
         run: npm run build:stage
+        # Runs: ng build --configuration=staging --localize && gzipper compress ./dist
 
-      - name: Set up SSH agent
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
-
-      - name: Trust server host key
-        run: ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
-
-      - name: Upload build artifacts to server
+      - name: Setup SSH
         run: |
-          rsync -az --delete \
-            --rsync-path="mkdir -p ~/preptm/FrontEnd/Stage/client/preptm && rsync" \
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Prepare server directories
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "mkdir -p /var/www/preptm/stage /var/www/preptm/pm2 /var/log/preptm /var/cache/nginx/stage-ssr"
+
+      - name: Stop StageFront before deploy
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "pm2 stop StageFront 2>/dev/null || true"
+
+      - name: Sync build output to server
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_rsa" \
             front/dist/preptm/ \
-            "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:~/preptm/FrontEnd/Stage/client/preptm/"
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/preptm/stage/
 
-      - name: Install server dependencies on remote
+      - name: Start StageFront and save
         run: |
-          ssh "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" "
-            cd ~/preptm/FrontEnd/Stage/client/preptm && npm install --omit=dev
-          "
-
-      - name: Reload SSR process (zero-downtime)
-        run: |
-          ssh "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" "
-            cp ~/preptm/FrontEnd/Stage/client/preptm/ecosystem.config.cjs ~/ecosystem.config.cjs
-            cd ~ && pm2 reload ecosystem.config.cjs --update-env && pm2 save
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+            pm2 restart StageFront 2>/dev/null || \
+            pm2 start /var/www/preptm/pm2/ecosystem.config.js --only StageFront && \
+            pm2 save
           "
