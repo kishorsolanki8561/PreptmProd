@@ -31,7 +31,8 @@
           "options": {
             "aot": true,
             "localize": [
-              "hi","en"
+              "hi",
+              "en"
             ],
             "outputPath": "dist/preptm",
             "index": "src/index.html",
@@ -51,14 +52,12 @@
             ],
             "styles": [
               "node_modules/ng-zorro-antd/style/index.min.css",
-
               "node_modules/ng-zorro-antd/select/style/index.min.css",
               "node_modules/ng-zorro-antd/image/style/index.min.css",
               "node_modules/ng-zorro-antd/form/style/index.min.css",
               "node_modules/ng-zorro-antd/input/style/index.min.css",
               "node_modules/ng-zorro-antd/list/style/index.min.css",
               "node_modules/ng-zorro-antd/breadcrumb/style/index.min.css",
-
               "src/assets/css/tailwind.scss",
               "src/styles.scss"
             ],
@@ -85,13 +84,19 @@
               ],
               "outputHashing": "all",
               "aot": true,
-              "optimization": true
+              "optimization": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
-              "ssr":false
+              "ssr": false
             }
           },
           "defaultConfiguration": "production"
