@@ -102,62 +102,61 @@ namespace CommonService.Other
         {
             //builder.Logging.AddSerilog();
             builder.Host.UseSerilog();
+            Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Error()
+            .Enrich.WithProcessId()
+            .Enrich.WithEnvironmentName()
+            .Enrich.WithMachineName()
+            .Enrich.WithClientIp()
+            .Enrich.WithCorrelationId()
+            .Enrich.WithProcessName()
+            .Enrich.FromLogContext()
+            .WriteTo.File("logs/log.txt"
+            , rollingInterval: RollingInterval.Day
+            , outputTemplate: "{NewLine}--------------------Log Start --------------------" +
+                     "{NewLine}--------------------IP--------------------" +
+                     "{NewLine}<{ClientIp}>" +
+                     "{NewLine}{Timestamp:yyyy-MM-dd HH:mm} {NewLine}" +
+                     "{NewLine}<{MachineName}> {NewLine} {Message} Error Level: [{Level}] {NewLine}" +
+                     "--------------------Message--------------------" +
+                     "{NewLine}{Message}{NewLine}" +
+                     "--------------------Exception--------------------" +
+                     "{NewLine}{Exception}{NewLine}" +
+                     "--------------------Log End--------------------{NewLine}")
+            .WriteTo.MSSqlServer(
+                connectionString: AppConfigFactory.Configs.connectionStrings.log
+                , tableName: "Logs"
+                , autoCreateSqlTable: true
+                , columnOptions: new ColumnOptions
+                {
+                    AdditionalColumns = new List<SqlColumn> {
+                    new("LogLevel", System.Data.SqlDbType.NVarChar),
+                    new("EventId", System.Data.SqlDbType.BigInt),
+                    new("NewLine", System.Data.SqlDbType.NVarChar),
+                    new("SourceContext", System.Data.SqlDbType.NVarChar),
+                    new("CorrelationId", System.Data.SqlDbType.NVarChar),
+                    new("ProcessName", System.Data.SqlDbType.NVarChar),
+                    new("ProcessId", System.Data.SqlDbType.BigInt),
+                    new("ThreadId", System.Data.SqlDbType.BigInt),
+                    new("MachineName", System.Data.SqlDbType.NVarChar),
+                    new("ClientIp", System.Data.SqlDbType.NVarChar),
+                    new("EnvironmentName", System.Data.SqlDbType.NVarChar)
+                    },
+                })
+                .WriteTo.Console(
+                    outputTemplate: "{NewLine}--------------------Log Start --------------------" +
+                     "{NewLine}--------------------IP--------------------" +
+                     "{NewLine}<{ClientIp}>" +
+                     "{NewLine}{Timestamp:yyyy-MM-dd HH:mm} {NewLine}" +
+                     "{NewLine}<{MachineName}> {NewLine} {Message} Error Level: [{Level}] {NewLine}" +
+                     "--------------------Message--------------------" +
+                     "{NewLine}{Message}{NewLine}" +
+                     "--------------------Exception--------------------" +
+                     "{NewLine}{Exception}{NewLine}" +
+                     "--------------------Log End--------------------{NewLine}"
+                    )
 
-            const string outputTemplate =
-                "{NewLine}--------------------Log Start --------------------" +
-                "{NewLine}--------------------IP--------------------" +
-                "{NewLine}<{ClientIp}>" +
-                "{NewLine}{Timestamp:yyyy-MM-dd HH:mm} {NewLine}" +
-                "{NewLine}<{MachineName}> {NewLine} {Message} Error Level: [{Level}] {NewLine}" +
-                "--------------------Message--------------------" +
-                "{NewLine}{Message}{NewLine}" +
-                "--------------------Exception--------------------" +
-                "{NewLine}{Exception}{NewLine}" +
-                "--------------------Log End--------------------{NewLine}";
-
-            var baseConfig = new LoggerConfiguration()
-                .MinimumLevel.Error()
-                .Enrich.WithProcessId()
-                .Enrich.WithEnvironmentName()
-                .Enrich.WithMachineName()
-                .Enrich.WithClientIp()
-                .Enrich.WithCorrelationId()
-                .Enrich.WithProcessName()
-                .Enrich.FromLogContext()
-                .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day, outputTemplate: outputTemplate)
-                .WriteTo.Console(outputTemplate: outputTemplate);
-
-            try
-            {
-                Log.Logger = baseConfig
-                    .WriteTo.MSSqlServer(
-                        connectionString: AppConfigFactory.Configs.connectionStrings.log,
-                        tableName: "Logs",
-                        autoCreateSqlTable: true,
-                        columnOptions: new ColumnOptions
-                        {
-                            AdditionalColumns = new List<SqlColumn> {
-                                new("LogLevel", System.Data.SqlDbType.NVarChar),
-                                new("EventId", System.Data.SqlDbType.BigInt),
-                                new("NewLine", System.Data.SqlDbType.NVarChar),
-                                new("SourceContext", System.Data.SqlDbType.NVarChar),
-                                new("CorrelationId", System.Data.SqlDbType.NVarChar),
-                                new("ProcessName", System.Data.SqlDbType.NVarChar),
-                                new("ProcessId", System.Data.SqlDbType.BigInt),
-                                new("ThreadId", System.Data.SqlDbType.BigInt),
-                                new("MachineName", System.Data.SqlDbType.NVarChar),
-                                new("ClientIp", System.Data.SqlDbType.NVarChar),
-                                new("EnvironmentName", System.Data.SqlDbType.NVarChar)
-                            },
-                        })
-                    .CreateLogger();
-            }
-            catch
-            {
-                // SQL Server log sink unavailable — fall back to file + console only
-                Log.Logger = baseConfig.CreateLogger();
-                Log.Warning("Serilog SQL Server sink failed to initialize. Logging to file only.");
-            }
+            .CreateLogger();
 
             builder.Services.AddHttpLogging(Logging => { });
         }
