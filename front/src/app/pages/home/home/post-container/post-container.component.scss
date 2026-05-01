@@ -28,45 +28,41 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .card-title {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #fff;
   margin: 0;
 }
 
 .card-view-all {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 3px;
   font-size: 11px;
   font-weight: 600;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
-  padding: 3px 8px;
+  padding: 3px 9px;
   border-radius: 20px;
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.25);
-  transition: background $transition-fast, color $transition-fast;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  transition: background $transition-fast;
   white-space: nowrap;
+  flex-shrink: 0;
 
   &:hover {
-    background: rgba(255,255,255,0.28);
+    background: rgba(255, 255, 255, 0.32);
     color: #fff;
   }
 
-  svg {
-    transition: transform $transition-fast;
-  }
-
-  &:hover svg {
-    transform: translateX(2px);
-  }
+  svg { transition: transform $transition-fast; }
+  &:hover svg { transform: translateX(2px); }
 }
 
 // =============================================
@@ -74,117 +70,124 @@
 // =============================================
 .card-body {
   flex: 1;
-  padding: 8px 0;
+  overflow: hidden;
 }
 
 .post-list {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 4px 0;
 }
 
 .post-item {
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  transition: background $transition-fast;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 
   &:last-child { border-bottom: none; }
 
-  &:hover {
-    background: rgba(0,0,0,0.025);
-  }
+  &:hover { background: rgba(0, 0, 0, 0.022); }
 }
 
+// =============================================
+// POST LINK — stacked layout (title → badge)
+// =============================================
 .post-link {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 9px 14px;
+  flex-direction: column;         // stack title then badge
+  gap: 5px;
+  padding: 10px 14px;
   text-decoration: none;
   color: inherit;
+  overflow: hidden;               // prevent any child overflow
 }
 
 .post-title {
   font-size: 13px;
   line-height: 1.5;
-  flex: 1;
   color: #1f2937;
   transition: color $transition-fast;
+  word-break: break-word;
 
-  .post-item:hover & {
-    color: #111;
-  }
+  .post-item:hover & { color: #111; }
 }
 
 // =============================================
-// BADGES
+// BADGES ROW
 // =============================================
 .post-badges {
-  flex-shrink: 0;
   display: flex;
   align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
+// ── Urgency badge (self-contained, no overflow) ──
 .badge-urgent {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   background: #dc2626;
   color: #fff;
   font-size: 10px;
   font-weight: 700;
-  padding: 3px 8px 3px 18px;
+  padding: 3px 9px;
   border-radius: 20px;
-  position: relative;
   line-height: 1;
   white-space: nowrap;
+  max-width: 100%;               // never exceed parent
 
+  // The day count — shown as a bold white number
   .badge-counter {
-    position: absolute;
-    left: -1px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #b91c1c;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    width: 22px;
-    height: 22px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 9px;
+    background: rgba(0, 0, 0, 0.20);
+    border-radius: 10px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    font-size: 10px;
     font-weight: 800;
+    position: static;             // no absolute — fully contained
+    transform: none;
+    border: none;
   }
 }
 
+// ── "NEW" gif badge ──
 .badge-new {
-  width: 32px;
-  height: 18px;
+  width: 30px;
+  height: 17px;
   object-fit: contain;
+  display: block;
 }
 
 // =============================================
-// COLOR VARIANTS — Header backgrounds
+// COLOR VARIANTS
 // =============================================
-.list-wrapper-1 .card-header { background: $post-list-1; }
-.list-wrapper-2 .card-header { background: $post-list-2; }
-.list-wrapper-3 .card-header { background: $post-list-3; }
-.list-wrapper-4 .card-header { background: $post-list-4; }
+.list-wrapper-1 {
+  border-left: 3px solid $post-list-1;
+  .card-header { background: $post-list-1; }
+  .post-item:hover { background: rgba($post-list-1, 0.04); }
+  .post-item:hover .post-title { color: $post-list-1; }
+}
 
-// Left accent border per variant
-.list-wrapper-1 { border-left: 3px solid $post-list-1; }
-.list-wrapper-2 { border-left: 3px solid $post-list-2; }
-.list-wrapper-3 { border-left: 3px solid $post-list-3; }
-.list-wrapper-4 { border-left: 3px solid $post-list-4; }
+.list-wrapper-2 {
+  border-left: 3px solid $post-list-2;
+  .card-header { background: $post-list-2; }
+  .post-item:hover { background: rgba($post-list-2, 0.04); }
+  .post-item:hover .post-title { color: $post-list-2; }
+}
 
-// Post item hover tint per variant
-.list-wrapper-1 .post-item:hover { background: rgba($post-list-1, 0.04); }
-.list-wrapper-2 .post-item:hover { background: rgba($post-list-2, 0.04); }
-.list-wrapper-3 .post-item:hover { background: rgba($post-list-3, 0.04); }
-.list-wrapper-4 .post-item:hover { background: rgba($post-list-4, 0.04); }
+.list-wrapper-3 {
+  border-left: 3px solid $post-list-3;
+  .card-header { background: $post-list-3; }
+  .post-item:hover { background: rgba($post-list-3, 0.04); }
+  .post-item:hover .post-title { color: $post-list-3; }
+}
 
-// Post title hover color per variant
-.list-wrapper-1 .post-item:hover .post-title { color: $post-list-1; }
-.list-wrapper-2 .post-item:hover .post-title { color: $post-list-2; }
-.list-wrapper-3 .post-item:hover .post-title { color: $post-list-3; }
-.list-wrapper-4 .post-item:hover .post-title { color: $post-list-4; }
+.list-wrapper-4 {
+  border-left: 3px solid $post-list-4;
+  .card-header { background: $post-list-4; }
+  .post-item:hover { background: rgba($post-list-4, 0.04); }
+  .post-item:hover .post-title { color: $post-list-4; }
+}
