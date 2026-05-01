@@ -1,0 +1,124 @@
+name: Deploy — Backend API
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch:
+    inputs:
+      service:
+        description: 'Service to deploy'
+        required: true
+        default: 'All'
+        type: choice
+        options:
+          - All
+          - FrontMicroService
+          - MasterMicroService
+          - AllDropDownMicroService
+          - FileUploaderMicroService
+          - TranslationMicroService
+
+jobs:
+  deploy:
+    name: Deploy ${{ matrix.service }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - service: FrontMicroService
+            project: backend/FrontMicroService/FrontMicroService.csproj
+            dll: FrontMicroService
+            systemd: preptm-frontapi
+            deploy_dir: /var/www/preptm/api/frontapi
+
+          - service: MasterMicroService
+            project: backend/MasterMicroService/MasterMicroService.csproj
+            dll: MasterMicroService
+            systemd: preptm-master
+            deploy_dir: /var/www/preptm/api/master
+
+          - service: AllDropDownMicroService
+            project: backend/AllDropDownMicroService/AllDropDownMicroService.csproj
+            dll: AllDropDownMicroService
+            systemd: preptm-alldropdown
+            deploy_dir: /var/www/preptm/api/alldropdown
+
+          - service: FileUploaderMicroService
+            project: backend/FileUploaderMicroService/FileUploaderMicroService.csproj
+            dll: FileUploaderMicroService
+            systemd: preptm-fileuploader
+            deploy_dir: /var/www/preptm/api/fileuploader
+            extra_rsync_args: --exclude=Content/
+
+          - service: TranslationMicroService
+            project: backend/TranslationMicroService/TranslationMicroService.csproj
+            dll: TranslationMicroService
+            systemd: preptm-translation
+            deploy_dir: /var/www/preptm/api/translation
+
+    steps:
+      - name: Check if this service is selected
+        id: gate
+        run: |
+          INPUT="${{ github.event.inputs.service }}"
+          if [ -z "$INPUT" ] || [ "$INPUT" = "All" ] || [ "$INPUT" = "${{ matrix.service }}" ]; then
+            echo "deploy=true" >> $GITHUB_OUTPUT
+          else
+            echo "deploy=false" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.deploy == 'true'
+
+      - uses: actions/setup-dotnet@v4
+        if: steps.gate.outputs.deploy == 'true'
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Publish ${{ matrix.service }}
+        if: steps.gate.outputs.deploy == 'true'
+        run: |
+          dotnet publish ${{ matrix.project }} \
+            -c Release \
+            --no-self-contained \
+            -r linux-x64 \
+            -o publish/${{ matrix.service }}
+
+      - name: Setup SSH
+        if: steps.gate.outputs.deploy == 'true'
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Prepare deploy directory on server
+        if: steps.gate.outputs.deploy == 'true'
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "mkdir -p ${{ matrix.deploy_dir }}"
+
+      - name: Stop service
+        if: steps.gate.outputs.deploy == 'true'
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "sudo systemctl stop ${{ matrix.systemd }} || true"
+
+      - name: Sync build output to server
+        if: steps.gate.outputs.deploy == 'true'
+        run: |
+          rsync -az --checksum --delete \
+            ${{ matrix.extra_rsync_args }} \
+            -e "ssh -i ~/.ssh/id_rsa" \
+            publish/${{ matrix.service }}/ \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ matrix.deploy_dir }}/
+
+      - name: Start service and verify
+        if: steps.gate.outputs.deploy == 'true'
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "sudo systemctl start ${{ matrix.systemd }} && sleep 3 && sudo systemctl status ${{ matrix.systemd }} --no-pager"
