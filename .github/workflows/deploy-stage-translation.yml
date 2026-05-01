@@ -1,0 +1,89 @@
+name: Deploy Stage Translation Microservice
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/TranslationMicroService/**'
+      - 'backend/CommonService/**'
+      - 'backend/DBInfrastructure/**'
+      - 'backend/ModelService/**'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Publish TranslationMicroService
+        run: |
+          dotnet publish backend/TranslationMicroService/TranslationMicroService.csproj \
+            -c Release \
+            --no-self-contained \
+            -r linux-x64 \
+            -o ./publish/translation
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Prepare server directories
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "mkdir -p /root/preptm/BackEnd/Stage/TranslationMicroService"
+
+      - name: Stop service before deploy
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "systemctl stop preptm-translation-api || true"
+
+      - name: Sync build output to server
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_rsa" \
+            ./publish/translation/ \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/root/preptm/BackEnd/Stage/TranslationMicroService/
+
+      - name: Register systemd service
+        run: |
+          cat > /tmp/preptm-translation-api.service << 'UNIT'
+          [Unit]
+          Description=PreptM Stage Translation Microservice
+          After=network.target
+
+          [Service]
+          WorkingDirectory=/root/preptm/BackEnd/Stage/TranslationMicroService
+          ExecStart=/usr/bin/dotnet /root/preptm/BackEnd/Stage/TranslationMicroService/TranslationMicroService.dll
+          Restart=always
+          RestartSec=10
+          KillSignal=SIGINT
+          SyslogIdentifier=preptm-translation-api
+          Environment=ASPNETCORE_ENVIRONMENT=Staging
+          Environment=ASPNETCORE_URLS=http://127.0.0.1:5233
+          Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+          [Install]
+          WantedBy=multi-user.target
+          UNIT
+          scp -i ~/.ssh/id_rsa /tmp/preptm-translation-api.service \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/tmp/preptm-translation-api.service
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+            mv /tmp/preptm-translation-api.service /etc/systemd/system/preptm-translation-api.service &&
+            systemctl daemon-reload &&
+            systemctl enable preptm-translation-api
+          "
+
+      - name: Start service
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "systemctl start preptm-translation-api && systemctl status preptm-translation-api --no-pager"
