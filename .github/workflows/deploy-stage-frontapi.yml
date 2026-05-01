@@ -1,13 +1,9 @@
 name: Deploy Stage Front Microservice
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'backend/FrontMicroService/**'
-      - 'backend/CommonService/**'
-      - 'backend/DBInfrastructure/**'
-      - 'backend/ModelService/**'
+  # Push trigger disabled — deploy-stage-backend.yml handles all staging services
+  # to avoid race conditions with parallel workflows touching the same systemd units.
+  # Use workflow_dispatch below to trigger this service individually if needed.
   workflow_dispatch:
 
 jobs:
