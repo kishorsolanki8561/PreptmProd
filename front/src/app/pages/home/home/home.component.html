@@ -44,6 +44,7 @@
   <div class="wrapper gap-padding-x">
     <div class="posts-grid">
 
+      <!-- 1. Recent — Deep Red -->
       <preptm-post-container
         viewMoreUrl="/latest"
         *ngIf="isLoading || allPosts?.recentPosts?.length"
@@ -53,15 +54,17 @@
         className="list-wrapper-1">
       </preptm-post-container>
 
+      <!-- 2. Expire Soon — Amber Orange -->
       <preptm-post-container
         viewMoreUrl="/expiresoon"
         *ngIf="isLoading || allPosts?.expiredSoonPosts?.length"
         [showLoader]="isLoading"
         i18n-heading heading="Expire Soon"
         [posts]="allPosts?.expiredSoonPosts"
-        className="list-wrapper-4">
+        className="list-wrapper-2">
       </preptm-post-container>
 
+      <!-- 3. Recruitments — Navy Blue -->
       <preptm-post-container
         viewMoreUrl="/jobs"
         *ngIf="isLoading || allPosts?.recruitments?.length"
@@ -71,58 +74,64 @@
         className="list-wrapper-3">
       </preptm-post-container>
 
+      <!-- 4. Private Jobs — Deep Purple -->
       <preptm-post-container
         viewMoreUrl="/private-jobs"
         *ngIf="isLoading || allPosts?.privateRecruitments?.length"
         [showLoader]="isLoading"
         i18n-heading heading="Private Jobs"
         [posts]="allPosts?.privateRecruitments"
-        className="list-wrapper-3">
+        className="list-wrapper-4">
       </preptm-post-container>
 
+      <!-- 5. Results — Forest Green -->
       <preptm-post-container
         viewMoreUrl="/results"
         *ngIf="isLoading || allPosts?.results?.length"
         [showLoader]="isLoading"
         i18n-heading heading="Results"
         [posts]="allPosts?.results"
-        className="list-wrapper-1">
+        className="list-wrapper-5">
       </preptm-post-container>
 
+      <!-- 6. Admissions — Dark Teal -->
       <preptm-post-container
         viewMoreUrl="/admissions"
         *ngIf="isLoading || allPosts?.admissions?.length"
         [showLoader]="isLoading"
         i18n-heading heading="Admissions"
         [posts]="allPosts?.admissions"
-        className="list-wrapper-2">
+        className="list-wrapper-6">
       </preptm-post-container>
 
+      <!-- 7. Exams — Royal Blue -->
       <preptm-post-container
         viewMoreUrl="/exams"
         *ngIf="isLoading || allPosts?.exams?.length"
         [showLoader]="isLoading"
         i18n-heading heading="Exams"
         [posts]="allPosts?.exams"
-        className="list-wrapper-3">
+        className="list-wrapper-7">
       </preptm-post-container>
 
+      <!-- 8. Admit Cards — Crimson Rose -->
       <preptm-post-container
         viewMoreUrl="/admit-cards"
         *ngIf="isLoading || allPosts?.admitCards?.length"
         [showLoader]="isLoading"
         i18n-heading heading="Admit Cards"
         [posts]="allPosts?.admitCards"
-        className="list-wrapper-1">
+        className="list-wrapper-8">
       </preptm-post-container>
 
+      <!-- 9. Upcoming — Indigo -->
       <preptm-post-container
         viewMoreUrl="/upcoming"
         *ngIf="isLoading || allPosts?.upComingPosts?.length"
         [showLoader]="isLoading"
         i18n-heading heading="Upcoming"
         [posts]="allPosts?.upComingPosts"
-        className="list-wrapper-2">
+        className="list-wrapper-9">
       </preptm-post-container>
 
     </div>

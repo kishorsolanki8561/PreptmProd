@@ -162,32 +162,21 @@
 }
 
 // =============================================
-// COLOR VARIANTS
+// COLOR VARIANTS — one unique color per card
 // =============================================
-.list-wrapper-1 {
-  border-left: 3px solid $post-list-1;
-  .card-header { background: $post-list-1; }
-  .post-item:hover { background: rgba($post-list-1, 0.04); }
-  .post-item:hover .post-title { color: $post-list-1; }
+@mixin card-variant($color) {
+  border-left: 3px solid $color;
+  .card-header { background: $color; }
+  .post-item:hover { background: rgba($color, 0.05); }
+  .post-item:hover .post-title { color: darken($color, 5%); }
 }
 
-.list-wrapper-2 {
-  border-left: 3px solid $post-list-2;
-  .card-header { background: $post-list-2; }
-  .post-item:hover { background: rgba($post-list-2, 0.04); }
-  .post-item:hover .post-title { color: $post-list-2; }
-}
-
-.list-wrapper-3 {
-  border-left: 3px solid $post-list-3;
-  .card-header { background: $post-list-3; }
-  .post-item:hover { background: rgba($post-list-3, 0.04); }
-  .post-item:hover .post-title { color: $post-list-3; }
-}
-
-.list-wrapper-4 {
-  border-left: 3px solid $post-list-4;
-  .card-header { background: $post-list-4; }
-  .post-item:hover { background: rgba($post-list-4, 0.04); }
-  .post-item:hover .post-title { color: $post-list-4; }
-}
+.list-wrapper-1 { @include card-variant($post-list-1); } // Recent        — Deep Red
+.list-wrapper-2 { @include card-variant($post-list-2); } // Expire Soon   — Amber Orange
+.list-wrapper-3 { @include card-variant($post-list-3); } // Recruitments  — Navy Blue
+.list-wrapper-4 { @include card-variant($post-list-4); } // Private Jobs  — Deep Purple
+.list-wrapper-5 { @include card-variant($post-list-5); } // Results       — Forest Green
+.list-wrapper-6 { @include card-variant($post-list-6); } // Admissions    — Dark Teal
+.list-wrapper-7 { @include card-variant($post-list-7); } // Exams         — Royal Blue
+.list-wrapper-8 { @include card-variant($post-list-8); } // Admit Cards   — Crimson Rose
+.list-wrapper-9 { @include card-variant($post-list-9); } // Upcoming      — Indigo

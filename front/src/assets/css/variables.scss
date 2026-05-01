@@ -53,8 +53,13 @@ $telegram-bg-color: #229ED9;
 $whatsapp-bg-color: #25d366;
 $facebook-bg-color: #1877f2;
 
-// === Post Category Accent Colors (richer, more vibrant) ===
-$post-list-1: #7c2d12;
-$post-list-2: #14532d;
-$post-list-3: #1e3a5f;
-$post-list-4: #78350f;
+// === Post Card Unique Accent Colors (one per card) ===
+$post-list-1: #7c2d12;   // Recent        — Deep Red
+$post-list-2: #92400e;   // Expire Soon   — Amber Orange
+$post-list-3: #1e3a5f;   // Recruitments  — Navy Blue
+$post-list-4: #4c1d95;   // Private Jobs  — Deep Purple
+$post-list-5: #14532d;   // Results       — Forest Green
+$post-list-6: #134e4a;   // Admissions    — Dark Teal
+$post-list-7: #1e40af;   // Exams         — Royal Blue
+$post-list-8: #881337;   // Admit Cards   — Crimson Rose
+$post-list-9: #312e81;   // Upcoming      — Indigo
