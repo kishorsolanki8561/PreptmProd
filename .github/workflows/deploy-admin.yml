@@ -48,7 +48,20 @@ jobs:
             admin/dist/new5-gstudy/ \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/preptm/admin/
 
-      - name: Reload nginx
+      - name: Reload nginx and verify
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-            "nginx -t && systemctl reload nginx"
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} bash << 'ENDSSH'
+            set -e
+            nginx -t
+            systemctl reload nginx
+            sleep 2
+            if systemctl is-active --quiet nginx; then
+              echo "OK: nginx is active"
+              systemctl status nginx --no-pager
+            else
+              echo "ERROR: nginx is not active after reload"
+              systemctl status nginx --no-pager
+              journalctl -u nginx -n 30 --no-pager
+              exit 1
+            fi
+          ENDSSH

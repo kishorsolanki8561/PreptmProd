@@ -64,3 +64,21 @@ jobs:
             pm2 start /var/www/preptm/pm2/ecosystem.config.js && \
             pm2 save
           "
+
+      - name: Verify ProdFront is online
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} bash << 'ENDSSH'
+            TIMEOUT=30
+            ELAPSED=0
+            until pm2 list --no-color 2>/dev/null | grep -q "ProdFront.*online"; do
+              if [ $ELAPSED -ge $TIMEOUT ]; then
+                echo "ERROR: ProdFront did not come online within ${TIMEOUT}s"
+                pm2 logs ProdFront --lines 50 --nostream
+                exit 1
+              fi
+              sleep 3
+              ELAPSED=$((ELAPSED + 3))
+            done
+            echo "OK: ProdFront is online"
+            pm2 show ProdFront
+          ENDSSH

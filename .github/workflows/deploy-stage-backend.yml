@@ -153,5 +153,20 @@ jobs:
       - name: Start service and verify
         if: steps.gate.outputs.deploy == 'true'
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-            "sudo systemctl start ${{ matrix.systemd }} && sleep 3 && sudo systemctl status ${{ matrix.systemd }} --no-pager"
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} bash << 'ENDSSH'
+            set -e
+            sudo systemctl start ${{ matrix.systemd }}
+            TIMEOUT=30
+            ELAPSED=0
+            until sudo systemctl is-active --quiet ${{ matrix.systemd }}; do
+              if [ $ELAPSED -ge $TIMEOUT ]; then
+                echo "ERROR: ${{ matrix.systemd }} did not become active within ${TIMEOUT}s"
+                sudo journalctl -u ${{ matrix.systemd }} -n 50 --no-pager
+                exit 1
+              fi
+              sleep 3
+              ELAPSED=$((ELAPSED + 3))
+            done
+            echo "OK: ${{ matrix.systemd }} is active"
+            sudo systemctl status ${{ matrix.systemd }} --no-pager
+          ENDSSH
