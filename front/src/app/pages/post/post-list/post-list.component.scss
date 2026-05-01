@@ -1,79 +1,194 @@
 @import 'src/assets/css/variables.scss';
 
+// =============================================
+// LAYOUT WRAPPER
+// =============================================
+.post-list-wrapper {
+  margin-top: 12px;
+  min-height: calc(100vh - 80px);
+  align-items: start;
+}
+
+// =============================================
+// FILTER — MOBILE (horizontal scroll chips)
+// =============================================
 .filter {
-    overflow: scroll;
-    -ms-overflow-style: none;
-    /* Internet Explorer 10+ */
-    scrollbar-width: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
 
-    width: calc(100vw - 20px);
-    margin: 0 auto;
+  width: 100%;
 
-    /* Firefox */
-    &::-webkit-scrollbar {
-        display: none;
-        /* Safari and Chrome */
+  .filter-title {
+    display: none;
+  }
+
+  .filter-item-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    white-space: nowrap;
+
+    h4 { display: none; }
+
+    nz-select {
+      min-width: 140px;
+      flex-shrink: 0;
     }
+  }
 
-    .filter-item-container {
-        display: inline-block;
-        white-space: nowrap;
+  .clear {
+    flex-shrink: 0;
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background $transition-fast;
+    white-space: nowrap;
 
-        nz-select {
-            margin-right: 10px;
-            width: 150px;
-        }
-
-        h4 {
-            display: none;
-        }
+    &:hover {
+      background: #fecaca;
     }
+  }
+}
 
+// =============================================
+// FILTER — DESKTOP sidebar
+// =============================================
+@media (min-width: 1024px) {
+  .post-list-wrapper {
+    margin-top: 16px;
+    gap: 20px;
+  }
+
+  .filter {
+    overflow: visible;
+    width: 100%;
+    position: sticky;
+    top: 80px; // below fixed header
+    background: #fff;
+    border: 1px solid $border-color;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+
+    // ── Filter Title Bar ──
     .filter-title {
-        display: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid $border-color;
+
+      > div {
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: $text-color;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+
+        // funnel icon via CSS
+        &::before {
+          content: '';
+          display: inline-block;
+          width: 14px;
+          height: 14px;
+          background: $primary-color;
+          clip-path: polygon(0 0, 100% 0, 60% 50%, 60% 100%, 40% 100%, 40% 50%);
+        }
+      }
+
+      button {
+        font-size: 11px;
+        font-weight: 600;
+        color: #ef4444;
+        background: #fee2e2;
+        border: 1px solid #fca5a5;
+        border-radius: 20px;
+        padding: 3px 10px;
+        cursor: pointer;
+        transition: background $transition-fast, color $transition-fast;
+
+        &:hover {
+          background: #fecaca;
+          color: #b91c1c;
+        }
+      }
+    }
+
+    // ── Filter Body ──
+    .filter-item-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding: 0;
+      white-space: normal;
+
+      h4 {
+        display: block;
+        font-size: 11px;
+        font-weight: 600;
+        color: $text-muted;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin: 16px 16px 6px;
+      }
+
+      nz-select {
+        display: block;
+        width: calc(100% - 32px);
+        margin: 0 16px 4px;
+      }
+
+      // Divider between filter groups
+      nz-select + h4 {
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid $border-color;
+      }
+
+      // Bottom padding
+      &::after {
+        content: '';
+        display: block;
+        height: 16px;
+      }
     }
 
     .clear {
-        vertical-align: middle;
-        line-height: 40px;
+      display: none; // hidden on desktop (use title-bar button)
     }
+  }
+
+  // ── Post Results Panel ──
+  .list {
+    background-color: $background-color;
+    border-radius: $radius-sm;
+    padding: 16px;
+    min-height: 60vh;
+  }
 }
 
+// =============================================
+// SEARCH RESULT HEADING
+// =============================================
+.list h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: $text-color;
+  margin-bottom: 12px;
 
-// lg
-@media (min-width:1024px) {
-    .post-list-wrapper {
-        margin-top: 10px;
-        min-height: calc(100vh - 100px);
-    }
-
-    .filter {
-        background-color: #fff;
-        border-right: 2px solid #bfbfbf45;
-        width: 100%;
-
-        .filter-item-container {
-            display: block;
-
-            nz-select {
-                width: 100%;
-            }
-
-            h4 {
-                display: block;
-            }
-        }
-
-        .filter-title {
-            display: flex;
-            border-bottom: 1px solid $background-color;
-        }
-    }
-
-    .list {
-        background-color: $background-color;
-        padding: 15px;
-    }
-
-
+  strong {
+    color: $primary-color;
+  }
 }
