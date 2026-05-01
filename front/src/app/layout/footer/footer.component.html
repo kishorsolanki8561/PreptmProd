@@ -1,80 +1,128 @@
-<footer class="gap-top">
-  <div class="container mx-auto grid grid-cols-1 md:grid-cols-2  lg:grid-cols-5 gap-16 gap-padding-x">
-    <div class="lg:col-span-2 section-1">
-      <div class="logo">
-        <a routerLink="/"><img style="width: 200px;" src="assets/img/logo-black-bg.svg" i18n-alt alt="Preptm Logo"
-            [attr.loading]="'lazy'" /></a>
-      </div>
-      <p class="summery" i18n>
-        <!-- One-stop solution for all your job preparation needs.  -->
-        Making the job hunt easy for you with all the latest job notifications and up-to-date information.
-      </p>
+<footer itemscope itemtype="https://schema.org/WPFooter">
 
-      <div class="mobile-app" itemscope itemtype="https://schema.org/SoftwareApplication">
-        <a class="play-store" target="_blank" href="https://play.google.com/store/apps/details?id=com.preptm.study">
-          <img src="assets/svg/google play.svg" i18n-alt alt="Download app from play store" [attr.loading]="'lazy'" />
-        </a>
-        <meta itemprop="name" content="Preptm" />
-        <meta itemprop="operatingSystem" content="ANDROID" />
-        <meta itemprop="applicationCategory" content="Education" />
-
+  <!-- Top CTA Strip -->
+  <div class="footer-cta">
+    <div class="wrapper gap-padding-x footer-cta-inner">
+      <div class="cta-text">
+        <span class="cta-badge" i18n>Free</span>
+        <span i18n>Stay updated with the latest government job notifications, admit cards and results.</span>
       </div>
-      <div class="social-media">
-        <a target="_blank" href="https://chat.whatsapp.com/BW9AIPdks2DJcjZlGQ24Tp" class="whatsapp"
-          i18n-title title="WhatsApp Share"><img src="assets/img/whatsApp-icon.svg" i18n-alt alt="WhatsApp" [attr.loading]="'lazy'" />
-        </a>
-        <a target="_blank" href="https://www.facebook.com/profile.php?id=100092545592455" class="facebook"
-          i18n-title title="Facebook Share">
-          <img src="assets/img/facebook-icon.svg" i18n-alt alt="Facebook" [attr.loading]="'lazy'" />
-        </a>
-        <a target="_blank" href="https://www.instagram.com/preptm_job.update/" class="instagram"
-          i18n-title title="Instagram Share">
-          <img src="assets/img/intagram.svg" i18n-alt alt="Instagram" [attr.loading]="'lazy'" />
-        </a>
-        <a target="_blank" href="https://x.com/thepreptm" class="twitter" i18n-title title="X Share">
-          <img src="assets/img/twitter.svg" i18n-alt alt="Twitter" [attr.loading]="'lazy'" />
-        </a>
-        <a target="_blank" href="https://t.me/official_5study" class="telegram" i18n-title title="Telegram Share">
-          <img src="assets/img/telegram.svg" i18n-alt alt="Telegram" [attr.loading]="'lazy'" />
+      <div class="cta-actions">
+        <a class="cta-btn-app" target="_blank" href="https://play.google.com/store/apps/details?id=com.preptm.study"
+          rel="noopener noreferrer" aria-label="Download Preptm app on Google Play">
+          <img src="assets/svg/google play.svg" i18n-alt alt="Download on Google Play" [attr.loading]="'lazy'" />
         </a>
       </div>
-    </div>
-    <div class="lg:col-span-2 section-2">
-      <h3 class="ftr-title" i18n>Quick Links</h3>
-      <ul>
-        <li><a [routerLink]="['/accountant']" i18n>Accountant</a></li>
-        <li><a [routerLink]="['/admission']" i18n>Admission</a></li>
-        <li><a [routerLink]="['/agriculture']" i18n>Agriculture</a></li>
-        <li><a [routerLink]="['/airforce']" i18n>Airforce</a></li>
-        <li><a [routerLink]="['/banking']" i18n>Banking</a></li>
-        <li><a [routerLink]="['/upsc']" i18n>Civil Services</a></li>
-        <li><a [routerLink]="['/engineering']" i18n>Engineering</a></li>
-        <li><a [routerLink]="['/examination']" i18n>Examination</a></li>
-        <li><a [routerLink]="['/high-court']" i18n>High Court</a></li>
-        <li><a [routerLink]="['/insurance']" i18n>Insurance</a></li>
-        <li><a [routerLink]="['/language-translator']" i18n>Language Translator</a></li>
-        <li><a [routerLink]="['/medical']" i18n>Medical</a></li>
-        <li><a [routerLink]="['/police']" i18n>Police</a></li>
-        <li><a [routerLink]="['/railway']" i18n>Railway</a></li>
-        <li><a [routerLink]="['/teaching']" i18n>Teaching</a></li>
-        <li><a [routerLink]="['/typing-jobs']" i18n>Typing</a></li>
-        <li><a [routerLink]="['/article']" i18n>Articles</a></li>
-      </ul>
-    </div>
-    <div class="section-3">
-      <h3 class="ftr-title" i18n>Pages</h3>
-      <ul>
-        <li><a [routerLink]="['/about-us']" i18n>About us</a></li>
-        <li><a [routerLink]="['/contact']" i18n>Contact us</a></li>
-        <li><a [routerLink]="['/disclaimer']" i18n>Disclaimer</a></li>
-        <li><a [routerLink]="['/privacy-policy']" i18n>Privacy Policy</a></li>
-        <li><a [routerLink]="['/terms-and-conditions']" i18n>Terms & conditions</a></li>
-        <li><a target="_blank" [href]="'https://api.preptm.com/api/front/Dashboard/GetSitemap'+lang" i18n>Sitemap</a>
-        </li>
-      </ul>
     </div>
   </div>
+
+  <!-- Main Footer Body -->
+  <div class="footer-body wrapper gap-padding-x">
+    <div class="footer-grid">
+
+      <!-- Brand Column -->
+      <div class="footer-brand">
+        <a routerLink="/" class="footer-logo-link" aria-label="Preptm Home">
+          <img src="assets/img/logo-black-bg.svg" i18n-alt alt="Preptm Logo" [attr.loading]="'lazy'"
+            width="180" height="44" />
+        </a>
+        <p class="footer-tagline" i18n>
+          Making the job hunt easy — latest government notifications, admit cards, and results, all in one place.
+        </p>
+
+        <!-- Social Links -->
+        <div class="social-links" role="list" aria-label="Social media links">
+          <a class="social-link whatsapp" target="_blank" href="https://chat.whatsapp.com/BW9AIPdks2DJcjZlGQ24Tp"
+            rel="noopener noreferrer" role="listitem" i18n-title title="Join WhatsApp Group" aria-label="WhatsApp">
+            <img src="assets/img/whatsApp-icon.svg" i18n-alt alt="WhatsApp" [attr.loading]="'lazy'" />
+          </a>
+          <a class="social-link facebook" target="_blank" href="https://www.facebook.com/profile.php?id=100092545592455"
+            rel="noopener noreferrer" role="listitem" i18n-title title="Follow on Facebook" aria-label="Facebook">
+            <img src="assets/img/facebook-icon.svg" i18n-alt alt="Facebook" [attr.loading]="'lazy'" />
+          </a>
+          <a class="social-link instagram" target="_blank" href="https://www.instagram.com/preptm_job.update/"
+            rel="noopener noreferrer" role="listitem" i18n-title title="Follow on Instagram" aria-label="Instagram">
+            <img src="assets/img/intagram.svg" i18n-alt alt="Instagram" [attr.loading]="'lazy'" />
+          </a>
+          <a class="social-link twitter" target="_blank" href="https://x.com/thepreptm"
+            rel="noopener noreferrer" role="listitem" i18n-title title="Follow on X" aria-label="X (Twitter)">
+            <img src="assets/img/twitter.svg" i18n-alt alt="X" [attr.loading]="'lazy'" />
+          </a>
+          <a class="social-link telegram" target="_blank" href="https://t.me/official_5study"
+            rel="noopener noreferrer" role="listitem" i18n-title title="Join Telegram Channel" aria-label="Telegram">
+            <img src="assets/img/telegram.svg" i18n-alt alt="Telegram" [attr.loading]="'lazy'" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links Column -->
+      <div class="footer-col">
+        <h3 class="footer-col-title" i18n>Job Categories</h3>
+        <ul class="footer-links two-col">
+          <li><a [routerLink]="['/accountant']"        i18n>Accountant</a></li>
+          <li><a [routerLink]="['/admission']"         i18n>Admission</a></li>
+          <li><a [routerLink]="['/agriculture']"       i18n>Agriculture</a></li>
+          <li><a [routerLink]="['/airforce']"          i18n>Airforce</a></li>
+          <li><a [routerLink]="['/banking']"           i18n>Banking</a></li>
+          <li><a [routerLink]="['/upsc']"              i18n>Civil Services</a></li>
+          <li><a [routerLink]="['/engineering']"       i18n>Engineering</a></li>
+          <li><a [routerLink]="['/examination']"       i18n>Examination</a></li>
+          <li><a [routerLink]="['/high-court']"        i18n>High Court</a></li>
+          <li><a [routerLink]="['/insurance']"         i18n>Insurance</a></li>
+          <li><a [routerLink]="['/medical']"           i18n>Medical</a></li>
+          <li><a [routerLink]="['/police']"            i18n>Police</a></li>
+          <li><a [routerLink]="['/railway']"           i18n>Railway</a></li>
+          <li><a [routerLink]="['/teaching']"          i18n>Teaching</a></li>
+          <li><a [routerLink]="['/typing-jobs']"       i18n>Typing</a></li>
+          <li><a [routerLink]="['/article']"           i18n>Articles</a></li>
+        </ul>
+      </div>
+
+      <!-- Pages + Explore Columns -->
+      <div class="footer-col-group">
+        <div class="footer-col">
+          <h3 class="footer-col-title" i18n>Explore</h3>
+          <ul class="footer-links">
+            <li><a routerLink="/jobs"        i18n>Govt. Jobs</a></li>
+            <li><a routerLink="/admit-cards" i18n>Admit Cards</a></li>
+            <li><a routerLink="/results"     i18n>Results</a></li>
+            <li><a routerLink="/exams"       i18n>Exams</a></li>
+            <li><a routerLink="/admissions"  i18n>Admissions</a></li>
+            <li><a routerLink="/syllabus"    i18n>Syllabus</a></li>
+            <li><a routerLink="/schemes"     i18n>Schemes</a></li>
+            <li><a routerLink="/article"     i18n>Articles</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="footer-col-title" i18n>Company</h3>
+          <ul class="footer-links">
+            <li><a [routerLink]="['/about-us']"            i18n>About Us</a></li>
+            <li><a [routerLink]="['/contact']"             i18n>Contact Us</a></li>
+            <li><a [routerLink]="['/disclaimer']"          i18n>Disclaimer</a></li>
+            <li><a [routerLink]="['/privacy-policy']"      i18n>Privacy Policy</a></li>
+            <li><a [routerLink]="['/terms-and-conditions']" i18n>Terms &amp; Conditions</a></li>
+            <li>
+              <a target="_blank" rel="noopener noreferrer"
+                [href]="'https://api.preptm.com/api/front/Dashboard/GetSitemap'+lang" i18n>Sitemap</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer Bottom Bar -->
   <div class="footer-bottom">
-    © Preptm 2023-25
+    <div class="wrapper gap-padding-x footer-bottom-inner">
+      <span>© Preptm 2023–2025 · All rights reserved</span>
+      <span class="footer-bottom-links">
+        <a [routerLink]="['/privacy-policy']" i18n>Privacy</a>
+        <a [routerLink]="['/terms-and-conditions']" i18n>Terms</a>
+        <a [routerLink]="['/disclaimer']" i18n>Disclaimer</a>
+      </span>
+    </div>
   </div>
+
 </footer>

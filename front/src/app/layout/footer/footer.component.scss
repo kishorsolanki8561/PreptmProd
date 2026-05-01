@@ -1,130 +1,262 @@
 @import 'src/assets/css/variables.scss';
 
+// =============================================
+// FOOTER BASE
+// =============================================
 footer {
   background-color: $footer-background-color;
-  color: #c1c1c1;
-  padding-top: 60px;
-  font-weight: 100;
+  color: #9ca3af;
+  font-weight: 400;
+  margin-top: 48px;
 }
 
-.section-1 {
-
-  .logo {
-    width: 150px;
-  }
-
-  .summery {
-    margin-top: 10px;
-    font-size: 14px;
-  }
-
-  .mobile-app {
-    display: flex;
-    gap: 20px;
-    flex-wrap: nowrap;
-    margin-top: 30px;
-
-    img {
-      // width: 50%;
-      width: 250px;
-    }
-  }
-
-
+// =============================================
+// TOP CTA STRIP
+// =============================================
+.footer-cta {
+  background: linear-gradient(135deg, $primary-color-dark 0%, $primary-color 100%);
+  padding: 16px 0;
 }
 
-.section-2 {
-  h3 {
-    font-size: 30px;
-  }
-
-  ul {
-    margin-top: 25px;
-  }
-
-  li {
-    width: 50%;
-    float: left;
-    line-height: 30px;
-    padding-right: 30px;
-
-    &:hover {
-      color: #fff;
-    }
-  }
-
+.footer-cta-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
 }
 
-.section-3 {
-  h3 {
-    font-size: 30px;
-  }
-
-  ul {
-    margin-top: 25px;
-  }
-
-  li {
-    line-height: 30px;
-
-    &:hover {
-      color: #fff;
-    }
-  }
-
+.cta-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.92);
+  font-size: 14px;
+  line-height: 1.5;
+  flex-wrap: wrap;
 }
 
-.footer-bottom {
-  text-align: center;
-  background-color: #161616;
-  margin-top: 60px;
-  line-height: 40px;
+.cta-badge {
+  background: $on-primary-color;
+  color: #1a1a1a;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
 }
 
-// lg
-@media (min-width:1024px) {
-  footer {
-    padding-top: 80px;
-    // padding-bottom: 80px;
-  }
-
-  .section-1 {
-    .logo {
-      width: 200px;
-    }
-
-    .summery {
-      margin-top: 15px;
-      font-weight: 100;
-      font-size: 15px;
-    }
-
-    .mobile-app {
-      img {
-        width: 200px;
-      }
-    }
-  }
-
-  .section-2 {
-    li {
-      font-size: 15px;
-    }
-  }
-
-  .footer-bottom {
-    margin-top: 80px;
-  }
-
+.cta-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-.ftr-title {
-  color: #8b8b8b;
-}
-
-.play-store {
+.cta-btn-app {
   img {
-    width: 200px;
-    height: 58px;
+    height: 40px;
+    width: auto;
+    display: block;
+    border-radius: 6px;
+    transition: transform $transition-base, box-shadow $transition-base;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    }
+  }
+}
+
+// =============================================
+// FOOTER BODY
+// =============================================
+.footer-body {
+  padding-top: 56px;
+  padding-bottom: 48px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+// =============================================
+// BRAND COLUMN
+// =============================================
+.footer-brand {
+  max-width: 340px;
+}
+
+.footer-logo-link {
+  display: inline-block;
+  margin-bottom: 16px;
+
+  img {
+    height: 44px;
+    width: auto;
+  }
+}
+
+.footer-tagline {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #9ca3af;
+  margin-bottom: 20px;
+}
+
+// =============================================
+// SOCIAL LINKS
+// =============================================
+.social-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  transition: transform $transition-base, box-shadow $transition-base;
+
+  img {
+    height: 18px;
+    width: 18px;
+    object-fit: contain;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+  }
+
+  &.facebook  { background-color: $facebook-bg-color; }
+  &.whatsapp  { background-color: $whatsapp-bg-color; }
+  &.instagram { background-image: $instagram-bg-color; }
+  &.twitter   { background-color: $twitter-bg-color; }
+  &.telegram  { background-color: $telegram-bg-color; }
+}
+
+// =============================================
+// FOOTER COLUMNS
+// =============================================
+.footer-col-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #e5e7eb;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  li a {
+    display: block;
+    color: #9ca3af;
+    font-size: 14px;
+    padding: 5px 0;
+    text-decoration: none;
+    transition: color $transition-fast, padding-left $transition-fast;
+    border-bottom: none;
+
+    &:hover {
+      color: #e5e7eb;
+      padding-left: 4px;
+    }
+  }
+
+  &.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 16px;
+  }
+}
+
+.footer-col-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+// =============================================
+// FOOTER BOTTOM BAR
+// =============================================
+.footer-bottom {
+  background-color: #0a0f1a;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 14px 0;
+}
+
+.footer-bottom-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 16px;
+
+  a {
+    color: #6b7280;
+    text-decoration: none;
+    transition: color $transition-fast;
+
+    &:hover { color: #e5e7eb; }
+  }
+}
+
+// =============================================
+// RESPONSIVE – TABLET (≥ 768px)
+// =============================================
+@media (min-width: 768px) {
+  .footer-cta-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 48px;
+  }
+
+  .footer-bottom-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+// =============================================
+// RESPONSIVE – DESKTOP (≥ 1024px)
+// =============================================
+@media (min-width: 1024px) {
+  .footer-body {
+    padding-top: 72px;
+    padding-bottom: 64px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 2fr 2fr 3fr;
+    gap: 0 56px;
+  }
+
+  .footer-brand {
+    max-width: 280px;
   }
 }

@@ -1,51 +1,75 @@
 @import 'src/assets/css/variables.scss';
 
 .custom-slider {
-  overflow-x: scroll;
-  // text-wrap: nowrap;
+  overflow-x: auto;
   display: flex;
-  margin-top: 8px;
-  // margin-left: 8px;
+  gap: 4px;
+  padding: 10px 12px 14px;
+  background: #fff;
+  border-radius: 0 0 $radius-sm $radius-sm;
+  box-shadow: $shadow-sm;
 
-  .slide-item {
-    // display: inline-block;
-    min-width: 80px;
-    max-width: 80px;
-    min-height: 100px;
-    text-align: center;
-    color: $primary-color;
-
-    .menu-image {
-      margin: 5px 10px;
-      background-color: $primary-color-light;
-      border-radius: 50%;
-      border: 1px solid $primary-color;
-      height: 60px;
-      width: 60px;
-
-      position: relative;
-
-      img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
-      }
-    }
-
-    label {
-      font-size: 12px;
-    }
-  }
-
+  // Hide scrollbar
   -ms-overflow-style: none;
-  /* Internet Explorer 10+ */
   scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
 
-  /* Firefox */
-  &::-webkit-scrollbar {
-    display: none;
-    /* Safari and Chrome */
+.slide-item {
+  flex-shrink: 0;
+  min-width: 72px;
+  max-width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 4px;
+  cursor: pointer;
+  border-radius: $radius-sm;
+  color: $primary-color;
+  text-decoration: none;
+  transition: background $transition-fast, transform $transition-fast;
+
+  &:hover,
+  &.active {
+    background: $primary-color-bg;
+    transform: translateY(-1px);
   }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.menu-image {
+  height: 52px;
+  width: 52px;
+  background: $primary-color-bg;
+  border-radius: 50%;
+  border: 1.5px solid rgba($primary-color, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background $transition-base, border-color $transition-base, box-shadow $transition-base;
+
+  img {
+    height: 24px;
+    width: 24px;
+    object-fit: contain;
+  }
+
+  .slide-item:hover & {
+    background: $primary-color-light;
+    border-color: $primary-color;
+    box-shadow: 0 2px 10px rgba($primary-color, 0.2);
+  }
+}
+
+label {
+  font-size: 11px;
+  font-weight: 500;
+  color: $primary-color;
+  text-align: center;
+  line-height: 1.3;
+  cursor: pointer;
 }

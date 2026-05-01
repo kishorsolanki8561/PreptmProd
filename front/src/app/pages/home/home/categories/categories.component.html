@@ -1,16 +1,22 @@
-<div class="gap-top wrapper-category" [loading]="isLoading">
-
-  <div class="grid grid-rows-2 grid-flow-col">
-
-    <a [routerLink]="['/',category.otherData.slugUrl]" class="category-item" *ngFor="let category of categories">
-      <div class="img-container">
-        <img nz-image [nzSrc]="category.otherData.icon" [nzDisablePreview]="true" [nzPlaceholder]="'assets/img/spinner.svg'"
-          [alt]="'category'" [attr.loading]="'lazy'" >
-      </div>
-      <p class="short-line-height">{{category.text}}</p>
-    </a>
-
-
+<section class="categories-section" aria-label="Browse by Category" [loading]="isLoading">
+  <div class="wrapper gap-padding-x">
+    <h2 class="categories-heading" i18n>Browse by Category</h2>
+    <div class="categories-grid">
+      <a [routerLink]="['/', category.otherData.slugUrl]"
+         class="category-card"
+         *ngFor="let category of categories"
+         [attr.aria-label]="category.text">
+        <div class="category-icon-wrap">
+          <img nz-image
+               [nzSrc]="category.otherData.icon"
+               [nzDisablePreview]="true"
+               [nzPlaceholder]="'assets/img/spinner.svg'"
+               [alt]="category.text"
+               [attr.loading]="'lazy'"
+               width="36" height="36">
+        </div>
+        <span class="category-label short-line-height">{{ category.text }}</span>
+      </a>
+    </div>
   </div>
-
-</div>
+</section>

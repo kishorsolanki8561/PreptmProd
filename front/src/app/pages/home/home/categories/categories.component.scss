@@ -1,69 +1,175 @@
 @import 'src/assets/css/variables.scss';
 
-.wrapper-category {
-  background-color: #effeff;
-  padding: 10px;
-  overflow-x: auto;
+// =============================================
+// SECTION
+// =============================================
+.categories-section {
+  background: linear-gradient(135deg, $primary-color-bg 0%, #fff 100%);
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+  padding: 24px 0;
+  margin-top: 20px;
 }
 
-.category-item {
-  text-align: center;
-  width: 90px;
-  margin: 0 auto;
+.categories-heading {
+  font-size: 16px;
+  font-weight: 700;
+  color: $text-color;
+  margin-bottom: 16px;
+  padding-left: 12px;
+  border-left: 3px solid $primary-color;
+}
+
+// =============================================
+// GRID
+// =============================================
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+// =============================================
+// CATEGORY CARD
+// =============================================
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 6px;
+  border-radius: $radius-sm;
+  background: #fff;
+  border: 1px solid $border-color;
+  text-decoration: none;
   cursor: pointer;
+  transition: transform $transition-base, box-shadow $transition-base, border-color $transition-base;
 
-  color: $primary-color;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: $shadow-md;
+    border-color: $primary-color;
 
-  .img-container {
-    height: 80px;
-    width: 80px;
-    margin: 0 auto;
-    border-radius: 10px;
-    position: relative;
-    transition: 0.10s ease;
-
-    img {
-      position: absolute;
-      top: 50%;
-      right: 50%;
-      transform: translate(50%, -50%);
-      max-height: 40px;
-      max-width: 40px;
+    .category-icon-wrap {
+      background: $primary-color-light;
+      border-color: $primary-color;
     }
 
-    .icon {
-      height: 60px;
-      width: 60px;
+    .category-label {
+      color: $primary-color-dark;
     }
   }
 
-  p {
-    margin-bottom: 10px;
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+// =============================================
+// ICON WRAPPER
+// =============================================
+.category-icon-wrap {
+  height: 56px;
+  width: 56px;
+  border-radius: 50%;
+  background: $primary-color-bg;
+  border: 1.5px solid rgba($primary-color, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background $transition-base, border-color $transition-base, box-shadow $transition-base;
+  flex-shrink: 0;
+
+  img {
+    height: 28px;
+    width: 28px;
+    object-fit: contain;
+  }
+}
+
+// =============================================
+// LABEL
+// =============================================
+.category-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: $primary-color;
+  text-align: center;
+  line-height: 1.4;
+  transition: color $transition-fast;
+}
+
+// =============================================
+// RESPONSIVE
+// =============================================
+@media (min-width: 480px) {
+  .categories-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (min-width: 640px) {
+  .categories-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+  }
+
+  .category-icon-wrap {
+    height: 60px;
+    width: 60px;
+
+    img {
+      height: 30px;
+      width: 30px;
+    }
+  }
+
+  .category-label {
     font-size: 12px;
   }
 }
 
-.category-item:hover {
-  .img-container {
-    box-shadow: 0px 0px 10px rgba(146, 146, 146, 0.423);
-    // background-color: #f6ebe2;
+@media (min-width: 768px) {
+  .categories-grid {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 14px;
+  }
+
+  .categories-section {
+    padding: 28px 0;
   }
 }
 
+@media (min-width: 1024px) {
+  .categories-grid {
+    grid-template-columns: repeat(10, 1fr);
+    gap: 16px;
+  }
 
-// lg
-@media (min-width:1024px) {
-  .category-item {
-    width: 120px;
+  .category-card {
+    padding: 14px 8px;
+  }
 
-    .img-container {
-      padding: 10px;
+  .category-icon-wrap {
+    height: 64px;
+    width: 64px;
 
+    img {
+      height: 32px;
+      width: 32px;
     }
+  }
 
-    p {
-      margin-bottom: 20px;
-      font-size: 15px;
-    }
+  .category-label {
+    font-size: 13px;
+  }
+
+  .categories-heading {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .categories-section {
+    padding: 36px 0;
   }
 }

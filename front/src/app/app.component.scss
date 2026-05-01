@@ -1,14 +1,14 @@
+// Header is fixed at 64px — this spacer pushes content below it
 .spacer {
-    height: 55px;
+  height: 64px;
 }
 
 .main-content {
-    min-height: calc(100vh - 50px);
+  min-height: calc(100vh - 64px);
 }
 
 @media (min-width: 1024px) {
-    .container {
-        max-width: 90%;
-        // width: 945px;
-    }
+  .container {
+    max-width: min(1280px, 96%);
+  }
 }

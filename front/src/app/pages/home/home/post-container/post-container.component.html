@@ -1,25 +1,44 @@
-<div class="gap-margin-x h-full">
-  <div [class]="className +' list-wrapper h-full relative'">
-    <p class="title">{{heading}}</p>
-    <div [loading]="showLoader" [ngClass]="{mb35:posts?.length && $any(posts).length>=6}">
-      <ul class="posts">
-        <li class="post-item " *ngFor="let post of posts">
-          <a target="_blank" [routerLink]="['/',post.blockTypeSlug,post.slugUrl]">
-            <span class="short-line-height">{{post.title}}</span>
-            <span *ngIf="post && post.reminingFewDays" class="remaining-days">
-              <span class="counter">{{post.reminingFewDays}}</span>
-              <span>&nbsp;Day <span *ngIf="post.reminingFewDays>1">'s</span> Left</span>
-            </span>
-            <img *ngIf="post.isNew && !post.reminingFewDays" src='assets/img/new-gif.gif' class="new-img inline ml-2"
-              alt="New post" [attr.loading]="'lazy'" >
-          </a>
+<article class="post-card" [class]="className">
+  <!-- Card Header -->
+  <header class="card-header">
+    <h2 class="card-title">{{ heading }}</h2>
+    <a *ngIf="posts?.length && $any(posts).length >= 6"
+       [routerLink]="viewMoreUrl"
+       target="_blank"
+       class="card-view-all"
+       [attr.aria-label]="'View all ' + heading">
+      <span i18n>All</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </header>
 
-        </li>
-      </ul>
-      <a [routerLink]="viewMoreUrl" target="_blank" *ngIf="posts?.length && $any(posts).length>=6"
-        class="more cursor-pointer">
-        <span i18n> More...</span>
-      </a>
-    </div>
+  <!-- Post List -->
+  <div class="card-body" [loading]="showLoader">
+    <ul class="post-list" itemscope itemtype="https://schema.org/ItemList">
+      <li class="post-item" *ngFor="let post of posts; let i = index"
+          itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <meta itemprop="position" [content]="i + 1" />
+        <a [routerLink]="['/', post.blockTypeSlug, post.slugUrl]"
+           target="_blank"
+           class="post-link"
+           itemprop="url">
+          <span class="post-title short-line-height" itemprop="name">{{ post.title }}</span>
+          <span class="post-badges">
+            <span *ngIf="post?.reminingFewDays" class="badge badge-urgent">
+              <span class="badge-counter">{{ post.reminingFewDays }}</span>
+              <span i18n>Day<span *ngIf="post.reminingFewDays > 1">'s</span> Left</span>
+            </span>
+            <img *ngIf="post.isNew && !post.reminingFewDays"
+                 src="assets/img/new-gif.gif"
+                 class="badge-new"
+                 alt="New post"
+                 [attr.loading]="'lazy'">
+          </span>
+        </a>
+      </li>
+    </ul>
   </div>
-</div>
+</article>

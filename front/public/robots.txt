@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Block admin and API paths
+Disallow: /admin/
+Disallow: /api/
+Disallow: /search/
+
+# Crawl delay for polite crawling
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://api.preptm.com/api/front/Dashboard/GetSitemapXML
+Sitemap: https://www.preptm.com/sitemap.xml

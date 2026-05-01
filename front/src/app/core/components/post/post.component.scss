@@ -1,134 +1,131 @@
 @import 'src/assets/css/variables.scss';
+
+// =============================================
+// POST CARD (list pages)
+// =============================================
 .post {
-    background-color: white;
-    border-radius: 5px;
-    height: 100%;
-    border: 2px solid $outline;
-    display: flex;
-    cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
+  background: #fff;
+  border-radius: $radius-sm;
+  border: 1px solid $border-color;
+  padding: 14px 16px;
+  cursor: pointer;
+  text-decoration: none;
+  height: 100%;
+  transition: box-shadow $transition-base, border-color $transition-base, transform $transition-base;
 
-    
-
-    .misc {
-        font-size: 12px;
-        display: flex;
-        flex-wrap: wrap;
-        color: gray;
-
-        .date {
-            background-color: #dbfee154;
-            font-size: 11px;
-
-            span {
-                font-size: 11px;
-            }
-        }
-
-        .seats {
-            background-color: #ececec66
-        }
-
-        .type {
-            background-color: #fbcece57;
-            font-size: 11px;
-        }
-
-        &:hover {
-            cursor: pointer;
-
-            a {
-                color: #000;
-            }
-
-            .remaining-days {
-                background-color: #ae0b09;
-
-                .counter {
-                    background-color: #ae0b09;
-                }
-            }
-
-            .new-img {
-                width: 35px;
-                height: 21px;
-            }
-        }
-    }
-
-    .remaining-days {
-        position: relative;
-        padding-left: 13px;
-        margin-left: 16px;
-        border: 2px solid;
-
-        display: inline-block;
-        color: white;
-        background-color: #e40f0c;
-        padding: 5px;
-        border-radius: 20px;
-        line-height: 8px;
-        padding-right: 8px;
-        padding-left: 13px;
-
-        * {
-            font-size: 13px;
-        }
-
-        .counter {
-            display: inline-block;
-            padding: 8px;
-            background-color: #e40f0c;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translate(-50%, -50%);
-            border: 2px solid #fff;
-            font-weight: bolder;
-        }
-    }
-
-    &:hover {
-        border: 2px solid $outline-hover;
-    }
-
-    // .remaining-days {
-    //     background-color: #aa0a0a;
-
-    //     .counter {
-    //         background-color: #aa0a0a;
-    //     }
-    // }
+  &:hover {
+    border-color: $primary-color;
+    box-shadow: $shadow-md;
+    transform: translateY(-2px);
+  }
 }
 
+// =============================================
+// TITLE
+// =============================================
+h2.post-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-color;
+  line-height: 1.55;
+  margin: 0;
+  transition: color $transition-fast;
 
+  .post:hover & {
+    color: $primary-color-dark;
+  }
+}
 
-.post:hover {
-    box-shadow: 0 0 5px #00000040;
+// =============================================
+// META CHIPS
+// =============================================
+.misc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+  margin-top: 4px;
 }
 
 .chip {
-    padding: 2px 10px;
-    border-radius: 10px;
-    color: black;
-    margin-right: 6px;
-    margin-top: 5px;
-    font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #374151;
 
-    span {
-        font-weight: 400;
-    }
+  span { font-size: 11px; }
 
+  &.date {
+    background: #dcfce7;
+    color: #15803d;
+  }
+
+  &.type {
+    background: #fee2e2;
+    color: #b91c1c;
+  }
+
+  &.seats {
+    background: #f3f4f6;
+    color: #374151;
+  }
 }
 
-h2.post-title {
+// =============================================
+// REMAINING DAYS BADGE
+// =============================================
+.remaining-days {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #dc2626;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px 3px 20px;
+  border-radius: 20px;
+  position: relative;
+  line-height: 1;
+  white-space: nowrap;
+  margin-left: 4px;
+
+  * { font-size: 11px; }
+
+  .counter {
+    position: absolute;
+    left: -1px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #b91c1c;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 800;
+  }
+
+  .misc:hover & {
+    background: #b91c1c;
+    .counter { background: #991b1b; }
+  }
+}
+
+// =============================================
+// RESPONSIVE
+// =============================================
+@media (min-width: 1024px) {
+  h2.post-title {
     font-size: 15px;
-}
-
-// lg
-@media (min-width:1024px) {
-    h2.post-title {
-        font-size: 15px;
-    }
-
+  }
 }
