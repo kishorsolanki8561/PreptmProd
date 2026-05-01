@@ -92,6 +92,7 @@ jobs:
   deploy-stage:
     name: Deploy ${{ matrix.service }} → Stage
     needs: build
+    environment: stage
     if: >
       needs.build.result == 'success' &&
       (github.event_name == 'push' ||
@@ -235,6 +236,7 @@ jobs:
   deploy-production:
     name: Deploy ${{ matrix.service }} → Production
     needs: build
+    environment: production
     if: >
       needs.build.result == 'success' &&
       (github.event.inputs.environment == 'production' ||

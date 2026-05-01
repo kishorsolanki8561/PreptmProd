@@ -83,6 +83,7 @@ jobs:
   deploy-stage:
     name: Deploy Admin → Stage
     needs: build-stage
+    environment: stage
     if: needs.build-stage.result == 'success'
     runs-on: ubuntu-latest
     steps:
@@ -132,6 +133,7 @@ jobs:
   deploy-production:
     name: Deploy Admin → Production
     needs: build-production
+    environment: production
     if: needs.build-production.result == 'success'
     runs-on: ubuntu-latest
     steps:

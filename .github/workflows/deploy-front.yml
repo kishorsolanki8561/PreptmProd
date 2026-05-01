@@ -89,6 +89,7 @@ jobs:
   deploy-stage:
     name: Deploy Frontend → Stage
     needs: build-stage
+    environment: stage
     if: needs.build-stage.result == 'success'
     runs-on: ubuntu-latest
     steps:
@@ -151,6 +152,7 @@ jobs:
   deploy-production:
     name: Deploy Frontend → Production
     needs: build-production
+    environment: production
     if: needs.build-production.result == 'success'
     runs-on: ubuntu-latest
     steps:
