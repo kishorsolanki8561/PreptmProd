@@ -111,7 +111,9 @@ jobs:
       - name: Sync build output to server
         if: steps.gate.outputs.deploy == 'true'
         run: |
-          rsync -az --delete \
+          # --checksum forces content comparison (not mtime+size) so deterministic-build
+          # DLLs with identical size/mtime but different TFM content are always updated.
+          rsync -az --checksum --delete \
             ${{ matrix.extra_rsync_args }} \
             -e "ssh -i ~/.ssh/id_rsa" \
             publish/${{ matrix.service }}/ \
