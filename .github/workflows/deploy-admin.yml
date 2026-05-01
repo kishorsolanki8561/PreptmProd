@@ -5,17 +5,31 @@ on:
     branches: [main]
     paths:
       - 'admin/**'
+      - '.github/workflows/deploy-admin.yml'
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deploy target'
+        required: true
+        default: 'stage'
+        type: choice
+        options:
+          - stage
+          - production
+          - both
 
 jobs:
-  build-and-deploy:
+  build-stage:
+    name: Build Admin (Stage)
+    if: >
+      github.event_name == 'push' ||
+      github.event.inputs.environment == 'stage' ||
+      github.event.inputs.environment == 'both'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js 20
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
@@ -25,9 +39,107 @@ jobs:
         working-directory: admin
         run: npm ci
 
-      - name: Build Angular (production)
+      - name: Build Admin (staging)
+        working-directory: admin
+        run: npm run buildProd:staging
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: admin-stage
+          path: admin/dist/new5-gstudy/
+          retention-days: 1
+
+  build-production:
+    name: Build Admin (Production)
+    if: >
+      github.event.inputs.environment == 'production' ||
+      github.event.inputs.environment == 'both'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: admin/package-lock.json
+
+      - name: Install dependencies
+        working-directory: admin
+        run: npm ci
+
+      - name: Build Admin (production)
         working-directory: admin
         run: npm run buildProd
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: admin-production
+          path: admin/dist/new5-gstudy/
+          retention-days: 1
+
+  deploy-stage:
+    name: Deploy Admin → Stage
+    needs: build-stage
+    if: needs.build-stage.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: admin-stage
+          path: dist/
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Prepare server directories
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "mkdir -p /var/www/preptm/stage-admin"
+
+      - name: Sync build to server
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_rsa" \
+            dist/ \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/preptm/stage-admin/
+
+      - name: Reload nginx and verify
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} bash << 'ENDSSH'
+            set -e
+            nginx -t
+            systemctl reload nginx
+            sleep 2
+            if systemctl is-active --quiet nginx; then
+              echo "OK: nginx is active"
+              systemctl status nginx --no-pager
+            else
+              echo "ERROR: nginx is not active after reload"
+              systemctl status nginx --no-pager
+              journalctl -u nginx -n 30 --no-pager
+              exit 1
+            fi
+          ENDSSH
+
+  deploy-production:
+    name: Deploy Admin → Production
+    needs: build-production
+    if: needs.build-production.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: admin-production
+          path: dist/
 
       - name: Setup SSH
         run: |
@@ -41,11 +153,11 @@ jobs:
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "mkdir -p /var/www/preptm/admin /var/cache/nginx/ssr /var/cache/nginx/dropdown /var/cache/nginx/front_api /var/log/preptm"
 
-      - name: Sync build output to server
+      - name: Sync build to server
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/id_rsa" \
-            admin/dist/new5-gstudy/ \
+            dist/ \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/preptm/admin/
 
       - name: Reload nginx and verify

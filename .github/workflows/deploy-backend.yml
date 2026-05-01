@@ -8,6 +8,15 @@ on:
       - '.github/workflows/deploy-backend.yml'
   workflow_dispatch:
     inputs:
+      environment:
+        description: 'Deploy target'
+        required: true
+        default: 'stage'
+        type: choice
+        options:
+          - stage
+          - production
+          - both
       service:
         description: 'Service to deploy'
         required: true
@@ -22,8 +31,8 @@ on:
           - TranslationMicroService
 
 jobs:
-  deploy:
-    name: Deploy ${{ matrix.service }}
+  build:
+    name: Build ${{ matrix.service }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -31,32 +40,228 @@ jobs:
         include:
           - service: FrontMicroService
             project: backend/FrontMicroService/FrontMicroService.csproj
+
+          - service: MasterMicroService
+            project: backend/MasterMicroService/MasterMicroService.csproj
+
+          - service: AllDropDownMicroService
+            project: backend/AllDropDownMicroService/AllDropDownMicroService.csproj
+
+          - service: FileUploaderMicroService
+            project: backend/FileUploaderMicroService/FileUploaderMicroService.csproj
+
+          - service: TranslationMicroService
+            project: backend/TranslationMicroService/TranslationMicroService.csproj
+
+    steps:
+      - name: Check if this service is selected
+        id: gate
+        run: |
+          INPUT="${{ github.event.inputs.service }}"
+          if [ -z "$INPUT" ] || [ "$INPUT" = "All" ] || [ "$INPUT" = "${{ matrix.service }}" ]; then
+            echo "run=true" >> $GITHUB_OUTPUT
+          else
+            echo "run=false" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.run == 'true'
+
+      - uses: actions/setup-dotnet@v4
+        if: steps.gate.outputs.run == 'true'
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Publish ${{ matrix.service }}
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          dotnet publish ${{ matrix.project }} \
+            -c Release \
+            --no-self-contained \
+            -r linux-x64 \
+            -o publish/${{ matrix.service }}
+
+      - name: Upload artifact
+        if: steps.gate.outputs.run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.service }}
+          path: publish/${{ matrix.service }}/
+          retention-days: 1
+
+  deploy-stage:
+    name: Deploy ${{ matrix.service }} → Stage
+    needs: build
+    if: >
+      needs.build.result == 'success' &&
+      (github.event_name == 'push' ||
+       github.event.inputs.environment == 'stage' ||
+       github.event.inputs.environment == 'both')
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - service: FrontMicroService
             dll: FrontMicroService
+            systemd: preptm-front-api
+            deploy_dir: /root/preptm/BackEnd/Stage/FrontMicroService
+            http_port: 5080
+
+          - service: MasterMicroService
+            dll: MasterMicroService
+            systemd: preptm-master-api
+            deploy_dir: /root/preptm/BackEnd/Stage/MasterMicroService
+            http_port: 5256
+
+          - service: AllDropDownMicroService
+            dll: AllDropDownMicroService
+            systemd: preptm-dropdown-api
+            deploy_dir: /root/preptm/BackEnd/Stage/AllDropDownMicroService
+            http_port: 5294
+
+          - service: FileUploaderMicroService
+            dll: FileUploaderMicroService
+            systemd: preptm-fileupload-api
+            deploy_dir: /root/preptm/BackEnd/Stage/FileUploaderMicroService
+            http_port: 5129
+            extra_rsync_args: --exclude=Content/
+
+          - service: TranslationMicroService
+            dll: TranslationMicroService
+            systemd: preptm-translation-api
+            deploy_dir: /root/preptm/BackEnd/Stage/TranslationMicroService
+            http_port: 5233
+
+    steps:
+      - name: Check if this service is selected
+        id: gate
+        run: |
+          INPUT="${{ github.event.inputs.service }}"
+          if [ -z "$INPUT" ] || [ "$INPUT" = "All" ] || [ "$INPUT" = "${{ matrix.service }}" ]; then
+            echo "run=true" >> $GITHUB_OUTPUT
+          else
+            echo "run=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Download artifact
+        if: steps.gate.outputs.run == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.service }}
+          path: publish/${{ matrix.service }}/
+
+      - name: Setup SSH
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Prepare deploy directory
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "mkdir -p ${{ matrix.deploy_dir }}"
+
+      - name: Stop service
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "sudo systemctl stop ${{ matrix.systemd }} || true"
+
+      - name: Sync build output to server
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          rsync -az --checksum --delete \
+            ${{ matrix.extra_rsync_args }} \
+            -e "ssh -i ~/.ssh/id_rsa" \
+            publish/${{ matrix.service }}/ \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ matrix.deploy_dir }}/
+
+      - name: Install systemd service
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          DEPLOY_DIR="${{ matrix.deploy_dir }}"
+          cat > /tmp/${{ matrix.systemd }}.service << UNIT
+          [Unit]
+          Description=PreptM Stage ${{ matrix.service }}
+          After=network.target
+
+          [Service]
+          WorkingDirectory=${DEPLOY_DIR}
+          ExecStart=/usr/bin/dotnet ${DEPLOY_DIR}/${{ matrix.dll }}.dll
+          Restart=always
+          RestartSec=10
+          KillSignal=SIGINT
+          SyslogIdentifier=${{ matrix.systemd }}
+          Environment=ASPNETCORE_ENVIRONMENT=Staging
+          Environment=ASPNETCORE_URLS=http://127.0.0.1:${{ matrix.http_port }}
+          Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+          [Install]
+          WantedBy=multi-user.target
+          UNIT
+          scp -i ~/.ssh/id_rsa /tmp/${{ matrix.systemd }}.service \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/tmp/${{ matrix.systemd }}.service
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+            sudo mv /tmp/${{ matrix.systemd }}.service /etc/systemd/system/${{ matrix.systemd }}.service &&
+            sudo systemctl daemon-reload &&
+            sudo systemctl enable ${{ matrix.systemd }}
+          "
+
+      - name: Start service and verify
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} bash << 'ENDSSH'
+            set -e
+            sudo systemctl start ${{ matrix.systemd }}
+            TIMEOUT=30
+            ELAPSED=0
+            until sudo systemctl is-active --quiet ${{ matrix.systemd }}; do
+              if [ $ELAPSED -ge $TIMEOUT ]; then
+                echo "ERROR: ${{ matrix.systemd }} did not become active within ${TIMEOUT}s"
+                sudo journalctl -u ${{ matrix.systemd }} -n 50 --no-pager
+                exit 1
+              fi
+              sleep 3
+              ELAPSED=$((ELAPSED + 3))
+            done
+            echo "OK: ${{ matrix.systemd }} is active"
+            sudo systemctl status ${{ matrix.systemd }} --no-pager
+          ENDSSH
+
+  deploy-production:
+    name: Deploy ${{ matrix.service }} → Production
+    needs: build
+    if: >
+      needs.build.result == 'success' &&
+      (github.event.inputs.environment == 'production' ||
+       github.event.inputs.environment == 'both')
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - service: FrontMicroService
             systemd: preptm-frontapi
             deploy_dir: /var/www/preptm/api/frontapi
 
           - service: MasterMicroService
-            project: backend/MasterMicroService/MasterMicroService.csproj
-            dll: MasterMicroService
             systemd: preptm-master
             deploy_dir: /var/www/preptm/api/master
 
           - service: AllDropDownMicroService
-            project: backend/AllDropDownMicroService/AllDropDownMicroService.csproj
-            dll: AllDropDownMicroService
             systemd: preptm-alldropdown
             deploy_dir: /var/www/preptm/api/alldropdown
 
           - service: FileUploaderMicroService
-            project: backend/FileUploaderMicroService/FileUploaderMicroService.csproj
-            dll: FileUploaderMicroService
             systemd: preptm-fileuploader
             deploy_dir: /var/www/preptm/api/fileuploader
             extra_rsync_args: --exclude=Content/
 
           - service: TranslationMicroService
-            project: backend/TranslationMicroService/TranslationMicroService.csproj
-            dll: TranslationMicroService
             systemd: preptm-translation
             deploy_dir: /var/www/preptm/api/translation
 
@@ -66,50 +271,40 @@ jobs:
         run: |
           INPUT="${{ github.event.inputs.service }}"
           if [ -z "$INPUT" ] || [ "$INPUT" = "All" ] || [ "$INPUT" = "${{ matrix.service }}" ]; then
-            echo "deploy=true" >> $GITHUB_OUTPUT
+            echo "run=true" >> $GITHUB_OUTPUT
           else
-            echo "deploy=false" >> $GITHUB_OUTPUT
+            echo "run=false" >> $GITHUB_OUTPUT
           fi
 
-      - uses: actions/checkout@v4
-        if: steps.gate.outputs.deploy == 'true'
-
-      - uses: actions/setup-dotnet@v4
-        if: steps.gate.outputs.deploy == 'true'
+      - name: Download artifact
+        if: steps.gate.outputs.run == 'true'
+        uses: actions/download-artifact@v4
         with:
-          dotnet-version: '6.0.x'
-
-      - name: Publish ${{ matrix.service }}
-        if: steps.gate.outputs.deploy == 'true'
-        run: |
-          dotnet publish ${{ matrix.project }} \
-            -c Release \
-            --no-self-contained \
-            -r linux-x64 \
-            -o publish/${{ matrix.service }}
+          name: ${{ matrix.service }}
+          path: publish/${{ matrix.service }}/
 
       - name: Setup SSH
-        if: steps.gate.outputs.deploy == 'true'
+        if: steps.gate.outputs.run == 'true'
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Prepare deploy directory on server
-        if: steps.gate.outputs.deploy == 'true'
+      - name: Prepare deploy directory
+        if: steps.gate.outputs.run == 'true'
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "mkdir -p ${{ matrix.deploy_dir }}"
 
       - name: Stop service
-        if: steps.gate.outputs.deploy == 'true'
+        if: steps.gate.outputs.run == 'true'
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "sudo systemctl stop ${{ matrix.systemd }} || true"
 
       - name: Sync build output to server
-        if: steps.gate.outputs.deploy == 'true'
+        if: steps.gate.outputs.run == 'true'
         run: |
           rsync -az --checksum --delete \
             ${{ matrix.extra_rsync_args }} \
@@ -118,7 +313,7 @@ jobs:
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ matrix.deploy_dir }}/
 
       - name: Start service and verify
-        if: steps.gate.outputs.deploy == 'true'
+        if: steps.gate.outputs.run == 'true'
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} bash << 'ENDSSH'
             set -e

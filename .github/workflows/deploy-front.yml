@@ -5,17 +5,31 @@ on:
     branches: [main]
     paths:
       - 'front/**'
+      - '.github/workflows/deploy-front.yml'
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deploy target'
+        required: true
+        default: 'stage'
+        type: choice
+        options:
+          - stage
+          - production
+          - both
 
 jobs:
-  build-and-deploy:
+  build-stage:
+    name: Build Angular (Stage)
+    if: >
+      github.event_name == 'push' ||
+      github.event.inputs.environment == 'stage' ||
+      github.event.inputs.environment == 'both'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js 20
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
@@ -28,10 +42,123 @@ jobs:
       - name: Install gzipper CLI
         run: npm install -g gzipper
 
-      - name: Build Angular SSR (all locales + gzip)
+      - name: Build Angular SSR (staging)
+        working-directory: front
+        run: npm run build:stage
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-stage
+          path: front/dist/preptm/
+          retention-days: 1
+
+  build-production:
+    name: Build Angular (Production)
+    if: >
+      github.event.inputs.environment == 'production' ||
+      github.event.inputs.environment == 'both'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: front/package-lock.json
+
+      - name: Install dependencies
+        working-directory: front
+        run: npm ci
+
+      - name: Install gzipper CLI
+        run: npm install -g gzipper
+
+      - name: Build Angular SSR (production, all locales + gzip)
         working-directory: front
         run: npm run build
-        # Runs: ng build --localize && gzipper compress ./dist
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-production
+          path: front/dist/preptm/
+          retention-days: 1
+
+  deploy-stage:
+    name: Deploy Frontend → Stage
+    needs: build-stage
+    if: needs.build-stage.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-stage
+          path: dist/
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Prepare server directories
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "mkdir -p /var/www/preptm/stage /var/www/preptm/pm2 /var/log/preptm /var/cache/nginx/stage-ssr"
+
+      - name: Stop StageFront
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "pm2 stop StageFront 2>/dev/null || true"
+
+      - name: Sync build output to server
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_rsa" \
+            dist/ \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/preptm/stage/
+
+      - name: Start StageFront and save
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+            pm2 restart StageFront 2>/dev/null || \
+            pm2 start /var/www/preptm/pm2/ecosystem.config.js --only StageFront && \
+            pm2 save
+          "
+
+      - name: Verify StageFront is online
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} bash << 'ENDSSH'
+            TIMEOUT=30
+            ELAPSED=0
+            until pm2 list --no-color 2>/dev/null | grep -q "StageFront.*online"; do
+              if [ $ELAPSED -ge $TIMEOUT ]; then
+                echo "ERROR: StageFront did not come online within ${TIMEOUT}s"
+                pm2 logs StageFront --lines 50 --nostream
+                exit 1
+              fi
+              sleep 3
+              ELAPSED=$((ELAPSED + 3))
+            done
+            echo "OK: StageFront is online"
+            pm2 show StageFront
+          ENDSSH
+
+  deploy-production:
+    name: Deploy Frontend → Production
+    needs: build-production
+    if: needs.build-production.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-production
+          path: dist/
 
       - name: Setup SSH
         run: |
@@ -45,7 +172,7 @@ jobs:
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "mkdir -p /var/www/preptm/front /var/www/preptm/pm2 /var/log/preptm /var/cache/nginx/ssr"
 
-      - name: Stop ProdFront before deploy
+      - name: Stop ProdFront
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "pm2 stop ProdFront 2>/dev/null || true"
@@ -54,7 +181,7 @@ jobs:
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/id_rsa" \
-            front/dist/preptm/ \
+            dist/ \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/preptm/front/
 
       - name: Start ProdFront and save
