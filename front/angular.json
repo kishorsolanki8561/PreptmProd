@@ -54,9 +54,7 @@
               "node_modules/ng-zorro-antd/style/index.min.css",
               "node_modules/ng-zorro-antd/select/style/index.min.css",
               "node_modules/ng-zorro-antd/image/style/index.min.css",
-              "node_modules/ng-zorro-antd/form/style/index.min.css",
               "node_modules/ng-zorro-antd/input/style/index.min.css",
-              "node_modules/ng-zorro-antd/list/style/index.min.css",
               "node_modules/ng-zorro-antd/breadcrumb/style/index.min.css",
               "src/assets/css/tailwind.scss",
               "src/styles.scss"

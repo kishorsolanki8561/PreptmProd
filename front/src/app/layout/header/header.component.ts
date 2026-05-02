@@ -91,7 +91,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     });
 
     this.renderer.listen('window', 'click', (e: Event) => {
-      if (e.target !== this.toggleButton.nativeElement && e.target !== this.searchDiv.nativeElement) {
+      if (e.target !== this.toggleButton?.nativeElement && e.target !== this.searchDiv?.nativeElement) {
         this.showSearchList = false;
       }
     });

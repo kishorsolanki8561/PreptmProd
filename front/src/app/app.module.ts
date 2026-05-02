@@ -6,7 +6,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { AuthInterceptor } from './core/interceptor/auth.interceptor';
@@ -26,7 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
       initialNavigation: 'enabledBlocking',
       scrollPositionRestoration: 'enabled'
     }),
-    BrowserAnimationsModule,
+    NoopAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
     CoreModule,

@@ -1,65 +1,5 @@
 @import 'src/assets/css/variables.scss';
 
-.owl-carousel .owl-stage-outer {
-  z-index: -1;
-}
-
-.owl-theme .owl-nav.disabled+.owl-dots {
-  margin-top: -18px;
-}
-
-.owl-theme .owl-dots .owl-dot span {
-  width: 5px;
-  height: 5px;
-  margin: 5px 4px;
-}
-
-.slick-slide {
-  max-height: 150px !important;
-}
-
-.slick-track {
-  max-height: 150px !important;
-}
-
-.slick-list {
-  max-height: 150px !important;
-}
-
-.slick-dots {
-  bottom: 30px;
-
-  li {
-    box-shadow: 0 0 5px #00000096;
-  }
-}
-
-// lg
-@media (min-width:1024px) {
-  .owl-theme .owl-dots .owl-dot span {
-    width: 10px;
-    height: 10px;
-    margin: 5px 7px;
-  }
-
-  .owl-theme .owl-nav.disabled+.owl-dots {
-    margin-top: -27px;
-  }
-
-  .slick-slide {
-    max-height: 280px !important;
-  }
-
-  .slick-track {
-    max-height: 280px !important;
-  }
-
-  .slick-list {
-    max-height: 280px !important;
-  }
-}
-
-
 .my-pagination {
   text-align: center;
   margin: 20px 0 20px;
@@ -105,13 +45,6 @@ img.ant-image-preview-img {
   display: inline-block;
 }
 
-nz-result {
-  svg {
-    margin: 0 auto;
-    display: block;
-  }
-}
-
 .additional-page-content {
   line-height: 30px;
 
@@ -136,8 +69,6 @@ iframe {
 }
 
 .whatsapp-notification-container {
-  // background-image: url("/assets/img/whatsapp-background.jpg");
-  // background-size: cover;
   background-color: #25d366;
   color: #fff;
 
