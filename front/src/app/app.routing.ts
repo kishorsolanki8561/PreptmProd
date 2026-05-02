@@ -11,6 +11,7 @@ export const routes: Routes = [
   { path: 'disclaimer', loadChildren: () => import('./pages/additional-pages/additional-pages.module').then(m => m.AdditionalPagesModule), data: { type: AdditionalPages.Disclaimer } },
   { path: 'manage-account', loadChildren: () => import('./pages/additional-pages/additional-pages.module').then(m => m.AdditionalPagesModule), data: { type: AdditionalPages.ManageAccount } },
   { path: 'contact', loadChildren: () => import('./pages/contact-us/contact-us.module').then(m => m.ContactUsModule) },
+  { path: 'sitemap', loadChildren: () => import('./pages/sitemap/sitemap.module').then(m => m.SitemapModule) },
   { path: 'article', loadChildren: () => import('./pages/article/article.module').then(m => m.ArticleModule) },
   { path: 'topic', loadChildren: () => import('./pages/article/tag.module').then(m => m.TagModule) },
 
