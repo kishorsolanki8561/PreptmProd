@@ -5,4 +5,5 @@ export const environment = {
     hostPort: 4000,
     encryptDecryptKey: "HR$2pIjHR$2pIj12",
     isEncrypt: false,
+    showAds: false,
 };

@@ -6,4 +6,5 @@ export const environment = {
   production: true,
   encryptDecryptKey: "HR$2pIjHR$2pIj12",
   isEncrypt: false,
+  showAds: true,
 };

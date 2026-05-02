@@ -9,7 +9,8 @@ export const environment = {
   baseApiUrl: "https://localhost:7229/api/", //local
   encryptDecryptKey: "HR$2pIjHR$2pIj12",
   isEncrypt: false,
-  hostPort: 4000
+  hostPort: 4000,
+  showAds: false,
 };
 
 /*
