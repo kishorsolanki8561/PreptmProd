@@ -235,9 +235,9 @@ namespace FrontMicroService.Service
                     sb.Append("<?xml version='1.0' encoding='UTF-8' ?><urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>");
                     foreach (var page in siteMapData.Data)
                     {
-                        var istdate = TimeZoneInfo.ConvertTimeFromUtc(Convert.ToDateTime(page.ModifiedDate),
-                        TimeZoneInfo.FindSystemTimeZoneById("India Standard Time"));
-                        string mDate = istdate.ToString("yyyy-MM-ddTHH:mm:sszzz");
+                        var utcDate = DateTime.SpecifyKind(Convert.ToDateTime(page.ModifiedDate), DateTimeKind.Utc);
+                        var istDate = new DateTimeOffset(utcDate).ToOffset(TimeSpan.FromHours(5) + TimeSpan.FromMinutes(30));
+                        string mDate = istDate.ToString("yyyy-MM-ddTHH:mm:sszzz");
                         string url = "";
                         url = page.SlugUrl;
                         sb.Append("<url><loc>" + url + "</loc><lastmod>" + mDate + "</lastmod> <changefreq>" + page.ChangeFreq + "</changefreq><priority>" + page.Priority + "</priority></url>");
