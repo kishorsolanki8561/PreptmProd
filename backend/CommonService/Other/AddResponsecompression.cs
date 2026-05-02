@@ -29,7 +29,7 @@ namespace CommonService.Other
             {
                 options.EnableForHttps = true; // Enable compression for HTTPS requests
                 options.Providers.Add<BrotliCompressionProvider>(); // Use Brotli compression
-                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "image/svg+xml" });
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "image/svg+xml", "application/xml" });
             });
         }
 
