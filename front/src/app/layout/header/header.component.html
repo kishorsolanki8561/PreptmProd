@@ -34,7 +34,7 @@
       </div>
 
       <!-- History suggestions -->
-      <div *ngIf="searchTextList.length==0 && !searchText.value" #searchDiv
+      <div *ngIf="searchTextList.length==0 && !searchText.value && historySerachText?.length" #searchDiv
         [ngClass]="{'search-list-open':showSearchList,'search-list':true}">
         <ul>
           <li class="search-item" *ngFor="let hoption of historySerachText" (click)="onSearch(hoption)">
@@ -49,7 +49,7 @@
       </div>
 
       <!-- Live suggestions -->
-      <div #searchDiv [ngClass]="{'search-list-open':showSearchList,'search-list':true}">
+      <div *ngIf="searchText.value || searchTextList?.length" #searchDiv [ngClass]="{'search-list-open':showSearchList,'search-list':true}">
         <ul>
           <li class="search-item search-query" (click)="onSearch(searchText.value)" *ngIf="searchText.value">
             <img src="assets/img/search.svg" alt="search" [attr.loading]="'lazy'" />

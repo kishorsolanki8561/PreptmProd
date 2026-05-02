@@ -8,16 +8,16 @@
             <meta itemprop="keywords" [content]="post?.keywords" />
             <meta itemprop="url" [content]="this.platformLocation.href" />
             <meta itemprop="headline" [content]="post?.title" />
-            
-            <!-- post header smart -->
+
+            <!-- Article header -->
             <div class="article-container section">
-                <h1 class="mx-2" *ngIf="post?.title">{{post?.title}}</h1>
-                
+                <h1 *ngIf="post?.title">{{post?.title}}</h1>
+
                 <div class="author-and-state">
-                    <div class="mx-2 author">
+                    <div class="author">
                         <div class="author-info">
                             <div class="profile" itemprop="author" itemscope itemtype="https://schema.org/Person">
-                                <img src="assets/img/boy.png" alt="Author avatar" class="avatar mr-2"  [attr.loading]="'lazy'"  />
+                                <img src="assets/img/boy.png" alt="Author avatar" class="avatar" [attr.loading]="'lazy'" />
                                 <span class="author-name" itemprop="name">Suresh</span>
                                 <meta itemprop="url" [content]="'https://www.preptm.com/assets/img/writter.jpg'" />
                             </div>
@@ -28,101 +28,122 @@
                                     <meta itemprop="url" [content]="preptmLogo" />
                                 </div>
                             </div>
-                            <span class="author-meta">
-                                <span class="publish-date mt-1 md:mt-2" title="Last updated" *ngIf="post?.modifiedDate">
+                            <span class="author-meta" *ngIf="post?.modifiedDate">
+                                <span class="publish-date" title="Last updated">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                        <line x1="16" y1="2" x2="16" y2="6"/>
+                                        <line x1="8" y1="2" x2="8" y2="6"/>
+                                        <line x1="3" y1="10" x2="21" y2="10"/>
+                                    </svg>
                                     <span class="date">{{post?.modifiedDate | date:DATE_FORMAT}}</span>
                                     <meta itemprop="datePublished" [content]="post?.modifiedDate+'+05:30'" />
                                 </span>
                             </span>
-
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
 
-            <!-- short  description -->
-            <div class="section gap-padding-all" *ngIf="this.shortDesc?.length">
-                <p class="mb-4" *ngFor="let desc of this.shortDesc">{{desc}}</p>
+            <!-- Short description — lead callout -->
+            <div class="short-desc-section section gap-padding-all" *ngIf="this.shortDesc?.length">
+                <p *ngFor="let desc of this.shortDesc">{{desc}}</p>
                 <meta itemprop="description" [content]="this.shortDesc.join(' ')" />
             </div>
 
-            <!-- main content -->
+            <!-- Main content -->
             <div class="section gap-padding-all">
                 <preptm-ads [isArticle]="true"></preptm-ads>
                 <div itemprop="articleBody" [innerHTML]="post?.description" class="editor"></div>
             </div>
 
-            <!-- thumbnail -->
+            <!-- Thumbnail -->
             <div class="thumbnail-wrapper" *ngIf="post && post?.thumbnail">
                 <meta itemprop="image" [content]="post.thumbnail" />
                 <meta itemprop="thumbnailUrl" [content]="post.thumbnail" />
                 <preptm-image [alt]="post.title" [onlyLow]="false" [skipSmall]="true" [className]="'thumbnail'"
                     [src]="post.thumbnail"></preptm-image>
-                <p class="text-center my-2" *ngIf="post?.thumbnail && post?.thumbnailCredit">
+                <p class="thumbnail-credit" *ngIf="post?.thumbnail && post?.thumbnailCredit">
                     <span>Photo by </span>
                     <span [innerHTML]="post.thumbnailCredit"></span>
                 </p>
             </div>
 
-            <!-- Tags list -->
-            <div class="tag-container section bg-gray" *ngIf="post?.tags?.length">
-                <div class="tag" [ngClass]="{'active': true}">
-                    Tags
-                </div>
-                <a class="tag button" [routerLink]="['/topic',tag.slugUrl]" *ngFor="let tag of (post?.tags ?? [])">
+            <!-- Tags -->
+            <div class="tag-container section" *ngIf="post?.tags?.length">
+                <span class="tags-label">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                        <line x1="7" y1="7" x2="7.01" y2="7"/>
+                    </svg>
+                    <span i18n>Tags</span>
+                </span>
+                <a class="tag" [routerLink]="['/topic', tag.slugUrl]" *ngFor="let tag of (post?.tags ?? [])">
                     {{ tag.tag }}
                 </a>
             </div>
 
-            <!-- faq -->
-            <div *ngIf="post && post.articleFaqs && post.articleFaqs.length" class="section gap-padding-all" itemscope
-                itemtype="https://schema.org/FAQPage">
-                <h2 class="mb-3">FAQ's</h2>
+            <!-- FAQ -->
+            <div *ngIf="post && post.articleFaqs && post.articleFaqs.length"
+                class="faq-section section gap-padding-all"
+                itemscope itemtype="https://schema.org/FAQPage">
+                <h2 class="faq-heading">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    FAQ's
+                </h2>
                 <ol class="faq-container">
                     <ng-container *ngFor="let faqItem of post?.articleFaqs">
                         <li class="faq" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
                             <p class="que" itemprop="name">{{faqItem.que}}</p>
-                            <p class="ans text-muted" itemscope itemprop="acceptedAnswer"
-                                itemtype="https://schema.org/Answer">
+                            <p class="ans" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                                 <span itemprop="text">{{faqItem.ans}}</span>
                             </p>
                         </li>
                     </ng-container>
-
                 </ol>
             </div>
 
         </div>
     </div>
+
+    <!-- Sidebar -->
     <div>
         <div class="grid grid-cols-1 gap-4 side-nav">
-            <!-- Latest Post -->
-            <div class="section bg-gray" *ngIf="latestList && latestList?.length">
-                <div class="title flex justify-between mb-4">
-                    <p i18n>Latest</p>
-                    <a routerLink="/latest" i18n>View All</a>
+
+            <!-- Latest -->
+            <div class="section sidebar-section" *ngIf="latestList && latestList?.length">
+                <div class="sidebar-header">
+                    <h3 i18n>Latest</h3>
+                    <a routerLink="/latest" class="sidebar-view-all" i18n>View All →</a>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
+                <div class="sidebar-body grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
                     <preptm-post [post]="post" *ngFor="let post of latestList"></preptm-post>
                 </div>
             </div>
 
-            <!-- related recruitment -->
-            <div class="section bg-gray" *ngIf="post?.recruitments && post?.recruitments?.length">
-                <p class="title" i18n>This may interest you</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 suggestion-links">
+            <!-- Related recruitments -->
+            <div class="section sidebar-section" *ngIf="post?.recruitments && post?.recruitments?.length">
+                <div class="sidebar-header">
+                    <h3 i18n>This may interest you</h3>
+                </div>
+                <div class="sidebar-body grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 suggestion-links">
                     <preptm-post [post]="post" *ngFor="let post of post?.recruitments"></preptm-post>
                 </div>
             </div>
 
-            <!-- related block content -->
-            <div class="section bg-gray" *ngIf="post?.blockContents && post?.blockContents?.length">
-                <h2 class="related-section-title hidden lg:block gap-top gap-padding-x" i18n>Related</h2>
-                <h2 class="title lg:hidden" i18n>Related</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 gap-padding-all suggestion-links">
+            <!-- Related block content -->
+            <div class="section sidebar-section" *ngIf="post?.blockContents && post?.blockContents?.length">
+                <div class="sidebar-header">
+                    <h3 i18n>Related</h3>
+                </div>
+                <div class="sidebar-body grid grid-cols-1 md:grid-cols-2 gap-3 suggestion-links">
                     <preptm-post [minimal]="false" [post]="post" *ngFor="let post of post?.blockContents"></preptm-post>
                 </div>
             </div>

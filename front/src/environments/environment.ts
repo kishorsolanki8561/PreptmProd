@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  // baseApiUrl: "https://sapi.preptm.com/api/", //stage
+  baseApiUrl: "https://sapi.preptm.com/api/", //stage
   // baseApiUrl: "https://api.preptm.com/api/", //live
-  baseApiUrl: "https://localhost:7229/api/", //local
+  // baseApiUrl: "https://localhost:7229/api/", //local
   encryptDecryptKey: "HR$2pIjHR$2pIj12",
   isEncrypt: false,
   hostPort: 4000,

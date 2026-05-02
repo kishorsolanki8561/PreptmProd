@@ -31,26 +31,33 @@
            class="post-link"
            itemprop="url">
 
-          <!-- Title -->
-          <span class="post-title short-line-height" itemprop="name">{{ post.title }}</span>
+          <!-- Item number -->
+          <span class="post-num" aria-hidden="true">{{ i + 1 }}</span>
 
-          <!-- Badges row — stacked below title, fully contained -->
-          <span class="post-badges">
+          <!-- Title + badges -->
+          <span class="post-content">
+            <span class="post-title short-line-height" itemprop="name">{{ post.title }}</span>
 
-            <!-- Urgency countdown -->
-            <span *ngIf="post?.reminingFewDays" class="badge badge-urgent">
-              <span class="badge-counter">{{ post.reminingFewDays }}</span>
-              <span i18n>Day<span *ngIf="$any(post.reminingFewDays) > 1">'s</span> Left</span>
+            <span class="post-badges">
+              <span *ngIf="post?.reminingFewDays" class="badge badge-urgent">
+                <span class="badge-counter">{{ post.reminingFewDays }}</span>
+                <span i18n>Day<span *ngIf="$any(post.reminingFewDays) > 1">'s</span> Left</span>
+              </span>
+              <img *ngIf="post.isNew && !post.reminingFewDays"
+                   src="assets/img/new-gif.gif"
+                   class="badge-new"
+                   alt="New post"
+                   [attr.loading]="'lazy'">
             </span>
-
-            <!-- NEW gif -->
-            <img *ngIf="post.isNew && !post.reminingFewDays"
-                 src="assets/img/new-gif.gif"
-                 class="badge-new"
-                 alt="New post"
-                 [attr.loading]="'lazy'">
-
           </span>
+
+          <!-- Click affordance -->
+          <svg class="post-chevron" width="13" height="13" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+
         </a>
 
       </li>
