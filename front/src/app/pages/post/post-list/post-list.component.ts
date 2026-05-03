@@ -54,6 +54,7 @@ export class PostListComponent implements OnInit {
 
       this.categorySlug = params['categorySlug']
       if (this.type == PostTypesSlug.SEARCH) {
+        this.showFilter = false;
         this._route.params.subscribe((params: Params) => {
           if (params['searchedData']) {
             this.filter.blockTypeSlug = '';
@@ -237,9 +238,7 @@ export class PostListComponent implements OnInit {
         if (res.totalRecords > 0) {
           this.pagination.totalItems = res.totalRecords;
           this.pagination.currentPage = this.filter.page;
-          this.showFilter = true;
         } else {
-          this.showFilter = false;
           this.pagination.totalItems = 0;
         }
         this.curModuleText = res?.otherData?.ModuleText || ''
@@ -256,7 +255,6 @@ export class PostListComponent implements OnInit {
         ]
       } else {
         this.list = []
-        this.showFilter = false
         this.pagination.totalItems = 0
       }
     }, () => {

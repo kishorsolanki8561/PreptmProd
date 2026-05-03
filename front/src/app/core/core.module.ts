@@ -5,6 +5,7 @@ import { PostComponent } from './components/post/post.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoaderDirective } from './directive/loader.directive';
 import { NoRecordsComponent } from './components/no-records/no-records.component';
+import { NoDataComponent } from './components/no-data/no-data.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { ShareButtonsComponent } from './components/share-buttons/share-buttons.component';
 import { SafePipe } from './pipes/safe.pipe';
@@ -23,6 +24,7 @@ const components = [
   LoaderDirective,
   LoaderComponent,
   NoRecordsComponent,
+  NoDataComponent,
   BreadcrumbComponent,
   ShareButtonsComponent,
   SafePipe,

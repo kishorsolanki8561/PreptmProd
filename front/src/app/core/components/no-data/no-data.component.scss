@@ -1,0 +1,47 @@
+@import 'src/assets/css/variables.scss';
+
+.no-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 20px;
+  min-height: 320px;
+  width: 100%;
+
+  &__illustration {
+    margin-bottom: 16px;
+    display: inline-flex;
+  }
+
+  &__title {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 700;
+    color: $text-color;
+  }
+
+  &__message {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: $text-muted;
+    max-width: 380px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .no-data {
+    padding: 64px 24px;
+    min-height: 380px;
+
+    &__title {
+      font-size: 20px;
+    }
+
+    &__message {
+      font-size: 15px;
+    }
+  }
+}

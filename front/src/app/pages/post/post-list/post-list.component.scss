@@ -3,8 +3,12 @@
 // =============================================
 // LAYOUT WRAPPER
 // =============================================
-.post-list-wrapper {
+.post-list-breadcrumb {
   margin-top: 12px;
+}
+
+.post-list-wrapper {
+  margin-top: 8px;
   min-height: calc(100vh - 80px);
   align-items: start;
 }
@@ -13,12 +17,6 @@
 // FILTER — MOBILE (horizontal scroll chips)
 // =============================================
 .filter {
-  overflow-x: auto;
-  overflow-y: hidden;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  &::-webkit-scrollbar { display: none; }
-
   width: 100%;
 
   .filter-title {
@@ -28,27 +26,99 @@
   .filter-item-container {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
+    gap: 8px;
+    padding: 10px;
     white-space: nowrap;
 
     h4 { display: none; }
 
     preptm-select {
-      min-width: 140px;
-      flex-shrink: 0;
+      flex: 1 1 calc(50% - 4px);
+      min-width: 0;
+      max-width: calc(50% - 4px);
+      position: relative;
+
+      ::ng-deep .select-trigger {
+        min-height: 28px;
+        padding: 0 24px 0 10px;
+        border-radius: 999px;
+        background-color: #fff;
+        border-color: $border-color;
+        font-size: 11px;
+        font-weight: 500;
+        transition: background-color $transition-fast, border-color $transition-fast, color $transition-fast, box-shadow $transition-fast;
+      }
+
+      ::ng-deep .select.size-large .select-trigger {
+        min-height: 28px;
+        padding-right: 24px;
+        font-size: 11px;
+      }
+
+      ::ng-deep .select-arrow {
+        right: 8px;
+      }
+
+      ::ng-deep .select-arrow svg {
+        width: 8px;
+        height: 5px;
+      }
+
+      ::ng-deep .select-clear {
+        right: 22px;
+        font-size: 14px;
+        width: 14px;
+        height: 14px;
+      }
+
+      // Active state — a value is currently applied
+      &:has(.select-value:not(.is-placeholder)) {
+        ::ng-deep .select-trigger {
+          background-color: $primary-color-bg;
+          border-color: $primary-color;
+          color: $primary-color-dark;
+          font-weight: 600;
+          padding-left: 18px;
+          box-shadow: 0 0 0 2px rgba(8, 123, 130, 0.12);
+        }
+
+        ::ng-deep .select-value {
+          color: $primary-color-dark;
+        }
+
+        ::ng-deep .select-arrow {
+          color: $primary-color-dark;
+        }
+
+        // leading dot indicator
+        &::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 7px;
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background-color: $primary-color;
+          transform: translateY(-50%);
+          z-index: 1;
+          pointer-events: none;
+        }
+      }
     }
   }
 
   .clear {
-    flex-shrink: 0;
+    flex: 0 0 auto;
+    margin-left: auto;
     background: #fee2e2;
     color: #b91c1c;
     border: 1px solid #fca5a5;
     border-radius: 20px;
     padding: 4px 14px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     cursor: pointer;
     transition: background $transition-fast;
@@ -56,6 +126,71 @@
 
     &:hover {
       background: #fecaca;
+    }
+  }
+}
+
+// =============================================
+// FILTER CHIP — MOBILE BOTTOM-SHEET POPUP
+// (only when chip is opened on mobile)
+// =============================================
+@media (max-width: 1023.98px) {
+  .filter .filter-item-container preptm-select {
+    ::ng-deep .select.is-open .select-dropdown {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: auto;
+      width: 100%;
+      max-width: none;
+      max-height: 65vh;
+      margin: 0;
+      padding: 20px 8px 24px;
+      border: none;
+      border-radius: 16px 16px 0 0;
+      box-shadow:
+        0 -8px 24px rgba(0, 0, 0, 0.18),
+        0 0 0 100vmax rgba(0, 0, 0, 0.45);
+      z-index: 9999;
+      animation: chip-sheet-up 0.22s ease-out;
+      overscroll-behavior: contain;
+    }
+
+    // grab handle at the top of the sheet
+    ::ng-deep .select.is-open .select-dropdown::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 4px;
+      border-radius: 2px;
+      background-color: #d1d5db;
+    }
+
+    ::ng-deep .select.is-open .select-option {
+      padding: 13px 18px;
+      font-size: 15px;
+      border-radius: 8px;
+      white-space: normal;
+    }
+
+    ::ng-deep .select.is-open .select-empty {
+      padding: 24px;
+      font-size: 14px;
+    }
+  }
+
+  @keyframes chip-sheet-up {
+    from {
+      transform: translateY(100%);
+      opacity: 0.6;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
     }
   }
 }
@@ -130,38 +265,74 @@
     .filter-item-container {
       display: flex;
       flex-direction: column;
+      align-items: stretch;
       gap: 0;
-      padding: 0;
+      padding: 0 16px 16px;
       white-space: normal;
 
       h4 {
         display: block;
+        width: 100%;
         font-size: 11px;
         font-weight: 600;
         color: $text-muted;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        margin: 16px 16px 6px;
+        text-align: left;
+        margin: 16px 0 6px;
       }
 
       preptm-select {
         display: block;
-        width: calc(100% - 32px);
-        margin: 0 16px 4px;
+        flex: none;
+        width: 100%;
+        max-width: none;
+        margin: 0 0 4px;
+
+        // Reset mobile chip styles for desktop sidebar
+        ::ng-deep .select-trigger {
+          min-height: 40px;
+          padding: 0 32px 0 12px;
+          border-radius: 8px;
+          font-size: 14px;
+          font-weight: 400;
+          box-shadow: none;
+        }
+
+        ::ng-deep .select.size-large .select-trigger {
+          min-height: 40px;
+          padding-right: 32px;
+          font-size: 14px;
+        }
+
+        ::ng-deep .select-arrow {
+          right: 10px;
+        }
+
+        ::ng-deep .select-arrow svg {
+          width: 10px;
+          height: 6px;
+        }
+
+        ::ng-deep .select-clear {
+          right: 28px;
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+        }
+
+        // Drop the leading-dot active indicator on desktop
+        &:has(.select-value:not(.is-placeholder))::before {
+          content: none;
+        }
+
+        &:has(.select-value:not(.is-placeholder)) ::ng-deep .select-trigger {
+          padding-left: 12px;
+        }
       }
 
-      // Divider between filter groups
       preptm-select + h4 {
         margin-top: 8px;
-        padding-top: 8px;
-        border-top: 1px solid $border-color;
-      }
-
-      // Bottom padding
-      &::after {
-        content: '';
-        display: block;
-        height: 16px;
       }
     }
 
