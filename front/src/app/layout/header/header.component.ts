@@ -1,9 +1,8 @@
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, OnInit, Output, PLATFORM_ID, Renderer2, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, PLATFORM_ID, Renderer2, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
-import { NzNotificationComponent, NzNotificationService } from 'ng-zorro-antd/notification';
+import { WhatsAppPromptService } from 'src/app/core/services/whatsapp-prompt.service';
 import { debounceTime, of, switchMap } from 'rxjs';
 import { ENABLE_LOGIN, PostTypesSlug } from 'src/app/core/fixed-values';
 import { LoginReq } from 'src/app/core/models/auth.model';
@@ -29,8 +28,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private _route: ActivatedRoute,
     private _cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private notification: NzNotificationService,
-    public breakpointObserver: BreakpointObserver
+    private whatsappPrompt: WhatsAppPromptService,
   ) {
     if (_coreService.checkIsClientSide()) {
       // this.searchText.setValue(' ');
@@ -53,8 +51,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   lastSearchedText = '';
   showProfileMenu = false;
   isLangChanged = false
-
-  @ViewChild('whatsappNotification', { static: true }) whatsappNotification: TemplateRef<{ $implicit: NzNotificationComponent }>;
 
   curLang: any;
 
@@ -138,12 +134,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         }
       })
     }
-
-    // this.breakpointObserver.observe(['(max-width: 1023px)'])
-    //   .subscribe((state: BreakpointState) => {
-    //     if (state.matches)
-    //       this.showWhatsappAlert();
-    //   });
 
   }
 
@@ -298,9 +288,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
 
   showWhatsappAlert() {
-    // setTimeout(() => {
-      this.notification.template(this.whatsappNotification, { nzDuration: 0, nzPlacement: 'bottomRight', nzClass: 'whatsapp-notification-container' });
-    // }, 10000);
+    this.whatsappPrompt.show();
   }
 
 

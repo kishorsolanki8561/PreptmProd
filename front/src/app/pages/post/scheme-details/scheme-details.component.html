@@ -279,7 +279,7 @@
         <div class="section images text-center" *ngIf="images && images?.length">
             <h2 class="related-section-title hidden lg:block gap-top gap-padding-x" i18n>Images</h2>
             <h2 class="title lg:hidden" i18n>Images</h2>
-            <nz-image-group>
+            <div class="image-group">
                 <div class="related-files-container">
                     <div *ngFor="let image of images;let i=index" class="text-center">
                         <!-- <img class="attachment" nz-image [nzSrc]="image.path" [alt]="'image-'+i"
@@ -289,7 +289,7 @@
                         <p>{{image.title}}</p>
                     </div>
                 </div>
-            </nz-image-group>
+            </div>
         </div>
 
         <!-- faq -->
@@ -313,7 +313,7 @@
         <div class="section images text-center" *ngIf="videos && videos?.length">
             <h2 class="related-section-title hidden lg:block gap-top gap-padding-x" i18n>Video's</h2>
             <h2 class="title lg:hidden" i18n>Video's</h2>
-            <nz-image-group>
+            <div class="image-group">
                 <div class="related-files-container">
                     <div *ngFor="let video of videos;let i=index" class="text-center">
 
@@ -324,7 +324,7 @@
                         <p>{{video.title}}</p>
                     </div>
                 </div>
-            </nz-image-group>
+            </div>
         </div>
 
 
@@ -332,7 +332,7 @@
         <div class="section images text-center" *ngIf="documents && documents?.length">
             <h2 class="related-section-title hidden lg:block gap-top gap-padding-x" i18n>Documents</h2>
             <h2 class="title lg:hidden" i18n>Documents</h2>
-            <nz-image-group>
+            <div class="image-group">
                 <div class="related-files-container">
                     <div *ngFor="let doc of documents;let i=index" class="text-center">
                         <a [href]="doc.path" class="attachment pdf" target="_blank">
@@ -341,7 +341,7 @@
                         <p>{{doc.title}}</p>
                     </div>
                 </div>
-            </nz-image-group>
+            </div>
         </div>
 
         <!-- buttons -->

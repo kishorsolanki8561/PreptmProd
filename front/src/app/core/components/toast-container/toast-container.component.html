@@ -1,0 +1,6 @@
+<div class="toast-container" role="status" aria-live="polite" aria-atomic="false">
+  <div *ngFor="let toast of toasts; trackBy: trackById" class="toast" [attr.data-type]="toast.type"
+    (click)="dismiss(toast.id)">
+    <span class="toast-text">{{ toast.text }}</span>
+  </div>
+</div>

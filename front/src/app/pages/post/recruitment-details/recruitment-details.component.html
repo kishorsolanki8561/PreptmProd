@@ -268,13 +268,13 @@
             <div class="section images text-center" *ngIf="post?.documents && post?.documents?.length">
                 <h2 class="related-section-title hidden lg:block gap-top gap-padding-x" i18n>Images</h2>
                 <h2 class="title lg:hidden" i18n>Images</h2>
-                <nz-image-group>
+                <div class="image-group">
                     <!-- <img nz-image width="150px" *ngFor="let docUrl of post?.documents;let i=index" [nzSrc]="docUrl"
                 [alt]="'document-'+i" [nzPlaceholder]="'assets/img/spinner.svg'" /> -->
                     <preptm-image [className]="'detailsImages'" [onlyMedium]="true"
                         *ngFor="let docUrl of post?.documents;let i=index" [alt]="'document-'+i" [showPreview]="true"
                         [onlyLow]="false" [class]="''" [src]="docUrl"></preptm-image>
-                </nz-image-group>
+                </div>
             </div>
 
             <!-- faq -->

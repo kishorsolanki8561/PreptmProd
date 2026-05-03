@@ -4,10 +4,7 @@ import { RouterModule } from '@angular/router';
 import { PostComponent } from './components/post/post.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoaderDirective } from './directive/loader.directive';
-import { NzImageModule } from 'ng-zorro-antd/image';
-
 import { NoRecordsComponent } from './components/no-records/no-records.component';
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { ShareButtonsComponent } from './components/share-buttons/share-buttons.component';
 import { SafePipe } from './pipes/safe.pipe';
@@ -20,8 +17,6 @@ import { AdsComponent } from './components/ads/ads.component';
 
 const modules = [
   RouterModule,
-  NzImageModule,
-  NzBreadCrumbModule
 ]
 const components = [
   PostComponent,

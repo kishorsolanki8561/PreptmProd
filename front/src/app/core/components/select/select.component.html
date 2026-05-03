@@ -1,0 +1,35 @@
+<div class="select" [class.is-open]="isOpen" [class.is-disabled]="disabled" [class.size-large]="size === 'large'">
+  <div #triggerEl class="select-trigger" [attr.tabindex]="disabled ? -1 : 0" role="combobox"
+    [attr.aria-expanded]="isOpen" [attr.aria-disabled]="disabled" aria-haspopup="listbox" (click)="toggle()">
+
+    <input *ngIf="showSearch && isOpen" #searchInput class="select-search" [value]="searchText"
+      (input)="onSearchInput(searchInput.value)" (click)="$event.stopPropagation()"
+      [placeholder]="displayText || placeholder" autocomplete="off">
+
+    <span *ngIf="!isOpen || !showSearch" class="select-value" [class.is-placeholder]="!selectedOption">
+      {{ displayText || placeholder }}
+    </span>
+
+    <button *ngIf="allowClear && selectedOption && !disabled" type="button" class="select-clear" (click)="clear($event)"
+      aria-label="Clear">
+      &times;
+    </button>
+
+    <span class="select-arrow" aria-hidden="true">
+      <svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </span>
+  </div>
+
+  <ul *ngIf="isOpen" class="select-dropdown" role="listbox">
+    <li *ngFor="let opt of filteredOptions; let i = index; trackBy: trackByValue" class="select-option"
+      [class.is-active]="i === highlightedIndex" [class.is-selected]="opt.value === selectedValue" role="option"
+      [attr.aria-selected]="opt.value === selectedValue" (click)="selectOption(opt)"
+      (mouseenter)="highlightedIndex = i">
+      {{ opt.text }}
+    </li>
+    <li *ngIf="!filteredOptions.length" class="select-empty">No results</li>
+  </ul>
+</div>

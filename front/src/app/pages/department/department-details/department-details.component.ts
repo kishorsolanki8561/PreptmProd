@@ -1,5 +1,4 @@
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { isPlatformServer } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Component, HostListener, Inject, OnInit, Optional, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -31,21 +30,16 @@ export class DepartmentDetailsComponent implements OnInit {
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object,
     @Optional() @Inject('IS_MOBILE') private isMobileReq: any,
-    public breakpointObserver: BreakpointObserver,
   ) {
 
     this._isServer = isPlatformServer(this.platformId);
 
-    if (!this._isServer) {
-      this.breakpointObserver.observe(['(max-width: 1024px)'])
-        .subscribe((state: BreakpointState) => {
-          if (state.matches)
-            this.isMobile = true
-          else
-            this.isMobile = false
-        });
+    if (isPlatformBrowser(this.platformId)) {
+      const mql = window.matchMedia('(max-width: 1024px)');
+      this.isMobile = mql.matches;
+      mql.addEventListener('change', (e) => { this.isMobile = e.matches; });
     } else {
-      this.isMobile = this.isMobileReq
+      this.isMobile = this.isMobileReq;
     }
 
     this._route.params.subscribe((params: Params) => {

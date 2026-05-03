@@ -1,4 +1,3 @@
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { isPlatformServer } from '@angular/common';
 import { Component, Inject, Optional, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -23,7 +22,6 @@ export class ArticlesComponent {
   constructor(
     private _postService: PostService,
     private _route: ActivatedRoute,
-    public breakpointObserver: BreakpointObserver,
     @Inject(PLATFORM_ID) private platformId: Object,
     @Optional() @Inject('IS_MOBILE') private isMobileReq: any,
     private _coreService: CoreService

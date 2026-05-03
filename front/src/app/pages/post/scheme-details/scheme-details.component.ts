@@ -1,4 +1,3 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { PlatformLocation } from '@angular/common';
 import { AfterViewInit, Component, OnInit, Renderer2 } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
@@ -44,7 +43,6 @@ export class SchemeDetailsComponent implements OnInit, AfterViewInit {
     private _coreService: CoreService,
     private _alert: AlertService,
     private renderer: Renderer2,
-    public breakpointObserver: BreakpointObserver,
     public platformLocation: PlatformLocation,
   ) {
 

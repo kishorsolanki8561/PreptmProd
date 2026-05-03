@@ -4,13 +4,15 @@ import { BrowserModule, provideClientHydration, withEventReplay, withHttpTransfe
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { ToastContainerComponent } from './core/components/toast-container/toast-container.component';
+import { WhatsAppNotificationComponent } from './core/components/whatsapp-notification/whatsapp-notification.component';
+import { LightboxComponent } from './core/components/lightbox/lightbox.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { AuthInterceptor } from './core/interceptor/auth.interceptor';
-import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { ReactiveFormsModule } from '@angular/forms';
 
 
@@ -19,6 +21,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     HeaderComponent,
     FooterComponent,
+    ToastContainerComponent,
+    WhatsAppNotificationComponent,
+    LightboxComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +49,6 @@ import { ReactiveFormsModule } from '@angular/forms';
       useClass: AuthInterceptor,
       multi: true
     },
-    { provide: NZ_I18N, useValue: en_US },
     provideHttpClient(withFetch())
   ],
   bootstrap: [AppComponent]

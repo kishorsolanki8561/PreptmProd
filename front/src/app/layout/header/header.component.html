@@ -89,9 +89,8 @@
 
     <!-- Profile picture -->
     <div class="profile" *ngIf="userDetails && !isLoginLoading">
-      <img class="profile-img cursor-pointer" nz-image (click)="openSidebar()" [attr.loading]="'lazy'"
-        [nzSrc]="userDetails.profileImg || 'assets/img/profile-pic-placeholder.svg'" [nzDisablePreview]="true"
-        [nzPlaceholder]="'assets/img/spinner.svg'" [alt]="userDetails.firstName">
+      <img class="profile-img cursor-pointer" (click)="openSidebar()" [attr.loading]="'lazy'"
+        [src]="userDetails.profileImg || 'assets/img/profile-pic-placeholder.svg'" [alt]="userDetails.firstName">
     </div>
 
     <!-- Mobile hamburger -->
@@ -125,22 +124,3 @@
     <ng-container *ngTemplateOutlet="menu"></ng-container>
   </nav>
 </div>
-
-
-<!-- WhatsApp notification template -->
-<ng-template #whatsappNotification let-notification>
-  <div class="ant-notification-notice-content">
-    <div>
-      <div class="ant-notification-notice-description">
-        <i class="fa-brands fa-whatsapp whatsapp-icon" aria-hidden="true"></i>
-        <span class="msg">Get Notifications on WhatsApp</span>
-      </div>
-      <div class="action-btn">
-        <a target="_blank" href="https://chat.whatsapp.com/BW9AIPdks2DJcjZlGQ24Tp" class="sub"
-          (click)="notification.close()">
-          <span>Join Group</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</ng-template>

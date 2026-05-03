@@ -1,0 +1,20 @@
+<div *ngIf="state" class="lb-overlay" role="dialog" aria-modal="true" aria-label="Image preview"
+  (click)="onBackdropClick($event)">
+
+  <div class="lb-toolbar" (click)="$event.stopPropagation()">
+    <button type="button" class="lb-btn" (click)="zoomIn()" aria-label="Zoom in" title="Zoom in">+</button>
+    <button type="button" class="lb-btn" (click)="zoomOut()" aria-label="Zoom out" title="Zoom out">&minus;</button>
+    <button type="button" class="lb-btn" (click)="rotate()" aria-label="Rotate" title="Rotate">↻</button>
+    <span class="lb-counter" *ngIf="hasMultiple">{{ state!.index + 1 }} / {{ state!.images.length }}</span>
+    <button type="button" class="lb-btn lb-close" (click)="close()" aria-label="Close" title="Close">&times;</button>
+  </div>
+
+  <button *ngIf="hasMultiple" type="button" class="lb-nav lb-prev" (click)="prev(); $event.stopPropagation()"
+    aria-label="Previous image" title="Previous">‹</button>
+
+  <button *ngIf="hasMultiple" type="button" class="lb-nav lb-next" (click)="next(); $event.stopPropagation()"
+    aria-label="Next image" title="Next">›</button>
+
+  <img *ngIf="currentImage as img" class="lb-img" [src]="img.src" [alt]="img.alt || ''" draggable="false"
+    [style.transform]="'scale(' + zoom + ') rotate(' + rotation + 'deg)'" (click)="$event.stopPropagation()">
+</div>

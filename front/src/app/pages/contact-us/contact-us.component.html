@@ -12,23 +12,21 @@
             <div class="form-body" [formGroup]="form">
                 <div class="control">
                     <p i18n>Message Type*</p>
-                    <nz-select class="w-full" id="gender" nzSize="large" formControlName="type" i18n-nzPlaceHolder
-                        nzPlaceHolder="Select a option and change input text above">
-                        <nz-option *ngFor="let option of feedbackTypeDdl" [nzLabel]="option.text"
-                            [nzValue]="option.value"></nz-option>
-                    </nz-select>
+                    <preptm-select size="large" formControlName="type" i18n-placeholder
+                        placeholder="Select a option and change input text above"
+                        [options]="feedbackTypeDdl"></preptm-select>
                 </div>
                 <div class="control">
                     <p i18n>Your Message*</p>
                     <textarea formControlName="message" i18n-placeholder placeholder="Leave your message here..."
-                        [nzStatus]="form.get('message')?.touched && form.get('message')?.hasError('required')?'error':''"
-                        nzStatus="error" rows="4" nzSize="large" nz-input></textarea>
+                        rows="4"
+                        class="form-textarea"
+                        [class.is-error]="form.get('message')?.touched && form.get('message')?.hasError('required')"></textarea>
                 </div>
 
                 <div class="text-end">
-                    <button class="btn-primary" [disabled]="isLoading" i18n-placeholder placeholder="Your message..." (click)="submit()" nzSize="large">
+                    <button class="btn-primary" [disabled]="isLoading" (click)="submit()">
                         <preptm-loader *ngIf="isLoading"></preptm-loader>
-                        <span class="icon" nz-icon nzTheme="outline" *ngIf="!isLoading"></span>
                         <span i18n> Send Message</span>
                     </button>
                 </div>

@@ -1,20 +1,18 @@
-<!-- <owl-carousel-o *ngIf="banners?.length" [loading]="isLoading" [options]="customOptions">
-  <ng-template *ngFor="let item of banners" carouselSlide class="slide">
-    <div [loading]="isLoading" class="gap-padding-x slide image-container">
-      <img class="banner-img" [src]="item.attachmentUrl">
-    </div>
-  </ng-template>
-</owl-carousel-o> -->
-
-<nz-carousel >
-<!-- <nz-carousel nzAutoPlay> -->
-  <div nz-carousel-content *ngFor="let item of banners">
-    <div class="gap-padding-x slide image-container text-center">
-      <a [href]="item.url" target="_blank">
-        <img nz-image [draggable]="false" [alt]="item.title" [title]="item.title" [attr.loading]="'lazy'" 
-          class="banner-img {{item.url?' cursor-pointer':''}}" [nzSrc]="item.attachmentUrl" [nzDisablePreview]="true"
-          [nzPlaceholder]="'assets/img/spinner.svg'">
-      </a>
+<div class="carousel-container" *ngIf="banners.length">
+  <div class="carousel-track" #track>
+    <div class="carousel-slide" *ngFor="let item of banners; let i = index">
+      <div class="gap-padding-x slide image-container text-center">
+        <a [href]="item.url" target="_blank" rel="noopener">
+          <img [draggable]="false" [alt]="item.title" [title]="item.title"
+            [attr.loading]="i === 0 ? 'eager' : 'lazy'"
+            class="banner-img {{item.url ? 'cursor-pointer' : ''}}" [src]="item.attachmentUrl">
+        </a>
+      </div>
     </div>
   </div>
-</nz-carousel>
+  <div class="carousel-dots" *ngIf="banners.length > 1">
+    <button *ngFor="let _ of banners; let i = index" type="button" class="carousel-dot"
+      [class.active]="i === currentIndex" (click)="goTo(i)" [attr.aria-label]="'Go to slide ' + (i + 1)">
+    </button>
+  </div>
+</div>

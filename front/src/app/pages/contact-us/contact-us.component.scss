@@ -1,6 +1,36 @@
 @import 'src/assets/css/variables.scss';
 
+.form-textarea {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: $text-color;
+    background-color: #fff;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    resize: vertical;
+    font-family: inherit;
+}
 
+.form-textarea:hover {
+    border-color: $primary-color;
+}
+
+.form-textarea:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba(8, 123, 130, 0.15);
+}
+
+.form-textarea.is-error {
+    border-color: #ef4444;
+}
+
+.form-textarea.is-error:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
 
 .header {
     margin: 20px 0;

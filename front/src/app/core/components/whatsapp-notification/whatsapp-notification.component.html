@@ -1,0 +1,13 @@
+<div *ngIf="visible" class="wn-card" role="alert" aria-live="polite">
+  <div class="wn-row">
+    <i class="fa-brands fa-whatsapp wn-icon" aria-hidden="true"></i>
+    <span class="wn-msg">Get Notifications on WhatsApp</span>
+    <button type="button" class="wn-close" (click)="dismiss()" aria-label="Close">&times;</button>
+  </div>
+  <div class="wn-actions">
+    <a target="_blank" rel="noopener" href="https://chat.whatsapp.com/BW9AIPdks2DJcjZlGQ24Tp" class="wn-cta"
+      (click)="dismiss()">
+      <span>Join Group</span>
+    </a>
+  </div>
+</div>

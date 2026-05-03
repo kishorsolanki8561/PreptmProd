@@ -1,0 +1,167 @@
+@import 'src/assets/css/variables.scss';
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.select {
+  position: relative;
+  width: 100%;
+  font-size: 14px;
+}
+
+.select-trigger {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 32px;
+  padding: 0 28px 0 12px;
+  background-color: #fff;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  outline: none;
+}
+
+.select-trigger:hover {
+  border-color: $primary-color;
+}
+
+.select-trigger:focus-visible,
+.select.is-open .select-trigger {
+  border-color: $primary-color;
+  box-shadow: 0 0 0 3px rgba(8, 123, 130, 0.15);
+}
+
+.select.size-large .select-trigger {
+  min-height: 40px;
+  padding-right: 32px;
+  font-size: 14px;
+}
+
+.select.is-disabled .select-trigger {
+  background-color: #f5f5f5;
+  color: #9ca3af;
+  cursor: not-allowed;
+  border-color: $border-color;
+  box-shadow: none;
+}
+
+.select-value {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: $text-color;
+}
+
+.select-value.is-placeholder {
+  color: #9ca3af;
+}
+
+.select-search {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  color: $text-color;
+  padding: 0;
+  width: 100%;
+  min-width: 0;
+}
+
+.select-search::placeholder {
+  color: #9ca3af;
+}
+
+.select-clear {
+  position: absolute;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-size: 18px;
+  line-height: 1;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 50%;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.select-clear:hover {
+  color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.08);
+}
+
+.select-arrow {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $primary-color;
+  display: inline-flex;
+  align-items: center;
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.select.is-open .select-arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.select-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background-color: #fff;
+  border: 1px solid $border-color;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10), 0 2px 6px rgba(0, 0, 0, 0.06);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.select-option {
+  padding: 7px 10px;
+  font-size: 13px;
+  color: $text-color;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.select-option.is-active:not(.is-selected) {
+  background-color: $primary-color-bg;
+}
+
+.select-option.is-selected {
+  background-color: $primary-color-light;
+  color: $primary-color-dark;
+  font-weight: 600;
+}
+
+.select-empty {
+  padding: 10px;
+  font-size: 13px;
+  color: #9ca3af;
+  text-align: center;
+}

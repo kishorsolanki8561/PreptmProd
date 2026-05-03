@@ -3,10 +3,8 @@ import { CommonModule } from '@angular/common';
 import { CoreModule } from 'src/app/core/core.module';
 import { RouterModule } from '@angular/router';
 import { ContactUsComponent } from './contact-us.component';
-import { NzSelectModule } from 'ng-zorro-antd/select';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { SelectComponent } from 'src/app/core/components/select/select.component';
 
 
 
@@ -20,11 +18,8 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     RouterModule.forChild([
       {path:'',component:ContactUsComponent}
     ]),
-    NzSelectModule,
     ReactiveFormsModule,
-    NzInputModule,
-    NzButtonModule,
-    
+    SelectComponent
   ]
 })
 export class ContactUsModule { }

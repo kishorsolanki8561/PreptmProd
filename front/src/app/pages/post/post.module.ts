@@ -4,11 +4,11 @@ import { CoreModule } from 'src/app/core/core.module';
 import { PostListComponent } from './post-list/post-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { PostTypesSlug } from 'src/app/core/fixed-values';
-import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthorComponent } from 'src/app/core/components/author/author.component';
 import { FormsModule } from '@angular/forms';
 import { CustomAdsComponent } from "../../core/components/custom-ads/custom-ads.component";
+import { SelectComponent } from 'src/app/core/components/select/select.component';
 
 const routes: Routes = [
 
@@ -59,10 +59,10 @@ const routes: Routes = [
     CommonModule,
     CoreModule,
     RouterModule.forChild(routes),
-    NzSelectModule,
     NgxPaginationModule,
     FormsModule,
-    CustomAdsComponent
+    CustomAdsComponent,
+    SelectComponent
 ]
 })
 export class PostModule { }

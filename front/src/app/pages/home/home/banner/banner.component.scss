@@ -1,14 +1,64 @@
+@import 'src/assets/css/variables.scss';
+
+.carousel-container {
+  position: relative;
+}
+
+.carousel-track {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.carousel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.25);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease, width 0.2s ease;
+}
+
+.carousel-dot.active {
+  background-color: $primary-color;
+  width: 18px;
+  border-radius: 4px;
+}
+
+.carousel-dot:hover {
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+.carousel-dot.active:hover {
+  background-color: $primary-color;
+}
+
 .slide {
   height: 150px;
   padding-top: 10px;
-}
-
-.red {
-  background-color: rgb(241, 165, 165);
-}
-
-.yellow {
-  background-color: rgb(141, 241, 171);
 }
 
 .image-container {
@@ -23,20 +73,7 @@
   }
 }
 
-// .slick-initialized.slick-slider {
-
-//   .slick-slide,
-//   .slick-track,
-//   .slick-list {
-//     max-height: 150px !important;
-//   }
-// }
-
-
-
-
-// lg
-@media (min-width:1024px) {
+@media (min-width: 1024px) {
   .slide {
     height: 280px;
   }
@@ -47,5 +84,19 @@
     .banner-img {
       max-height: 280px;
     }
+  }
+
+  .carousel-dots {
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .carousel-dot.active {
+    width: 22px;
   }
 }

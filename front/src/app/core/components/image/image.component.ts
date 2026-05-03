@@ -1,6 +1,6 @@
 import { isPlatformServer } from '@angular/common';
 import { Component, HostListener, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
-import { NzImageService } from 'ng-zorro-antd/image';
+import { LightboxService } from '../../services/lightbox.service';
 
 @Component({
   selector: 'preptm-image',
@@ -23,13 +23,12 @@ export class ImageComponent implements OnInit {
   @Input() skipSmall = false
 
   @Input() set src(url: string) {
-    if(url){
+    if (url) {
       let ext = url.split('.').pop();
       this.originalUrl = url;
       this.srcHigh = url.replaceAll('OriginalAttachment', 'Th1200x628').replaceAll(`.${ext}`, '.png');
       this.srcMedium = url.replaceAll('OriginalAttachment', 'Th360x180').replaceAll(`.${ext}`, '.png');
       this.srcLow = url.replaceAll('OriginalAttachment', 'Th360x180').replaceAll(`.${ext}`, '.png');
-      // this.srcLow = url.replaceAll('OriginalAttachment', 'Th120x68').replaceAll(`.${ext}`, '.png');
     }
   }
 
@@ -40,7 +39,7 @@ export class ImageComponent implements OnInit {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private nzImageService: NzImageService
+    private lightbox: LightboxService
   ) {
     this._isServer = isPlatformServer(this.platformId);
     this.calculateScreenWidth();
@@ -52,23 +51,20 @@ export class ImageComponent implements OnInit {
     }
   }
 
-
   ngOnInit(): void {
     this.fallback = this.fallback;
-    // this.srcHigh = this.fallback.replaceAll('OriginalAttachment','Th1200x628').replaceAll('.webp','.png');
-    // this.srcMedium = this.fallback.replaceAll('OriginalAttachment','Th360x180').replaceAll('.webp','.png');
-    // this.srcLow = this.fallback.replaceAll('OriginalAttachment','Th120x68').replaceAll('.webp','.png');
+  }
+
+  onError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    if (img && img.src !== this.fallback) {
+      img.src = this.fallback;
+    }
   }
 
   openPreview(alt = '') {
     if (this.showPreview) {
-      let images = [
-        {
-          src: this.fallback,
-          alt: alt
-        }
-      ]
-      this.nzImageService.preview(images);
+      this.lightbox.open([{ src: this.fallback, alt }]);
     }
   }
 }

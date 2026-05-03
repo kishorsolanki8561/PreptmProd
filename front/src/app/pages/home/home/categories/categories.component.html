@@ -10,10 +10,8 @@
            class="category-card"
            [attr.aria-label]="category.text">
           <div class="category-icon-wrap">
-            <img nz-image
-                 [nzSrc]="category.otherData.icon"
-                 [nzDisablePreview]="true"
-                 [nzPlaceholder]="'assets/img/spinner.svg'"
+            <img
+                 [src]="category.otherData.icon"
                  [alt]="category.text"
                  [attr.loading]="'lazy'"
                  width="32" height="32">

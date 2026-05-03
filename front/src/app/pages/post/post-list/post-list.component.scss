@@ -35,7 +35,7 @@
 
     h4 { display: none; }
 
-    nz-select {
+    preptm-select {
       min-width: 140px;
       flex-shrink: 0;
     }
@@ -144,14 +144,14 @@
         margin: 16px 16px 6px;
       }
 
-      nz-select {
+      preptm-select {
         display: block;
         width: calc(100% - 32px);
         margin: 0 16px 4px;
       }
 
       // Divider between filter groups
-      nz-select + h4 {
+      preptm-select + h4 {
         margin-top: 8px;
         padding-top: 8px;
         border-top: 1px solid $border-color;

@@ -12,19 +12,15 @@
         <div class="filter-item-container gap-padding-y">
             <h4 class="mb-2" i18n>Department</h4>
 
-            <nz-select [(ngModel)]="filter.departmentId" (ngModelChange)="filterList()" nzSize="large" nzShowSearch
-                [nzAllowClear]="!!filter.departmentId" i18n-nzPlaceHolder nzPlaceHolder="Department">
-                <nz-option *ngFor="let item of ddls?.ddlDepartment" [nzLabel]="item.text"
-                    [nzValue]="item.value"></nz-option>
-            </nz-select>
+            <preptm-select [(ngModel)]="filter.departmentId" (ngModelChange)="filterList()" size="large" [showSearch]="true"
+                [allowClear]="!!filter.departmentId" i18n-placeholder placeholder="Department"
+                [options]="ddls?.ddlDepartment || []"></preptm-select>
 
             <ng-container *ngIf="type != postType.SCHEME">
                 <h4 class="mb-2" i18n>Categorise</h4>
-                <nz-select [(ngModel)]="filter.categoryId" (ngModelChange)="filterList()" nzSize="large" nzShowSearch
-                    [nzAllowClear]="!!filter.categoryId" i18n-nzPlaceHolder nzPlaceHolder="Categorise" [nzDisabled]="categorySlug">
-                    <nz-option *ngFor="let item of ddls?.ddlCategory" [nzLabel]="item.text"
-                        [nzValue]="item.value"></nz-option>
-                </nz-select>
+                <preptm-select [(ngModel)]="filter.categoryId" (ngModelChange)="filterList()" size="large" [showSearch]="true"
+                    [allowClear]="!!filter.categoryId" i18n-placeholder placeholder="Categorise" [disabled]="!!categorySlug"
+                    [options]="ddls?.ddlCategory || []"></preptm-select>
             </ng-container>
             <container-element [ngSwitch]="type">
 
@@ -32,27 +28,22 @@
                 <ng-container *ngSwitchCase="postType.RECRUITMENT">
 
                     <h4 class="mb-2" i18n>Qualification</h4>
-                    <nz-select [(ngModel)]="filter.qualificationId" (ngModelChange)="filterList()" nzSize="large"
-                        nzShowSearch [nzAllowClear]="!!filter.qualificationId" i18n-nzPlaceHolder nzPlaceHolder="Qualification">
-                        <nz-option *ngFor="let item of ddls?.ddlQualification" [nzLabel]="item.text"
-                            [nzValue]="item.value"></nz-option>
-                    </nz-select>
+                    <preptm-select [(ngModel)]="filter.qualificationId" (ngModelChange)="filterList()" size="large"
+                        [showSearch]="true" [allowClear]="!!filter.qualificationId" i18n-placeholder
+                        placeholder="Qualification" [options]="ddls?.ddlQualification || []"></preptm-select>
 
                     <h4 class="mb-2" i18n>Designation</h4>
-                    <nz-select [(ngModel)]="filter.jobDesignationId" (ngModelChange)="filterList()" nzSize="large"
-                        nzShowSearch [nzAllowClear]="!!filter.jobDesignationId" i18n-nzPlaceHolder nzPlaceHolder="Designation">
-                        <nz-option *ngFor="let item of ddls?.ddlJobDesignation" [nzLabel]="item.text"
-                            [nzValue]="item.value"></nz-option>
-                    </nz-select>
+                    <preptm-select [(ngModel)]="filter.jobDesignationId" (ngModelChange)="filterList()" size="large"
+                        [showSearch]="true" [allowClear]="!!filter.jobDesignationId" i18n-placeholder
+                        placeholder="Designation" [options]="ddls?.ddlJobDesignation || []"></preptm-select>
                 </ng-container>
 
                 <ng-container *ngSwitchCase="postType.SCHEME">
                     <h4 class="mb-2" i18n>Eligibility</h4>
-                    <nz-select [(ngModel)]="filter.eligibilityId" (ngModelChange)="filterList()" nzSize="large"
-                        nzShowSearch [nzAllowClear]="!!filter.eligibilityId" i18n-nzPlaceHolder nzPlaceHolder="Eligibility">
-                        <nz-option *ngFor="let item of ddlLookup?.[ddlLookupEnum.SchemeEligibility]"
-                            [nzLabel]="item.text" [nzValue]="item.value"></nz-option>
-                    </nz-select>
+                    <preptm-select [(ngModel)]="filter.eligibilityId" (ngModelChange)="filterList()" size="large"
+                        [showSearch]="true" [allowClear]="!!filter.eligibilityId" i18n-placeholder
+                        placeholder="Eligibility"
+                        [options]="ddlLookup?.[ddlLookupEnum.SchemeEligibility] || []"></preptm-select>
                 </ng-container>
 
             </container-element>
