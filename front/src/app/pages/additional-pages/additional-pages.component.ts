@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { finalize } from 'rxjs';
 import { API_ROUTES } from 'src/app/core/api.routes';
 import { AdditionalPages } from 'src/app/core/fixed-values';
 import { AdditionalPagesService } from 'src/app/core/services/additional-pages.service';
@@ -22,8 +23,9 @@ export class AdditionalPagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true
-    this._additionaPageService.getAdditionalPage(this.pageType).subscribe((resp) => {
-      this.isLoading = false
+    this._additionaPageService.getAdditionalPage(this.pageType).pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe((resp) => {
       if (resp.isSuccess) {
         this.data = resp.data as string
       } else {

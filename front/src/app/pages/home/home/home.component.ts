@@ -1,5 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
+import { finalize } from 'rxjs';
 import { CockpitPanelsPosts, Post } from 'src/app/core/models/post.model';
 import { CoreService } from 'src/app/core/services/core.service';
 import { PostService } from 'src/app/core/services/post.service';
@@ -19,8 +20,9 @@ export class HomeComponent implements OnInit {
     private renderer: Renderer2,
   ) {
     this._coreService.setPageTitle('Preptm : Latest Job Updates')
-    this._postService.getPostsForCockpitPanels().subscribe(res => {
-      this.isLoading = false
+    this._postService.getPostsForCockpitPanels().pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe(res => {
       if (res.isSuccess) {
         if(res?.data?.privateRecruitments){
           res.data.privateRecruitments = res.data.privateRecruitments.map((item: Post) => {
@@ -31,7 +33,6 @@ export class HomeComponent implements OnInit {
         this.allPosts = res.data
         this._coreService.addCommonTags(this.renderer)
       }
-    }, (err) => {
     })
   }
 

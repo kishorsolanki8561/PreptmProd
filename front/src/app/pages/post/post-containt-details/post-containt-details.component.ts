@@ -2,6 +2,7 @@ import { PlatformLocation } from '@angular/common';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
+import { finalize } from 'rxjs';
 import { DATE_FORMAT, ExamModeEnum, PreptmLogo } from 'src/app/core/fixed-values';
 import { Breadcrumb, ShareContent } from 'src/app/core/models/core.models';
 import { BlockContaintDetails, Post, PostListFilter } from 'src/app/core/models/post.model';
@@ -55,8 +56,9 @@ export class PostContaintDetailsComponent implements OnInit {
   getBlockContaintDetails(slug: string) {
     this.post = undefined;
     this.isLoading = true
-    this._postService.getBlockContaintDetails(slug).subscribe(res => {
-      this.isLoading = false
+    this._postService.getBlockContaintDetails(slug).pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe(res => {
       if (res.isSuccess && res.data) {
 
         this.post = res.data

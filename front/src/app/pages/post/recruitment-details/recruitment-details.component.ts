@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CoreService } from 'src/app/core/services/core.service';
 import { PostService } from 'src/app/core/services/post.service';
 import { PlatformLocation } from '@angular/common';
+import { finalize } from 'rxjs';
 
 
 @Component({
@@ -65,9 +66,10 @@ export class RecruitmentDetailsComponent implements OnInit {
   getDetails() {
     this.isLoading = true
     this.post = undefined;
-    this._postService.getRecruitmentDetails(this.slug).subscribe(res => {
+    this._postService.getRecruitmentDetails(this.slug).pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe(res => {
       if (res.isSuccess && res.data) {
-        this.isLoading = false
         this.post = res.data
         this.shortDesc = res.data.shortDesription?.split('\n') || []
         if (this.post)
@@ -84,10 +86,8 @@ export class RecruitmentDetailsComponent implements OnInit {
         this.jsonLD = this.getSafeHTML(this.getJsonLdData());
 
       } else {
-        this.isLoading = false
         this.post = undefined
       }
-    }, (err) => {
     })
     // this.GetUpCommingPost();
     // this.GetExpirePost();

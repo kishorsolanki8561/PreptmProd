@@ -2,6 +2,7 @@ import { PlatformLocation } from '@angular/common';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
+import { finalize } from 'rxjs';
 import { DATE_FORMAT, ExamModeEnum, PreptmLogo } from 'src/app/core/fixed-values';
 import { Breadcrumb, ShareContent } from 'src/app/core/models/core.models';
 import { AdmissionDetails, Post, PostListFilter } from 'src/app/core/models/post.model';
@@ -62,8 +63,9 @@ export class AdmissionDetailsComponent implements OnInit {
   getDetails() {
     this.isLoading = true
     this.post = undefined;
-    this._postService.getAdmissionDetails(this.slug).subscribe(res => {
-      this.isLoading = false
+    this._postService.getAdmissionDetails(this.slug).pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe(res => {
       if (res.isSuccess) {
         this.post = res.data
         this.shortDesc = res.data.shortDesription?.split('\n') || []
@@ -74,11 +76,7 @@ export class AdmissionDetailsComponent implements OnInit {
           { text: this.post.title }
         ]
         this.addMetaTags(this.post)
-        // this.GetUpCommingPost();
-        // this.GetExpirePost();
-        // this.GetLatestPost();
       } else {
-        this.isLoading = false
         this.post = undefined
       }
     })

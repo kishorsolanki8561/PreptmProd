@@ -2,6 +2,7 @@ import { PlatformLocation } from '@angular/common';
 import { AfterViewInit, Component, OnInit, Renderer2 } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
+import { finalize } from 'rxjs';
 import { DATE_FORMAT, ExamModeEnum, LEVEL, ATTACHMENT_TYPE, PreptmLogo } from 'src/app/core/fixed-values';
 import { Breadcrumb, ShareContent } from 'src/app/core/models/core.models';
 import { SchemeModel } from 'src/app/core/models/post.model';
@@ -117,9 +118,10 @@ export class SchemeDetailsComponent implements OnInit, AfterViewInit {
   getDetails() {
     this.isLoading = true
     this.post = undefined;
-    this._postService.getSchemeDetails(this.slug).subscribe(res => {
+    this._postService.getSchemeDetails(this.slug).pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe(res => {
       if (res.isSuccess) {
-        this.isLoading = false
         this.post = res.data
         this.shortDesc = res.data.shortDescription?.split('\n') || []
         if (this.post)
@@ -135,7 +137,6 @@ export class SchemeDetailsComponent implements OnInit, AfterViewInit {
 
         this.addMetaTags(this.post)
       } else {
-        this.isLoading = true
         this.post = undefined
       }
     })
