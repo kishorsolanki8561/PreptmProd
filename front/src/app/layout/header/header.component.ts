@@ -140,7 +140,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     if (ENABLE_LOGIN) {
-      this._authService.isLoggedIn$.subscribe(isLoggedIn => {
+      this._authService.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
         if (isLoggedIn) {
           let user = this._authService.getUserDetails()
           this.userDetails = user ? { ...user } : null;

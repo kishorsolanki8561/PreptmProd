@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { ddlItem } from 'src/app/core/models/core.models';
 import { CoreService } from 'src/app/core/services/core.service';
 
@@ -7,7 +8,8 @@ import { CoreService } from 'src/app/core/services/core.service';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   categories: ddlItem[];
   lang: string = "";
   constructor(
@@ -20,8 +22,13 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   getCategories() {
-    this._coreService.getDdl('ddlCategory').subscribe(res => {
+    this._coreService.getDdl('ddlCategory').pipe(takeUntil(this.destroy$)).subscribe(res => {
       if (res.isSuccess) {
         this.categories = res.data.ddlCategory
       } else {

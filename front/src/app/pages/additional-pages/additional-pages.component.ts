@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { API_ROUTES } from 'src/app/core/api.routes';
 import { AdditionalPages } from 'src/app/core/fixed-values';
 import { AdditionalPagesService } from 'src/app/core/services/additional-pages.service';
@@ -10,7 +10,8 @@ import { AdditionalPagesService } from 'src/app/core/services/additional-pages.s
   templateUrl: './additional-pages.component.html',
   styleUrls: ['./additional-pages.component.scss']
 })
-export class AdditionalPagesComponent implements OnInit {
+export class AdditionalPagesComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   pageType = this._route.snapshot.data['type']
   AdditionalPages = AdditionalPages
   data: string = ''
@@ -24,6 +25,7 @@ export class AdditionalPagesComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true
     this._additionaPageService.getAdditionalPage(this.pageType).pipe(
+      takeUntil(this.destroy$),
       finalize(() => this.isLoading = false)
     ).subscribe((resp) => {
       if (resp.isSuccess) {
@@ -33,6 +35,11 @@ export class AdditionalPagesComponent implements OnInit {
       }
     })
 
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

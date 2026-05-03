@@ -1,7 +1,8 @@
 import { CommonModule, PlatformLocation } from '@angular/common';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { CoreModule } from 'src/app/core/core.module';
 import { DATE_FORMAT, PreptmLogo } from 'src/app/core/fixed-values';
 import { Breadcrumb } from 'src/app/core/models/core.models';
@@ -16,7 +17,8 @@ import { PostService } from 'src/app/core/services/post.service';
   imports: [CoreModule, CommonModule],
   styleUrls: ['./article-details.component.scss']
 })
-export class ArticleDetailsComponent implements OnInit {
+export class ArticleDetailsComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   post: ArticleDetails | undefined;
   breadcrumb: Breadcrumb[] = [];
   latestList: Post[] = [];
@@ -34,7 +36,7 @@ export class ArticleDetailsComponent implements OnInit {
     public platformLocation: PlatformLocation,
   ) {
     this.lang = this._coreService.getCurrentLang()
-    this._route.params.subscribe((params: Params) => {
+    this._route.params.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
       this.slug = params['articleSlug']
       this.getArticleDetail(this.slug);
     })
@@ -46,9 +48,14 @@ export class ArticleDetailsComponent implements OnInit {
     this.GetLatestPost()
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   getArticleDetail(slug: string) {
     this.post = undefined;
-    this._postService.getArticleDetails(slug).subscribe(res => {
+    this._postService.getArticleDetails(slug).pipe(takeUntil(this.destroy$)).subscribe(res => {
       if (res.isSuccess) {
 
         this.post = res.data
@@ -122,7 +129,7 @@ export class ArticleDetailsComponent implements OnInit {
 
 
   getList(payload: PostListFilter, Type: string = '') {
-    this._postService.getPostLists(payload).subscribe((res) => {
+    this._postService.getPostLists(payload).pipe(takeUntil(this.destroy$)).subscribe((res) => {
       if (res.isSuccess) {
         if (Type == 'latest') {
           this.latestList = res.data ?? [];

@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { Subject, takeUntil } from 'rxjs';
 import { CoreModule } from 'src/app/core/core.module';
 import { Breadcrumb, PaginationModel } from 'src/app/core/models/core.models';
 import { ArticleList, ArticleListFilter } from 'src/app/core/models/post.model';
@@ -15,7 +16,8 @@ import { PostService } from 'src/app/core/services/post.service';
   imports: [CoreModule, CommonModule, NgxPaginationModule],
   styleUrls: ['./article-list.component.scss']
 })
-export class ArticleListComponent {
+export class ArticleListComponent implements OnDestroy {
+  private destroy$ = new Subject<void>();
   articleItems: ArticleList[] | [];
   latestArticles: ArticleList[] | [];
   breadcrumb: Breadcrumb[] = []
@@ -32,13 +34,13 @@ export class ArticleListComponent {
     private _coreService: CoreService
   ) {
 
-    this._route.params.subscribe((params: Params) => {
+    this._route.params.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
       this.payload.tagTypeSlug = params['tagTypeSlug'] || ''
       this.payload.articleTypeSlug = params['articleTypeSlug'] || ''
       // this.articleList();
     })
 
-    this._route.queryParams.subscribe((params: Params) => {
+    this._route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
       if (params['page'])
         this.payload.page = +params['page']
       this.articleList()
@@ -50,8 +52,13 @@ export class ArticleListComponent {
 
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   articleList() {
-    this._postService.getArticleList(this.payload).subscribe(res => {
+    this._postService.getArticleList(this.payload).pipe(takeUntil(this.destroy$)).subscribe(res => {
       if (res.isSuccess) {
         // this.articleItems = [...res.data ?? []];
         this.articleItems = [...res.data?.articles ?? []];

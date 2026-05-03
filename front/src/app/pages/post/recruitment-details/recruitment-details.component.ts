@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { DomSanitizer, MetaDefinition, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DATE_FORMAT, ExamModeEnum, PostTypesSlug, PreptmLogo } from 'src/app/core/fixed-values';
@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CoreService } from 'src/app/core/services/core.service';
 import { PostService } from 'src/app/core/services/post.service';
 import { PlatformLocation } from '@angular/common';
-import { finalize } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -17,9 +17,10 @@ import { finalize } from 'rxjs';
   templateUrl: './recruitment-details.component.html',
   styleUrls: ['./recruitment-details.component.scss']
 })
-export class RecruitmentDetailsComponent implements OnInit {
+export class RecruitmentDetailsComponent implements OnInit, OnDestroy {
   @ViewChild('descHtml') descHtml: any
 
+  private destroy$ = new Subject<void>();
   isLoading = false;
 
   post: RecruitmentDetails | undefined;
@@ -54,7 +55,7 @@ export class RecruitmentDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this._route.params.subscribe((params: Params) => {
+    this._route.params.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
       this.slug = params['slug'];
       this.getDetails();
 
@@ -63,10 +64,16 @@ export class RecruitmentDetailsComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   getDetails() {
     this.isLoading = true
     this.post = undefined;
     this._postService.getRecruitmentDetails(this.slug).pipe(
+      takeUntil(this.destroy$),
       finalize(() => this.isLoading = false)
     ).subscribe(res => {
       if (res.isSuccess && res.data) {
@@ -165,8 +172,10 @@ export class RecruitmentDetailsComponent implements OnInit {
     this.isBookmarkLoading = true
 
     // @ts-ignore
-    this._postService.manageBookmark(shouldAdd, this.post).subscribe((response) => {
-      this.isBookmarkLoading = false;
+    this._postService.manageBookmark(shouldAdd, this.post).pipe(
+      takeUntil(this.destroy$),
+      finalize(() => this.isBookmarkLoading = false)
+    ).subscribe((response) => {
       if (response.isSuccess) {
         if (shouldAdd)
           // @ts-ignore
@@ -177,8 +186,6 @@ export class RecruitmentDetailsComponent implements OnInit {
       } else {
         alert(response.message)
       }
-    }, () => {
-      this.isBookmarkLoading = false;
     })
   }
 
@@ -202,7 +209,7 @@ export class RecruitmentDetailsComponent implements OnInit {
   }
 
   getList(payload: PostListFilter, Type: string = '') {
-    this._postService.getPostLists(payload).subscribe((res) => {
+    this._postService.getPostLists(payload).pipe(takeUntil(this.destroy$)).subscribe((res) => {
       if (res.isSuccess) {
         if (Type === 'upcoming') {
           this.upcommingList = res.data ?? [];

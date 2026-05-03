@@ -1,8 +1,8 @@
 import { PlatformLocation } from '@angular/common';
-import { AfterViewInit, Component, OnInit, Renderer2 } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
-import { finalize } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { DATE_FORMAT, ExamModeEnum, LEVEL, ATTACHMENT_TYPE, PreptmLogo } from 'src/app/core/fixed-values';
 import { Breadcrumb, ShareContent } from 'src/app/core/models/core.models';
 import { SchemeModel } from 'src/app/core/models/post.model';
@@ -16,7 +16,8 @@ import { PostService } from 'src/app/core/services/post.service';
   templateUrl: './scheme-details.component.html',
   styleUrls: ['./scheme-details.component.scss']
 })
-export class SchemeDetailsComponent implements OnInit, AfterViewInit {
+export class SchemeDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   isLoading = false;
   preptmLogo = PreptmLogo
 
@@ -47,7 +48,7 @@ export class SchemeDetailsComponent implements OnInit, AfterViewInit {
     public platformLocation: PlatformLocation,
   ) {
 
-    this._route.params.subscribe((params: Params) => {
+    this._route.params.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
       this.slug = params['slug'];
       this.getDetails()
     })
@@ -58,6 +59,11 @@ export class SchemeDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   addMetaTags(schemeDetails: SchemeModel) {
@@ -119,6 +125,7 @@ export class SchemeDetailsComponent implements OnInit, AfterViewInit {
     this.isLoading = true
     this.post = undefined;
     this._postService.getSchemeDetails(this.slug).pipe(
+      takeUntil(this.destroy$),
       finalize(() => this.isLoading = false)
     ).subscribe(res => {
       if (res.isSuccess) {
@@ -150,8 +157,10 @@ export class SchemeDetailsComponent implements OnInit, AfterViewInit {
     this.isBookmarkLoading = true
 
     // @ts-ignore
-    this._postService.manageBookmark(shouldAdd, this.post).subscribe((response) => {
-      this.isBookmarkLoading = false;
+    this._postService.manageBookmark(shouldAdd, this.post).pipe(
+      takeUntil(this.destroy$),
+      finalize(() => this.isBookmarkLoading = false)
+    ).subscribe((response) => {
       if (response.isSuccess) {
         if (shouldAdd)
           // @ts-ignore
@@ -162,8 +171,6 @@ export class SchemeDetailsComponent implements OnInit, AfterViewInit {
       } else {
         alert(response.message)
       }
-    }, () => {
-      this.isBookmarkLoading = false;
     })
   }
 }

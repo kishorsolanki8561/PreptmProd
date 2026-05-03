@@ -1,6 +1,6 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
-import { finalize } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { CockpitPanelsPosts, Post } from 'src/app/core/models/post.model';
 import { CoreService } from 'src/app/core/services/core.service';
 import { PostService } from 'src/app/core/services/post.service';
@@ -11,7 +11,8 @@ import { PostService } from 'src/app/core/services/post.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   allPosts: CockpitPanelsPosts | undefined;
   isLoading = true;
   constructor(
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
   ) {
     this._coreService.setPageTitle('Preptm : Latest Job Updates')
     this._postService.getPostsForCockpitPanels().pipe(
+      takeUntil(this.destroy$),
       finalize(() => this.isLoading = false)
     ).subscribe(res => {
       if (res.isSuccess) {
@@ -38,6 +40,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.addMetaTags()
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   addMetaTags() {

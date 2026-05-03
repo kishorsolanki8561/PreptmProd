@@ -1,8 +1,8 @@
 import { PlatformLocation } from '@angular/common';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
-import { finalize } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { DATE_FORMAT, ExamModeEnum, PreptmLogo } from 'src/app/core/fixed-values';
 import { Breadcrumb, ShareContent } from 'src/app/core/models/core.models';
 import { AdmissionDetails, Post, PostListFilter } from 'src/app/core/models/post.model';
@@ -16,8 +16,9 @@ import { PostService } from 'src/app/core/services/post.service';
   templateUrl: './admission-details.component.html',
   styleUrls: ['./admission-details.component.scss']
 })
-export class AdmissionDetailsComponent implements OnInit {
+export class AdmissionDetailsComponent implements OnInit, OnDestroy {
 
+  private destroy$ = new Subject<void>();
   isMobile = true
   isLoading = false
   private _isServer = false;
@@ -50,7 +51,7 @@ export class AdmissionDetailsComponent implements OnInit {
 
   ) {
     this.lang = this._coreService.getCurrentLang()
-    this._route.params.subscribe((params: Params) => {
+    this._route.params.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
       this.slug = params['slug'];
       this.getDetails()
     })
@@ -60,10 +61,16 @@ export class AdmissionDetailsComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   getDetails() {
     this.isLoading = true
     this.post = undefined;
     this._postService.getAdmissionDetails(this.slug).pipe(
+      takeUntil(this.destroy$),
       finalize(() => this.isLoading = false)
     ).subscribe(res => {
       if (res.isSuccess) {
@@ -183,7 +190,7 @@ export class AdmissionDetailsComponent implements OnInit {
   }
 
   getList(payload: PostListFilter, Type: string = '') {
-    this._postService.getPostLists(payload).subscribe((res) => {
+    this._postService.getPostLists(payload).pipe(takeUntil(this.destroy$)).subscribe((res) => {
       if (res.isSuccess) {
         if (Type == 'upcoming') {
           this.upcommingList = res.data ?? [];

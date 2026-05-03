@@ -1,6 +1,7 @@
 import { isPlatformServer } from '@angular/common';
-import { Component, Inject, Optional, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnDestroy, Optional, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { API_ROUTES } from 'src/app/core/api.routes';
 import { DdlLookupSlug } from 'src/app/core/fixed-values';
 import { ddl, ddlItem } from 'src/app/core/models/core.models';
@@ -12,8 +13,9 @@ import { PostService } from 'src/app/core/services/post.service';
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss']
 })
-export class ArticlesComponent {
+export class ArticlesComponent implements OnDestroy {
 
+  private destroy$ = new Subject<void>();
   private _isServer = false;
   isMobile = true;
   typeSlug = ''
@@ -41,13 +43,18 @@ export class ArticlesComponent {
 
   ngOnInit(): void {
 
-    this._route.params.subscribe((params: Params) => {
+    this._route.params.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
       this.getArticles();
     })
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   getArticles() {
-    this._coreService.GetDDLLookupData(DdlLookupSlug.Article, '', ``).subscribe((res) => {
+    this._coreService.GetDDLLookupData(DdlLookupSlug.Article, '', ``).pipe(takeUntil(this.destroy$)).subscribe((res) => {
       if (res.isSuccess) {
         this.articleTypeList = res.data[DdlLookupSlug.Article]
       } else {

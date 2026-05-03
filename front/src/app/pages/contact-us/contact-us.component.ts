@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { FeedbackTypeDdl } from 'src/app/core/fixed-values';
 import { AdditionalPagesService } from 'src/app/core/services/additional-pages.service';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -11,7 +12,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
   templateUrl: './contact-us.component.html',
   styleUrls: ['./contact-us.component.scss']
 })
-export class ContactUsComponent implements OnInit {
+export class ContactUsComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   feedbackTypeDdl = FeedbackTypeDdl
   form: FormGroup = this._fb.group({
     type: [4, Validators.required],
@@ -30,6 +32,11 @@ export class ContactUsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   submit() {
 
     // if (!this._authService.isUserLoggedIn()) {
@@ -41,17 +48,18 @@ export class ContactUsComponent implements OnInit {
     let value = this.form.getRawValue();
     if (this.form.valid && value.message) {
       this.isLoading = true
-      this._additionalPagesService.sendUserMessage(value).subscribe((resp) => {
-        this.isLoading = false
+      this._additionalPagesService.sendUserMessage(value).pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.isLoading = false)
+      ).subscribe((resp) => {
         if (resp.isSuccess) {
           this._alert.info("Thank you for your feedback")
           this._router.navigateByUrl('/')
         } else {
           this._alert.info("We are facing technical issue right now, Please try again later.")
         }
-      }, (err) => {
+      }, () => {
         this._alert.info("We are facing technical issue right now, Please try again later.")
-        this.isLoading = false
       })
     }
   }

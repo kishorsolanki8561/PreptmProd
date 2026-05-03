@@ -1,8 +1,8 @@
 import { PlatformLocation } from '@angular/common';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
-import { finalize } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { DATE_FORMAT, ExamModeEnum, PreptmLogo } from 'src/app/core/fixed-values';
 import { Breadcrumb, ShareContent } from 'src/app/core/models/core.models';
 import { BlockContaintDetails, Post, PostListFilter } from 'src/app/core/models/post.model';
@@ -15,7 +15,8 @@ import { PostService } from 'src/app/core/services/post.service';
   templateUrl: './post-containt-details.component.html',
   styleUrls: ['./post-containt-details.component.scss']
 })
-export class PostContaintDetailsComponent implements OnInit {
+export class PostContaintDetailsComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   post: BlockContaintDetails | undefined;
   DATE_FORMAT = DATE_FORMAT
   ExamModeEnum = ExamModeEnum
@@ -44,7 +45,7 @@ export class PostContaintDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._route.params.subscribe((params: Params) => {
+    this._route.params.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
       this.getBlockContaintDetails(params['slug']);
     });
 
@@ -53,10 +54,16 @@ export class PostContaintDetailsComponent implements OnInit {
     // this.GetLatestPost();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   getBlockContaintDetails(slug: string) {
     this.post = undefined;
     this.isLoading = true
     this._postService.getBlockContaintDetails(slug).pipe(
+      takeUntil(this.destroy$),
       finalize(() => this.isLoading = false)
     ).subscribe(res => {
       if (res.isSuccess && res.data) {
@@ -141,8 +148,10 @@ export class PostContaintDetailsComponent implements OnInit {
     this.isBookmarkLoading = true
 
     // @ts-ignore
-    this._postService.manageBookmark(shouldAdd, this.post).subscribe((response) => {
-      this.isBookmarkLoading = false;
+    this._postService.manageBookmark(shouldAdd, this.post).pipe(
+      takeUntil(this.destroy$),
+      finalize(() => this.isBookmarkLoading = false)
+    ).subscribe((response) => {
       if (response.isSuccess) {
         if (shouldAdd)
           // @ts-ignore
@@ -153,8 +162,6 @@ export class PostContaintDetailsComponent implements OnInit {
       } else {
         alert(response.message)
       }
-    }, () => {
-      this.isBookmarkLoading = false;
     })
   }
 
@@ -178,7 +185,7 @@ export class PostContaintDetailsComponent implements OnInit {
   }
 
   getList(payload: PostListFilter, Type: string = '') {
-    this._postService.getPostLists(payload).subscribe((res) => {
+    this._postService.getPostLists(payload).pipe(takeUntil(this.destroy$)).subscribe((res) => {
       if (res.isSuccess) {
         if (Type == 'upcoming') {
           this.upcommingList = res.data ?? [];

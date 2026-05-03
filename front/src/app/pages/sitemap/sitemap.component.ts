@@ -1,6 +1,7 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { MetaDefinition } from '@angular/platform-browser';
+import { Subject, takeUntil } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CoreService } from 'src/app/core/services/core.service';
 
@@ -40,7 +41,8 @@ const CATEGORY_META: Record<string, { label: string; icon: string; color: string
   templateUrl: './sitemap.component.html',
   styleUrls: ['./sitemap.component.scss']
 })
-export class SitemapComponent implements OnInit {
+export class SitemapComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   isLoading = true;
   hasError = false;
   groups: SiteMapGroup[] = [];
@@ -65,7 +67,7 @@ export class SitemapComponent implements OnInit {
     this._setMetaTags();
 
     const url = environment.baseApiUrl + 'front/Dashboard/GetSitemap';
-    this._http.get(url, { responseType: 'text' }).subscribe({
+    this._http.get(url, { responseType: 'text' }).pipe(takeUntil(this.destroy$)).subscribe({
       next: (xml) => {
         const entries = this._parseXml(xml);
         this.totalUrls = entries.length;
@@ -78,6 +80,11 @@ export class SitemapComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   // Regex-based parser — works on both server (Node.js) and browser

@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { skip } from 'rxjs';
+import { finalize, skip, Subject, takeUntil } from 'rxjs';
 import { API_ROUTES } from 'src/app/core/api.routes';
 import { DdlLookup, PostTypesSlug } from 'src/app/core/fixed-values';
 import { Breadcrumb, PaginationModel, ddl, ddlLookup } from 'src/app/core/models/core.models';
@@ -14,7 +14,8 @@ import { PostService } from 'src/app/core/services/post.service';
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.scss']
 })
-export class PostListComponent implements OnInit {
+export class PostListComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   list: Post[] = [];
   filter = new PostListFilter();
   loading = false;
@@ -50,12 +51,12 @@ export class PostListComponent implements OnInit {
 
   ngOnInit(): void {
     this.filter.searchText = '';
-    this._route.params.subscribe((params: Params) => {
+    this._route.params.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
 
       this.categorySlug = params['categorySlug']
       if (this.type == PostTypesSlug.SEARCH) {
         this.showFilter = false;
-        this._route.params.subscribe((params: Params) => {
+        this._route.params.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
           if (params['searchedData']) {
             this.filter.blockTypeSlug = '';
             this.filter.orderBy = 'latest'
@@ -82,14 +83,18 @@ export class PostListComponent implements OnInit {
       }
 
 
-    }, (err) => {
     })
 
-    this._route.queryParams.pipe(skip(1)).subscribe((params: Params) => {
+    this._route.queryParams.pipe(skip(1), takeUntil(this.destroy$)).subscribe((params: Params) => {
       this.filter.page = +params['page']
       this.getList(this.filter)
     })
 
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   updateFilter() {
@@ -143,7 +148,7 @@ export class PostListComponent implements OnInit {
   }
 
   getDdls() {
-    this._coreService.getDdl(API_ROUTES.post.filterDdl).subscribe((res) => {
+    this._coreService.getDdl(API_ROUTES.post.filterDdl).pipe(takeUntil(this.destroy$)).subscribe((res) => {
       if (res.isSuccess) {
         this.ddls = res.data
 
@@ -156,20 +161,16 @@ export class PostListComponent implements OnInit {
       } else {
         this.ddls = undefined
       }
-    }, (err) => {
-      this.loading = false
     })
   }
 
   getDdlLookupData() {
-    this._coreService.GetDDLLookupData('', '', `${this.ddlLookupEnum.SchemeEligibility}`).subscribe((res) => {
+    this._coreService.GetDDLLookupData('', '', `${this.ddlLookupEnum.SchemeEligibility}`).pipe(takeUntil(this.destroy$)).subscribe((res) => {
       if (res.isSuccess) {
         this.ddlLookup = res.data
       } else {
         this.ddlLookup = undefined
       }
-    }, (err) => {
-      this.loading = false
     })
   }
 
@@ -188,8 +189,10 @@ export class PostListComponent implements OnInit {
     payload.page = this.filter.page
     payload.pageSize = this.filter.pageSize
     payload.searchText = this.search
-    this._postService.search(payload).subscribe((res) => {
-      this.loading = false
+    this._postService.search(payload).pipe(
+      takeUntil(this.destroy$),
+      finalize(() => this.loading = false)
+    ).subscribe((res) => {
       if (res.isSuccess && res.totalRecords > 0) {
         this.list = res.data;
         this.pagination.totalItems = res.totalRecords;
@@ -198,8 +201,6 @@ export class PostListComponent implements OnInit {
         this.list = []
         this.pagination.totalItems = 0
       }
-    }, () => {
-      this.loading = false
     })
 
   }
@@ -210,8 +211,10 @@ export class PostListComponent implements OnInit {
     let payload = new BookmarkFilter()
     payload.page = this.filter.page
     payload.pageSize = this.filter.pageSize
-    this._postService.bookmarks(payload).subscribe((res) => {
-      this.loading = false
+    this._postService.bookmarks(payload).pipe(
+      takeUntil(this.destroy$),
+      finalize(() => this.loading = false)
+    ).subscribe((res) => {
       if (res.isSuccess && res.totalRecords > 0) {
         this.list = res.data;
         this.pagination.totalItems = res.totalRecords;
@@ -220,8 +223,6 @@ export class PostListComponent implements OnInit {
         this.list = []
         this.pagination.totalItems = 0
       }
-    }, () => {
-      this.loading = false
     })
 
   }
@@ -230,8 +231,10 @@ export class PostListComponent implements OnInit {
 
     this.loading = true
 
-    this._postService.getPostLists(payload).subscribe((res) => {
-      this.loading = false
+    this._postService.getPostLists(payload).pipe(
+      takeUntil(this.destroy$),
+      finalize(() => this.loading = false)
+    ).subscribe((res) => {
       if (res.isSuccess) {
         this.list = res.data ?? [];
         this._coreService.addCommonTags(this.renderer)
@@ -257,8 +260,6 @@ export class PostListComponent implements OnInit {
         this.list = []
         this.pagination.totalItems = 0
       }
-    }, () => {
-      this.loading = false
     })
 
   }

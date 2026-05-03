@@ -1,7 +1,8 @@
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Component, HostListener, Inject, OnInit, Optional, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { Component, HostListener, Inject, OnDestroy, OnInit, Optional, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { DepartmentDetail, DepartmentDetailsFilter } from 'src/app/core/models/department.model';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CoreService } from 'src/app/core/services/core.service';
@@ -13,7 +14,8 @@ import { environment } from 'src/environments/environment';
   templateUrl: './department-details.component.html',
   styleUrls: ['./department-details.component.scss']
 })
-export class DepartmentDetailsComponent implements OnInit {
+export class DepartmentDetailsComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   department: DepartmentDetail | undefined;
   payload: DepartmentDetailsFilter = new DepartmentDetailsFilter();
   isLoading = false;
@@ -42,7 +44,7 @@ export class DepartmentDetailsComponent implements OnInit {
       this.isMobile = this.isMobileReq;
     }
 
-    this._route.params.subscribe((params: Params) => {
+    this._route.params.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
       this.payload.slugUrl = params['slug'];
       this.getDetails(this.payload)
     })
@@ -50,20 +52,25 @@ export class DepartmentDetailsComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   getDetails(payload: DepartmentDetailsFilter) {
     this.department = undefined;
     this.isLoading = true
-    this._postService.getDepartmentDetails(payload).subscribe(res => {
-      this.isLoading = false
+    this._postService.getDepartmentDetails(payload).pipe(
+      takeUntil(this.destroy$),
+      finalize(() => this.isLoading = false)
+    ).subscribe(res => {
       if (res.isSuccess) {
         this.department = res.data
         this.addMetaTags(this.department)
       } else {
         this.department = undefined
       }
-    }, () => {
-      this.isLoading = false
-      this.department = undefined
     })
   }
 
