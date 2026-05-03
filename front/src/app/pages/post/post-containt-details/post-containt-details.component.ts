@@ -64,7 +64,7 @@ export class PostContaintDetailsComponent implements OnInit {
         this.shareContent = this.getShareContent(this.post);
 
         this.breadcrumb = [
-          { text: this._coreService.titleCase(this.post?.moduleText), path: '/' + this.post.moduleSlug },
+          { text: this._coreService.titleCase(this.post?.moduleText || this.post?.moduleName), path: '/' + this.post.moduleSlug },
           { text: this.post.title }
         ]
         this.addMetaTags(this.post)

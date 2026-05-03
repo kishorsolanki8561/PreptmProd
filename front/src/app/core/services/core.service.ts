@@ -125,7 +125,8 @@ export class CoreService {
 
 
 
-  titleCase(str: string): string {
+  titleCase(str: string | null | undefined): string {
+    if (!str) return '';
     return str.replace(/\w\S*/g,
       function (txt) {
         return txt.charAt(0).toUpperCase() +

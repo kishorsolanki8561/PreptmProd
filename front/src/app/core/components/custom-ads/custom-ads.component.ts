@@ -1,10 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-custom-ads',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './custom-ads.component.html',
   styleUrl: './custom-ads.component.scss'
 })

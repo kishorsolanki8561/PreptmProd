@@ -66,7 +66,7 @@
         </h3>
 
         <div class="mx-3 lg:mx-0 mt-4" itemscope itemtype="https://schema.org/ItemList">
-            <link itemprop="url" [href]="this.document.location.href">
+            <link itemprop="url" [attr.href]="this.document.location.href">
             <meta itemprop="numberOfItems" [content]="list.length || 0" />
             <meta itemprop="name" [content]="search || this.curModuleText" />
 

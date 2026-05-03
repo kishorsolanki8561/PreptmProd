@@ -70,7 +70,7 @@ export class AdmissionDetailsComponent implements OnInit {
         if (this.post)
           this.shareContent = this.getShareContent(this.post)
         this.breadcrumb = [
-          { text: this._coreService.titleCase(this.post.moduleText), path: '/' + this.post.moduleSlug + 's' },
+          { text: this._coreService.titleCase(this.post.moduleText || this.post.moduleName), path: '/' + this.post.moduleSlug + 's' },
           { text: this.post.title }
         ]
         this.addMetaTags(this.post)

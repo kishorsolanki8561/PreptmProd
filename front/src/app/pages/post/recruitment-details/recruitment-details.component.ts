@@ -75,7 +75,7 @@ export class RecruitmentDetailsComponent implements OnInit {
 
         const isPrivate = this.post.isPrivate;
         this.breadcrumb = [
-          { text: this._coreService.titleCase(isPrivate ? "Private Jobs" : this.post.moduleText), path: '/' + (isPrivate ? PostTypesSlug.PRIVATE_RECRUITMENT : this.post.moduleSlug) },
+          { text: this._coreService.titleCase(isPrivate ? "Private Jobs" : (this.post.moduleText || this.post.moduleName)), path: '/' + (isPrivate ? PostTypesSlug.PRIVATE_RECRUITMENT : this.post.moduleSlug) },
           { text: this.post.title }
         ];
 
