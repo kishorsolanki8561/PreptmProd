@@ -119,7 +119,7 @@
 
 <!-- Mobile bottom-sheet menu -->
 <div class="mobile-overlay" *ngIf="isMobileMenuOpen" (click)="closeMobileMenu()">
-  <nav class="mobile-sheet" (click)="$event.stopPropagation()" aria-label="Mobile navigation">
+  <nav class="mobile-sheet" (click)="onMobileSheetClick($event)" aria-label="Mobile navigation">
     <div class="sheet-handle"></div>
     <ng-container *ngTemplateOutlet="menu"></ng-container>
   </nav>

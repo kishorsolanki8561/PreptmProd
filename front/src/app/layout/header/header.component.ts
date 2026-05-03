@@ -294,6 +294,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   closeMobileMenu() {
     this.isMobileMenuOpen = false
   }
+  onMobileSheetClick(event: MouseEvent) {
+    event.stopPropagation();
+    if ((event.target as HTMLElement).closest('a')) {
+      this.closeMobileMenu();
+    }
+  }
   closeSidebar() {
     this.isSidebarOpen = false
   }

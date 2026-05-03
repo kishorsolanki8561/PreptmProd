@@ -353,6 +353,7 @@
   .nav-list {
     display: flex !important;
     flex-direction: column;
+    align-items: stretch;
     gap: 0;
 
     li a {
@@ -363,6 +364,8 @@
       border-bottom: 1px solid rgba(0,0,0,0.06);
       display: flex;
       align-items: center;
+      justify-content: center;
+      text-align: center;
 
       &::after { display: none; }
 
@@ -374,9 +377,11 @@
       &.nav-active {
         color: $primary-color !important;
         background: $primary-color-bg;
-        border-left: 3px solid $primary-color;
         font-weight: 600 !important;
-        padding-left: 21px;
+
+        &:hover {
+          background: $primary-color-light;
+        }
       }
     }
 
