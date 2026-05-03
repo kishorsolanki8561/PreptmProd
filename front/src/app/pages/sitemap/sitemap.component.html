@@ -1,0 +1,108 @@
+<div class="sitemap-page">
+
+  <!-- Hero -->
+  <div class="sitemap-hero">
+    <div class="hero-inner">
+      <h1 class="hero-title">Sitemap</h1>
+      <p class="hero-subtitle" *ngIf="!isLoading && totalUrls > 0">
+        {{ totalUrls }} pages across {{ groups.length }} categories
+      </p>
+      <p class="hero-subtitle" *ngIf="isLoading">Loading…</p>
+
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="text" placeholder="Search pages…" autocomplete="off"
+               [value]="searchText" (input)="onSearch($any($event.target).value)" />
+        <button class="clear-btn" *ngIf="searchText" (click)="onSearch('')" title="Clear">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category filter tabs -->
+  <div class="tabs-wrap" *ngIf="!isLoading && groups.length > 0">
+    <div class="tabs container gap-padding-x">
+      <button class="tab" [class.active]="activeFilter === 'all'" (click)="setFilter('all')">
+        All <span class="tab-count">{{ totalUrls }}</span>
+      </button>
+      <button class="tab" *ngFor="let g of groups"
+              [class.active]="activeFilter === g.label"
+              [style.--c]="g.color"
+              (click)="setFilter(g.label)">
+        {{ g.label }} <span class="tab-count">{{ g.entries.length }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="container gap-padding-x sitemap-body">
+
+    <!-- Skeleton -->
+    <ng-container *ngIf="isLoading">
+      <div class="skeleton-block" *ngFor="let i of [1,2,3]">
+        <div class="sk sk-head"></div>
+        <div class="sk-grid">
+          <div class="sk sk-card" *ngFor="let j of [1,2,3,4,5,6]"></div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading">
+
+      <!-- Error -->
+      <div class="empty-wrap" *ngIf="hasError">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 8v4M12 16h.01"/>
+        </svg>
+        <p>Could not load sitemap. Please try again later.</p>
+      </div>
+
+      <!-- No results -->
+      <div class="empty-wrap" *ngIf="!hasError && filteredGroups.length === 0 && searchText">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M8 11h6"/>
+        </svg>
+        <p>No pages matched "<strong>{{ searchText }}</strong>"</p>
+        <button (click)="onSearch('')">Clear search</button>
+      </div>
+
+      <!-- Groups -->
+      <section class="cat-section" *ngFor="let group of filteredGroups">
+
+        <div class="cat-heading" [style.--c]="group.color">
+          <span class="cat-dot"></span>
+          <h2 class="cat-name">{{ group.label }}</h2>
+          <span class="cat-pill">{{ group.entries.length }}</span>
+        </div>
+
+        <div class="url-grid">
+          <a class="url-card" *ngFor="let entry of group.entries"
+             [href]="entry.slugUrl" target="_blank" rel="noopener"
+             [style.--c]="group.color">
+            <div class="card-top">
+              <span class="card-title">{{ pageLabel(entry.slugUrl) }}</span>
+              <svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </div>
+            <span class="card-date">{{ entry.modifiedDate | date:'d MMM yyyy' }}</span>
+          </a>
+        </div>
+
+      </section>
+
+    </ng-container>
+  </div>
+</div>
