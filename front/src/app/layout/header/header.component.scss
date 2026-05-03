@@ -159,10 +159,13 @@
   &:hover { background: $primary-color-bg; }
 
   &.search-query {
+    justify-content: flex-start;
+    gap: 8px;
     color: $primary-color;
     font-size: 13px;
 
-    img { height: 14px; margin-right: 8px; opacity: 0.6; }
+    img { height: 14px; opacity: 0.6; }
+    strong { font-weight: 600; }
   }
 }
 

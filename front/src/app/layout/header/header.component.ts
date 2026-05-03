@@ -1,9 +1,9 @@
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, PLATFORM_ID, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID, Renderer2, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { WhatsAppPromptService } from 'src/app/core/services/whatsapp-prompt.service';
-import { debounceTime, of, switchMap } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, filter, map, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { ENABLE_LOGIN, PostTypesSlug } from 'src/app/core/fixed-values';
 import { LoginReq } from 'src/app/core/models/auth.model';
 // import { Post } from 'src/app/core/models/post.model';
@@ -17,7 +17,7 @@ import { SearchService } from 'src/app/core/services/search.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
+export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private _searchService: SearchService,
@@ -48,7 +48,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   isLoginLoading = false;
   isMobileMenuOpen = false;
   isSidebarOpen = false;
-  lastSearchedText = '';
   showProfileMenu = false;
   isLangChanged = false
 
@@ -56,6 +55,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   userDetails: user | null;
   isSearchCompleted = false
+
+  private destroy$ = new Subject<void>();
+  private suggestionCache = new Map<string, string[]>();
+  private static readonly SUGGESTION_CACHE_LIMIT = 50;
+  private static readonly SUGGESTION_MIN_LENGTH = 2;
 
   @ViewChild('toggleButton') toggleButton: ElementRef;
   @ViewChild('searchDiv') searchDiv: ElementRef;
@@ -67,23 +71,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.userDetails = this._authService.getUserDetails();
 
 
-    //  to remove/set searched text
-    this._router.events.subscribe((e) => {
+    this._router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
       let currentRoute = this._route.root;
       while (currentRoute.children[0] !== undefined) {
         currentRoute = currentRoute.children[0];
       }
-      if (e instanceof NavigationEnd) {
-
-        // this.setPageTitle(currentRoute);
-
-        let searchedVal = currentRoute.snapshot.params['searchedData']
-        if (searchedVal) {
-          this.searchText.setValue(searchedVal)
-        } else {
-          this.searchText.setValue(null)
-        }
-      }
+      const searchedVal = currentRoute.snapshot.params['searchedData'];
+      this.searchText.setValue(searchedVal || null);
     });
 
     this.renderer.listen('window', 'click', (e: Event) => {
@@ -91,30 +88,54 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this.showSearchList = false;
       }
     });
-    this.searchText.valueChanges.subscribe((res) => {
-      if (!res) {
-        this.searchTextList = [];
-        this.ishistory = true;
-        if (this._coreService.getLocalStorage('serach')) {
-          this.historySerachText = [...this._coreService.getLocalStorage('serach') || []]
-        }
-      }
-    });
+
     this.searchText.valueChanges.pipe(
-      debounceTime(500),
-      switchMap((query: any) => {
-        if (query) {
-          {
-            this.ishistory = false;
-            if (this.lastSearchedText != query) {
-              this.lastSearchedText = query
-              if (!this.isSearchCompleted)
-                this.onGetPopularBySearchText();
-            }
+      map(v => (v ?? '').trim()),
+      // Reset to history view immediately when the input is cleared, before
+      // the debounce, so the dropdown swap is not delayed.
+      tap(q => {
+        if (!q) {
+          this.searchTextList = [];
+          this.ishistory = true;
+          const stored = this._coreService.getLocalStorage('serach');
+          if (stored) {
+            this.historySerachText = [...stored];
           }
-        };
-        return of(query);
-      })
+        }
+      }),
+      debounceTime(250),
+      distinctUntilChanged(),
+      filter(q => q.length >= HeaderComponent.SUGGESTION_MIN_LENGTH && !this.isSearchCompleted),
+      tap(() => this.ishistory = false),
+      // switchMap cancels the in-flight request on each new keystroke, so a
+      // late response from an earlier query cannot overwrite the current list.
+      switchMap(q => {
+        const cached = this.suggestionCache.get(q);
+        if (cached) {
+          this.searchTextList = cached;
+          this.showSearchList = true;
+          return of(null);
+        }
+        this.isSearchLoading = true;
+        return this._searchService.GetPopularBySearchText(q).pipe(
+          tap(res => {
+            this.isSearchLoading = false;
+            if (res.isSuccess && res.data) {
+              this.cacheSuggestions(q, res.data);
+              this.searchTextList = res.data;
+              this.showSearchList = true;
+            } else {
+              this.searchTextList = [];
+            }
+          }),
+          catchError(() => {
+            this.isSearchLoading = false;
+            this.searchTextList = [];
+            return of(null);
+          })
+        );
+      }),
+      takeUntil(this.destroy$)
     ).subscribe();
 
 
@@ -248,24 +269,20 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
 
-  onGetPopularBySearchText() {
-    this.isSearchLoading = true
-    this._searchService.GetPopularBySearchText(String(this.searchText.value?.trim())).subscribe((res) => {
-      this.isSearchLoading = false
-      if (res.isSuccess) {
-        if (res.data) {
-          this.searchTextList = res.data;
-          this.showSearchList = true
-        }
-        else {
-          this.searchTextList = []
-        }
+  private cacheSuggestions(query: string, data: string[]) {
+    if (this.suggestionCache.size >= HeaderComponent.SUGGESTION_CACHE_LIMIT) {
+      const oldestKey = this.suggestionCache.keys().next().value;
+      if (oldestKey !== undefined) {
+        this.suggestionCache.delete(oldestKey);
       }
-    }, (error: any) => {
-      this.isSearchLoading = false
-      this.searchTextList = []
-    })
+    }
+    this.suggestionCache.set(query, data);
   }
+
+  trackBySuggestion(_: number, item: string) {
+    return item;
+  }
+
   onEnter() {
 
   }
@@ -291,5 +308,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.whatsappPrompt.show();
   }
 
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.suggestionCache.clear();
+  }
 
 }

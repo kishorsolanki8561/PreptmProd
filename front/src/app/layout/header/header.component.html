@@ -37,7 +37,7 @@
       <div *ngIf="searchTextList.length==0 && !searchText.value && historySerachText?.length" #searchDiv
         [ngClass]="{'search-list-open':showSearchList,'search-list':true}">
         <ul>
-          <li class="search-item" *ngFor="let hoption of historySerachText" (click)="onSearch(hoption)">
+          <li class="search-item" *ngFor="let hoption of historySerachText; trackBy: trackBySuggestion" (click)="onSearch(hoption)">
             <div class="search-item-left">
               <img src="assets/img/history.svg" alt="history" [attr.loading]="'lazy'" />
               <span>{{hoption}}</span>
@@ -53,9 +53,9 @@
         <ul>
           <li class="search-item search-query" (click)="onSearch(searchText.value)" *ngIf="searchText.value">
             <img src="assets/img/search.svg" alt="search" [attr.loading]="'lazy'" />
-            <span i18n>Search for</span>&nbsp;"<strong>{{searchText.value}}</strong>"
+            <span><ng-container i18n>Search for</ng-container> "<strong>{{searchText.value}}</strong>"</span>
           </li>
-          <li class="search-item" *ngFor="let option of searchTextList" (click)="onSearch(option)">
+          <li class="search-item" *ngFor="let option of searchTextList; trackBy: trackBySuggestion" (click)="onSearch(option)">
             <div class="search-item-left">
               <img src="assets/img/search.svg" alt="search" [attr.loading]="'lazy'">
               <span>{{option}}</span>
