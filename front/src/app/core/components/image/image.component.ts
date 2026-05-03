@@ -1,5 +1,6 @@
 import { isPlatformServer } from '@angular/common';
 import { Component, HostListener, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { LightboxService } from '../../services/lightbox.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class ImageComponent implements OnInit {
   srcMedium = 'assets/img/placeholder.svg';
   srcLow = 'assets/img/placeholder.svg';
   srcWidth = 0;
+  hasError = false;
   private _isServer = false;
   @Input() showPreview = false;
   @Input() alt = '';
@@ -24,11 +26,13 @@ export class ImageComponent implements OnInit {
 
   @Input() set src(url: string) {
     if (url) {
-      let ext = url.split('.').pop();
-      this.originalUrl = url;
-      this.srcHigh = url.replaceAll('OriginalAttachment', 'Th1200x628').replaceAll(`.${ext}`, '.png');
-      this.srcMedium = url.replaceAll('OriginalAttachment', 'Th360x180').replaceAll(`.${ext}`, '.png');
-      this.srcLow = url.replaceAll('OriginalAttachment', 'Th360x180').replaceAll(`.${ext}`, '.png');
+      this.hasError = false;
+      const resolvedUrl = url.includes('http') ? url : `${environment.fileBaseUrl}${url.startsWith('/') ? '' : '/'}${url}`;
+      let ext = resolvedUrl.split('.').pop();
+      this.originalUrl = resolvedUrl;
+      this.srcHigh = resolvedUrl.replaceAll('OriginalAttachment', 'Th1200x628').replaceAll(`.${ext}`, '.png');
+      this.srcMedium = resolvedUrl.replaceAll('OriginalAttachment', 'Th360x180').replaceAll(`.${ext}`, '.png');
+      this.srcLow = resolvedUrl.replaceAll('OriginalAttachment', 'Th360x180').replaceAll(`.${ext}`, '.png');
     }
   }
 
@@ -56,6 +60,7 @@ export class ImageComponent implements OnInit {
   }
 
   onError(event: Event) {
+    this.hasError = true;
     const img = event.target as HTMLImageElement;
     if (img && img.src !== this.fallback) {
       img.src = this.fallback;
@@ -63,8 +68,8 @@ export class ImageComponent implements OnInit {
   }
 
   openPreview(alt = '') {
-    if (this.showPreview) {
-      this.lightbox.open([{ src: this.fallback, alt }]);
+    if (this.showPreview && !this.hasError) {
+      this.lightbox.open([{ src: this.originalUrl, alt }]);
     }
   }
 }

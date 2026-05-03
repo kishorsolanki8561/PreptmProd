@@ -7,6 +7,7 @@ export const environment = {
   baseApiUrl: "https://sapi.preptm.com/api/", //stage
   // baseApiUrl: "https://api.preptm.com/api/", //live
   // baseApiUrl: "https://localhost:7229/api/", //local
+  fileBaseUrl:"https://file.preptm.com/Content",
   encryptDecryptKey: "HR$2pIjHR$2pIj12",
   isEncrypt: false,
   hostPort: 4000,

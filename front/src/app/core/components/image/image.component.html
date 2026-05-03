@@ -1,15 +1,19 @@
 <!-- small -->
-<img [class]="className" *ngIf="!skipSmall && (srcWidth<600 || onlyLow); else medium" [src]="srcLow"
-    [attr.loading]="'lazy'" [alt]="alt" (error)="onError($event)" (click)="openPreview()">
+<!-- <img [class]="className" *ngIf="!skipSmall && (srcWidth<600 || onlyLow); else medium" [src]="srcLow"
+    [attr.loading]="'lazy'" [alt]="alt" (error)="onError($event)" (click)="openPreview()"> -->
 
 <!-- medium -->
-<ng-template #medium>
+<!-- <ng-template #medium>
     <img [class]="className" *ngIf="(srcWidth<1024 || onlyMedium); else large" [src]="srcMedium"
         [attr.loading]="'lazy'" [alt]="alt" (error)="onError($event)" (click)="openPreview()">
-</ng-template>
+</ng-template> -->
 
 <!-- large -->
-<ng-template #large>
+<!-- <ng-template #large>
     <img [class]="className" [src]="srcHigh" [attr.loading]="'lazy'" [alt]="alt" (error)="onError($event)"
         (click)="openPreview()">
-</ng-template>
+</ng-template> -->
+
+
+<img [class]="className" [src]="originalUrl"
+    [attr.loading]="'lazy'" [alt]="alt" (error)="onError($event)" (click)="openPreview()" />
